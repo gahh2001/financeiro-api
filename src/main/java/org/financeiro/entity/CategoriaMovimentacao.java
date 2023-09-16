@@ -10,6 +10,8 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	private String tipoMovimentacao;
 	private String nomeCategoria;
 	private Long idConta;
+
+	//teste
 	
 	public CategoriaMovimentacao() {
 	}
