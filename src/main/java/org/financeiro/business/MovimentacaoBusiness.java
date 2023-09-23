@@ -1,5 +1,8 @@
 package org.financeiro.business;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -51,18 +54,20 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness{
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacaosPorIdConta(Long idConta, Long dataInicio, Long dataFim) {
+	public List<Movimentacao> listaMovimentacaosPorIdConta(Long idConta, Date dataInicio, Date dataFim) {
 		return movimentacaoRepository.listaMovimentacaosPorIdConta(idConta, dataInicio, dataFim);
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, Long dataInicio, Long dataFim) {
-		return movimentacaoRepository.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, String dataInicio, String dataFim) {
+		return movimentacaoRepository.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao,
+				stringToDate(dataInicio), stringToDate(dataFim));
 	};
 
 	@Override
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, Long dataInicio, Long dataFim) {
-		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(idConta, idCategoria, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, String dataInicio, String dataFim) {
+		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(idConta, idCategoria,
+				stringToDate(dataInicio), stringToDate(dataFim));
 	};
 
 	@Override
@@ -73,5 +78,19 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness{
 	@Override
 	public void removeMovimentacao(Long idMovimentacao) {
 		movimentacaoRepository.removeMovimentacao(idMovimentacao);
+	}
+
+	private Date stringToDate(String dataString) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date teste = dateFormat.parse(dataString);
+			if (teste != null) {
+				return teste;
+			}
+			return teste;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package org.financeiro.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,21 +28,23 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaosPorIdConta(Long idConta, Long dataInicio, Long dataFim) {
-		return list("select t from Movimentacao t where t.idConta = ?1 and (t.dataMovimentacao between ?2 and ?3)", idConta, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaosPorIdConta(Long idConta, Date dataInicio, Date dataFim) {
+		return list("select t from Movimentacao t where t.idConta = ?1 "
+			+ "and (t.dataMovimentacao between ?2 and ?3)", idConta, dataInicio, dataFim);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, Long dataInicio, Long dataFim) {
-		return list("select t from Movimentacao t where t.idConta = ?1 and t.tipoMovimentacao = ?2 and (t.dataMovimentacao between ?3 and ?4)", 
-						idConta, tipoMovimentacao, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, Date dataInicio, Date dataFim) {
+		return list("select t from Movimentacao t where t.idConta = ?1 and t.tipoMovimentacao = ?2 "
+				+ "and (t.dataMovimentacao between ?3 and ?4)", idConta, tipoMovimentacao, dataInicio, dataFim);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, Long dataInicio, Long dataFim) {
-		return list("select t from Movimentacao t where t.idConta = ?1 and t.idCategoriaMovimentacao = ?2 and (t.dataMovimentacao between ?3 and ?4)", idConta, idCategoria, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, Date dataInicio, Date dataFim) {
+		return list("select t from Movimentacao t where t.idConta = ?1 and t.idCategoriaMovimentacao = ?2 "
+			+ "and (t.dataMovimentacao between ?3 and ?4)", idConta, idCategoria, dataInicio, dataFim);
 	}
 
 	@Override

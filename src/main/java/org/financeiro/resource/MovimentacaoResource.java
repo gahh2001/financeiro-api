@@ -1,5 +1,6 @@
 package org.financeiro.resource;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -46,23 +47,32 @@ public class MovimentacaoResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacaosPorIdConta(@QueryParam("idConta") Long idConta, @QueryParam("dataInicio") Long dataInicio, @QueryParam("dataFim") Long dataFim) {
-		return business.listaMovimentacaosPorIdConta(idConta, dataInicio, dataFim);
+	public List<Movimentacao> listaMovimentacaosPorIdConta(
+			@QueryParam("idConta") Long idConta, 
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim) {
+		return business.listaMovimentacaosPorIdConta(idConta, new Date(dataInicio), new Date(dataFim));
 	}
 
 	@GET
 	@Path("/tipoMovimentacao")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(@QueryParam("idConta") Long idConta, @QueryParam("tipoMovimentacao") String tipoMovimentacao,
-														@QueryParam("dataInicio") Long dataInicio, @QueryParam("dataFim") Long dataFim) {
+	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(
+			@QueryParam("idConta") Long idConta,
+			@QueryParam("tipoMovimentacao") String tipoMovimentacao,
+			@QueryParam("dataInicio") String dataInicio,
+			@QueryParam("dataFim") String dataFim) {
 		return business.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao, dataInicio, dataFim);
 	}
 
 	@GET
 	@Path("/categoria")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(@QueryParam("idConta") Long idConta, @QueryParam("idCategoria") Long idCategoria, 
-													@QueryParam("dataInicio") Long dataInicio, @QueryParam("dataFim") Long dataFim) {
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(
+			@QueryParam("idConta") Long idConta,
+			@QueryParam("idCategoria") Long idCategoria,
+			@QueryParam("dataInicio") String dataInicio,
+			@QueryParam("dataFim") String dataFim) {
 		return business.listaMovimentacaoPorIdCategoria(idConta, idCategoria, dataInicio, dataFim);
 	}
 

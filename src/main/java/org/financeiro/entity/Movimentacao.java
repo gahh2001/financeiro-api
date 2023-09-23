@@ -1,5 +1,8 @@
 package org.financeiro.entity;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -10,14 +13,15 @@ public class Movimentacao extends PanacheEntity{
 	private Long id;
 	private Long idConta;
 	private Double valor;
-	private Long dataMovimentacao;
+	@Column(columnDefinition = "DATE")
+	private Date dataMovimentacao;
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
 	
 	public Movimentacao() {
 	}
 
-	public Movimentacao(Long id, Long idConta, Double valor, Long dataMovimentacao, String tipoMovimentacao,
+	public Movimentacao(Long id, Long idConta, Double valor, Date dataMovimentacao, String tipoMovimentacao,
 			Long idCategoriaMovimentacao) {
 		this.id = id;
 		this.idConta = idConta;
@@ -45,12 +49,6 @@ public class Movimentacao extends PanacheEntity{
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	public Long getDataMovimentacao() {
-		return dataMovimentacao;
-	}
-	public void setDataMovimentacao(Long dataMovimentacao) {
-		this.dataMovimentacao = dataMovimentacao;
-	}
 	public String getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}
@@ -65,7 +63,10 @@ public class Movimentacao extends PanacheEntity{
 	public void setIdCategoriaMovimentacao(Long idCategoriaMovimentacao) {
 		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
 	}
-
-	
-
+	public Date getDataMovimentacao() {
+		return dataMovimentacao;
+	}
+	public void setDataMovimentacao(Date dataMovimentacao) {
+		this.dataMovimentacao = dataMovimentacao;
+	}
 }
