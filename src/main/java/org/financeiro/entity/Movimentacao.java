@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.financeiro.dto.MovimentacaoDTO;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
@@ -29,6 +31,15 @@ public class Movimentacao extends PanacheEntity{
 		this.dataMovimentacao = dataMovimentacao;
 		this.tipoMovimentacao = tipoMovimentacao;
 		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
+	}
+
+	public Movimentacao(MovimentacaoDTO movimentacaoDTO) {
+		this.id = movimentacaoDTO.getId();
+		this.idConta = movimentacaoDTO.getIdConta();
+		this.valor = movimentacaoDTO.getValor();
+		this.dataMovimentacao = new Date(movimentacaoDTO.getDataMovimentacao());
+		this.tipoMovimentacao = movimentacaoDTO.getTipoMovimentacao();
+		this.idCategoriaMovimentacao = movimentacaoDTO.getIdCategoriaMovimentacao();
 	}
 
 	public Long getIdConta() {

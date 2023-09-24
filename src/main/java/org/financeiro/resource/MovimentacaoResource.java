@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.financeiro.business.IMovimentacaoBusiness;
+import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 
 @Path("/movimentacao")
@@ -29,10 +30,9 @@ public class MovimentacaoResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criaMovimentacao(Movimentacao movimentacao) {
-		if (movimentacao.getIdConta() != null && movimentacao.getValor() != null && movimentacao.getDataMovimentacao() != null
-				&& movimentacao.getTipoMovimentacao() != null && movimentacao.getIdCategoriaMovimentacao() != null) {
-					Movimentacao criado = business.criaMovimentacao(movimentacao);
+	public Response criaMovimentacao(MovimentacaoDTO movimentacao) {
+		if (movimentacao != null) {
+					Movimentacao criado = business.criaMovimentacao( new Movimentacao(movimentacao));
 					return Response.ok(criado).build();
 				}
 		return Response.status(400).entity("Informe todos os dados corretamente").build();

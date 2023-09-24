@@ -13,7 +13,7 @@ import org.financeiro.repository.IContaRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 
 @ApplicationScoped
-public class MovimentacaoBusiness implements IMovimentacaoBusiness{
+public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 
 	@Inject
 	IMovimentacaoRepository movimentacaoRepository;
@@ -26,7 +26,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness{
 		Double investimentoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getInvestimento();
 		Double novoSaldo;
 		Double novoInvestimento;
-		switch(movimentacao.getTipoMovimentacao().toUpperCase()) {
+		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
 			case "INVESTIMENTO": {
 				novoSaldo = saldoAtual - movimentacao.getValor();
 				novoInvestimento = investimentoAtual + movimentacao.getValor();
@@ -44,7 +44,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness{
 				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
 			}
 		}
-		
+
 		return movimentacaoRepository.criaMovimentacao(movimentacao);
 	}
 
@@ -59,13 +59,15 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness{
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, String dataInicio, String dataFim) {
+	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao,
+			String dataInicio, String dataFim) {
 		return movimentacaoRepository.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao,
 				stringToDate(dataInicio), stringToDate(dataFim));
 	};
 
 	@Override
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, String dataInicio, String dataFim) {
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, String dataInicio,
+			String dataFim) {
 		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(idConta, idCategoria,
 				stringToDate(dataInicio), stringToDate(dataFim));
 	};
