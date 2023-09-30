@@ -40,12 +40,12 @@ public class ContaRepository implements IContaRepository, PanacheRepository<Cont
 	@Override
 	@Transactional
 	public void atualizaSaldoConta(Double novoSaldo, Long idConta) {
-		update("update Conta t set t.saldo = ?1 where t.id = ?2 ", novoSaldo, idConta);
+		update("update Conta t set t.saldoConta = ?1 where t.id = ?2 ", novoSaldo, idConta);
 	}
 
 	@Override
 	@Transactional
 	public void atualizaInvestimento(double novoInvestimento, Long idConta) {
-		update("update Conta t set t.investimento = ?1 where t.id = ?2", novoInvestimento, idConta);
+		update("update Conta t set t.saldoInvestimento = ?1 where t.id = ?2", novoInvestimento, idConta);
 	}
 }

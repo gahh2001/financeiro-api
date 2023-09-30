@@ -44,7 +44,7 @@ public class ContaResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criaConta(Conta conta) {
-		if (conta.getIdUsuario() != null && conta.getSaldo() != null && conta.getInvestimento() != null) {
+		if (conta != null) {
 			Conta contaCriada = repository.criaconta(conta);
 			return Response.ok(contaCriada).build();
 		}

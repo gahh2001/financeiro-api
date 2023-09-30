@@ -5,36 +5,41 @@ import javax.persistence.Entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
-public class Conta extends PanacheEntity{
+public class Conta extends PanacheEntity {
 
-	private Double saldo;
-	private Double investimento;
+	private Double saldoConta;
+	private Double saldoInvestimento;
 	private Long idUsuario;
 
 	public Conta() {
 	}
 
 	public Conta(Double saldo, Double investimento, Long idUsuario) {
-		this.saldo = saldo;
-		this.investimento = investimento;
+		this.saldoConta = saldo;
+		this.saldoInvestimento = investimento;
 		this.idUsuario = idUsuario;
 	}
-	
-	public Double getSaldo() {
-		return saldo;
+
+	public Double getSaldoConta() {
+		return saldoConta;
 	}
-	public void setSaldo(Double saldoDisponível) {
-		this.saldo = saldoDisponível;
+
+	public void setSaldoConta(Double saldoDisponível) {
+		this.saldoConta = saldoDisponível;
 	}
-	public Double getInvestimento() {
-		return investimento;
+
+	public Double getSaldoInvestimento() {
+		return saldoInvestimento;
 	}
-	public void setInvestimento(Double investimento) {
-		this.investimento = investimento;
+
+	public void setSaldoInvestimento(Double investimento) {
+		this.saldoInvestimento = investimento;
 	}
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
+
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}

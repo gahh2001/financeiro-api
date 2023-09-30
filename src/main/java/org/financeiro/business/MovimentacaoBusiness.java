@@ -22,8 +22,8 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 
 	@Override
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
-		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldo();
-		Double investimentoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getInvestimento();
+		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoConta();
+		Double investimentoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoInvestimento();
 		Double novoSaldo;
 		Double novoInvestimento;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
