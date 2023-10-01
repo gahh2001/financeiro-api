@@ -17,12 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.financeiro.business.ICategoriaMovimentacaoBusiness;
+import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 
-@Path("/categoriaMovimentacao")
+@Path("/categoria-movimentacao")
 @ApplicationScoped
 public class CategoriaMovimentacaoResource {
-	
+
 	@Inject
 	ICategoriaMovimentacaoBusiness business;
 
@@ -30,7 +31,7 @@ public class CategoriaMovimentacaoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
-		if (categoria.getIdConta() != null && categoria.getNomeCategoria() != null && categoria.getTipoMovimentacao() != null) {
+		if (categoria != null) {
 			CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
 			return Response.ok(criada).build();
 		}
@@ -38,9 +39,8 @@ public class CategoriaMovimentacaoResource {
 	}
 
 	@GET
-	@Path("/conta")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(@QueryParam("idConta") Long idConta) {
+	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(@QueryParam("idConta") Long idConta) {
 		return business.listaCategoriasMovimentacao(idConta);
 	}
 
@@ -52,8 +52,10 @@ public class CategoriaMovimentacaoResource {
 	}
 
 	@GET
+	@Path("/tipo")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(@QueryParam("idConta") Long idConta, @QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
+			@QueryParam("idConta") Long idConta, @QueryParam("tipoMovimentacao") String tipoMovimentacao) {
 		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, idConta);
 	}
 
@@ -61,20 +63,22 @@ public class CategoriaMovimentacaoResource {
 	@Path("/{idCategoria}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, @PathParam(value = "idCategoria") Long idCategoria) {
+	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome,
+			@PathParam(value = "idCategoria") Long idCategoria) {
 		return business.atualizaNomeCategoriaMovimentacao(novoNome, idCategoria);
 	}
 
 	@DELETE
 	@Path("/{idCategoria}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeCategoriaMovimentacao(@PathParam(value = "idCategoria") Long idCategoria, @QueryParam("idConta") Long idConta) {
+	public Response removeCategoriaMovimentacao(@PathParam(value = "idCategoria") Long idCategoria,
+			@QueryParam("idConta") Long idConta) {
 		CategoriaMovimentacao apagada = business.removeCategoriaMovimentacao(idConta, idCategoria);
 		if (apagada != null) {
 			return Response.ok(apagada).build();
 		}
 		return Response.status(406).entity("Não é possível apagar esta categoria,"
-			+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
+				+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
 
 	}
 

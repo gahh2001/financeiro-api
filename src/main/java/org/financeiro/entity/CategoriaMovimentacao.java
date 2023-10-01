@@ -7,6 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 @Entity
 public class CategoriaMovimentacao extends PanacheEntity{
 
+	private Long id;
 	private String tipoMovimentacao;
 	private String nomeCategoria;
 	private Long idConta;
@@ -14,10 +15,19 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	public CategoriaMovimentacao() {
 	}
 	
-	public CategoriaMovimentacao(String tipoMovimentacao, String nomeCategoria, Long idConta) {
+	public CategoriaMovimentacao(Long id, String tipoMovimentacao, String nomeCategoria, Long idConta) {
+		this.id = id;
 		this.tipoMovimentacao = tipoMovimentacao;
 		this.nomeCategoria = nomeCategoria;
 		this.idConta = idConta;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getTipoMovimentacao() {

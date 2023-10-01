@@ -1,10 +1,12 @@
 package org.financeiro.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
@@ -24,8 +26,14 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(Long idConta) {
-		return repository.listaCategoriasMovimentacao(idConta);
+	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(Long idConta) {
+		List<CategoriaMovimentacao> categorias = repository.listaCategoriasMovimentacao(idConta);
+		List<CategoriaMovimentacaoDTO> categoriasDTO = new ArrayList<>();
+		categorias.forEach(categoria -> {
+			categoriasDTO.add(new CategoriaMovimentacaoDTO(categoria.getId(), categoria.getTipoMovimentacao(),
+				categoria.getNomeCategoria(), categoria.getIdConta()));
+		});
+		return categoriasDTO;
 	}
 
 	@Override
