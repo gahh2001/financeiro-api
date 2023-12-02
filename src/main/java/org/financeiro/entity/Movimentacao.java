@@ -37,7 +37,7 @@ public class Movimentacao extends PanacheEntity{
 		this.id = movimentacaoDTO.getId();
 		this.idConta = movimentacaoDTO.getIdConta();
 		this.valor = movimentacaoDTO.getValor();
-		this.dataMovimentacao = new Date(movimentacaoDTO.getDataMovimentacao());
+		this.dataMovimentacao = movimentacaoDTO.getDataMovimentacao();
 		this.tipoMovimentacao = movimentacaoDTO.getTipoMovimentacao();
 		this.idCategoriaMovimentacao = movimentacaoDTO.getIdCategoriaMovimentacao();
 	}

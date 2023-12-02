@@ -1,25 +1,26 @@
 package org.financeiro.dto;
 
+import java.util.Date;
+
+import org.financeiro.entity.Movimentacao;
+
 public class MovimentacaoDTO {
-	
+
 	private Long id;
 	private Long idConta;
 	private Double valor;
-	private Long dataMovimentacao;
+	private Date dataMovimentacao;
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
-	
-	public MovimentacaoDTO() {
-	}
+	private String nomeCategoriaMovimentacao;
 
-	public MovimentacaoDTO(Long id, Long idConta, Double valor, Long dataMovimentacao, String tipoMovimentacao,
-			Long idCategoriaMovimentacao) {
-		this.id = id;
-		this.idConta = idConta;
-		this.valor = valor;
-		this.dataMovimentacao = dataMovimentacao;
-		this.tipoMovimentacao = tipoMovimentacao;
-		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
+	public MovimentacaoDTO(Movimentacao movimentacao) {
+		this.id = movimentacao.getId();
+		this.idConta = movimentacao.getIdConta();
+		this.valor = movimentacao.getValor();
+		this.dataMovimentacao = movimentacao.getDataMovimentacao();
+		this.tipoMovimentacao = movimentacao.getTipoMovimentacao();
+		this.idCategoriaMovimentacao = movimentacao.getIdCategoriaMovimentacao();
 	}
 
 	public Long getId() {
@@ -46,11 +47,11 @@ public class MovimentacaoDTO {
 		this.valor = valor;
 	}
 
-	public Long getDataMovimentacao() {
+	public Date getDataMovimentacao() {
 		return dataMovimentacao;
 	}
 
-	public void setDataMovimentacao(Long dataMovimentacao) {
+	public void setDataMovimentacao(Date dataMovimentacao) {
 		this.dataMovimentacao = dataMovimentacao;
 	}
 
@@ -68,5 +69,13 @@ public class MovimentacaoDTO {
 
 	public void setIdCategoriaMovimentacao(Long idCategoriaMovimentacao) {
 		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
+	}
+
+	public String getNomeCategoriaMovimentacao() {
+		return nomeCategoriaMovimentacao;
+	}
+
+	public void setNomeCategoriaMovimentacao(String nomeCategoriaMovimentacao) {
+		this.nomeCategoriaMovimentacao = nomeCategoriaMovimentacao;
 	}
 }

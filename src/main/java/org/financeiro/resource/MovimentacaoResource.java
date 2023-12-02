@@ -32,9 +32,9 @@ public class MovimentacaoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criaMovimentacao(MovimentacaoDTO movimentacao) {
 		if (movimentacao != null) {
-					Movimentacao criado = business.criaMovimentacao( new Movimentacao(movimentacao));
-					return Response.ok(criado).build();
-				}
+			Movimentacao criado = business.criaMovimentacao(new Movimentacao(movimentacao));
+			return Response.ok(criado).build();
+		}
 		return Response.status(400).entity("Informe todos os dados corretamente").build();
 	}
 
@@ -44,14 +44,14 @@ public class MovimentacaoResource {
 	public Movimentacao listaMovimentacaosPorId(@PathParam(value = "id") Long idMovimentacao) {
 		return business.listaMovimentacaoPorId(idMovimentacao);
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacaosPorIdConta(
-			@QueryParam("idConta") Long idConta, 
+	public List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(
+			@QueryParam("idConta") Long idConta,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
-		return business.listaMovimentacaosPorIdConta(idConta, new Date(dataInicio), new Date(dataFim));
+		return business.listaMovimentacaosPorIdContaEPeriodo(idConta, new Date(dataInicio), new Date(dataFim));
 	}
 
 	@GET

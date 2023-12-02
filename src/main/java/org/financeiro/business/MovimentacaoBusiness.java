@@ -4,10 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.repository.IContaRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
@@ -19,6 +21,8 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	IMovimentacaoRepository movimentacaoRepository;
 	@Inject
 	IContaRepository contaRepository;
+	@Inject
+	ICategoriaMovimentacaoBusiness categoriaMovimentacaobusiness;
 
 	@Override
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
@@ -54,8 +58,18 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacaosPorIdConta(Long idConta, Date dataInicio, Date dataFim) {
-		return movimentacaoRepository.listaMovimentacaosPorIdConta(idConta, dataInicio, dataFim);
+	public List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(Long idConta, Date dataInicio, Date dataFim) {
+		List<Movimentacao> movimentacoes = movimentacaoRepository
+				.listaMovimentacaosPorIdContaEPeriodo(idConta, dataInicio, dataFim);
+		return movimentacoes.stream()
+				.map(movimentacao -> {
+					MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
+					dto.setNomeCategoriaMovimentacao(categoriaMovimentacaobusiness
+							.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao())
+							.getNomeCategoria());
+					return dto;
+				})
+				.collect(Collectors.toList());
 	}
 
 	@Override
