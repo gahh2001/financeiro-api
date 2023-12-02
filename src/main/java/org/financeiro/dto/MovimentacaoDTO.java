@@ -23,6 +23,9 @@ public class MovimentacaoDTO {
 		this.idCategoriaMovimentacao = movimentacao.getIdCategoriaMovimentacao();
 	}
 
+	public MovimentacaoDTO() {
+	}
+
 	public Long getId() {
 		return id;
 	}
