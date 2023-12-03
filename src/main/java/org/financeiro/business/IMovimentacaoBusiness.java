@@ -22,6 +22,6 @@ public interface IMovimentacaoBusiness {
 
 	List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria);
 
-	void removeMovimentacao(Long idMovimentacao);
+	Boolean removeMovimentacao(Long idMovimentacao);
 
 }

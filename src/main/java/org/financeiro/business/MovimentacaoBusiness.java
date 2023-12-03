@@ -92,8 +92,22 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	};
 
 	@Override
-	public void removeMovimentacao(Long idMovimentacao) {
-		movimentacaoRepository.removeMovimentacao(idMovimentacao);
+	public Boolean removeMovimentacao(Long idMovimentacao) {
+		Movimentacao movimentacao = movimentacaoRepository.listaMovimentacaoPorId(idMovimentacao);
+		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoConta();
+		Double novoSaldo;
+		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
+			case "NEGATIVO": {
+					novoSaldo = saldoAtual + movimentacao.getValor();
+					contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
+					break;
+				}
+				default: {
+					novoSaldo = saldoAtual - movimentacao.getValor();
+					contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
+				}
+			}
+		return movimentacaoRepository.removeMovimentacao(idMovimentacao);
 	}
 
 	private Date stringToDate(String dataString) {

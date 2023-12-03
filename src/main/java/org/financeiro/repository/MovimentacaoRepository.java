@@ -58,7 +58,7 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 
 	@Override
 	@Transactional
-	public void removeMovimentacao(Long idMovimentacao) {
-		deleteById(idMovimentacao);
+	public Boolean removeMovimentacao(Long idMovimentacao) {
+		return deleteById(idMovimentacao);
 	}
 }

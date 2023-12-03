@@ -78,7 +78,11 @@ public class MovimentacaoResource {
 
 	@DELETE
 	@Path("/{id}")
-	public void removeMovimentacao(@PathParam(value = "id") Long idMovimentacao) {
-		business.removeMovimentacao(idMovimentacao);
+	public Response removeMovimentacao(@PathParam(value = "id") Long idMovimentacao) {
+		Boolean deleted = business.removeMovimentacao(idMovimentacao);
+		if (deleted) {
+			return Response.ok().build();
+		}
+		return Response.status(500).build();
 	}
 }
