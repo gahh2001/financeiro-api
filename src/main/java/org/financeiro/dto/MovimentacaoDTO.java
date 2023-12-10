@@ -13,6 +13,7 @@ public class MovimentacaoDTO {
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
 	private String nomeCategoriaMovimentacao;
+	private String descricaoMovimentacao;
 
 	public MovimentacaoDTO(Movimentacao movimentacao) {
 		this.id = movimentacao.getId();
@@ -21,6 +22,7 @@ public class MovimentacaoDTO {
 		this.dataMovimentacao = movimentacao.getDataMovimentacao();
 		this.tipoMovimentacao = movimentacao.getTipoMovimentacao();
 		this.idCategoriaMovimentacao = movimentacao.getIdCategoriaMovimentacao();
+		this.descricaoMovimentacao = movimentacao.getDescricaoMovimentacao();
 	}
 
 	public MovimentacaoDTO() {
@@ -80,5 +82,13 @@ public class MovimentacaoDTO {
 
 	public void setNomeCategoriaMovimentacao(String nomeCategoriaMovimentacao) {
 		this.nomeCategoriaMovimentacao = nomeCategoriaMovimentacao;
+	}
+
+	public String getDescricaoMovimentacao() {
+		return descricaoMovimentacao;
+	}
+
+	public void setDescricaoMovimentacao(String descricaoMovimentacao) {
+		this.descricaoMovimentacao = descricaoMovimentacao;
 	}
 }
