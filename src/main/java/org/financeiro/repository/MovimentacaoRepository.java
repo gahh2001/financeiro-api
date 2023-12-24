@@ -3,12 +3,11 @@ package org.financeiro.repository;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
-
 import org.financeiro.entity.Movimentacao;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheRepository<Movimentacao> {
@@ -18,6 +17,18 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
 		persist(movimentacao);
 		return movimentacao;
+	}
+
+	@Override
+	@Transactional
+	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada) {
+		Movimentacao movimentacaoAntiga = this.findById(movimentacaoAtualizada.getId());
+		movimentacaoAntiga.setDataMovimentacao(movimentacaoAtualizada.getDataMovimentacao());
+		movimentacaoAntiga.setDescricaoMovimentacao(movimentacaoAtualizada.getDescricaoMovimentacao());
+		movimentacaoAntiga.setIdCategoriaMovimentacao(movimentacaoAtualizada.getIdCategoriaMovimentacao());
+		movimentacaoAntiga.setValor(movimentacaoAtualizada.getValor());
+		this.persistAndFlush(movimentacaoAntiga);
+		return movimentacaoAtualizada;
 	}
 
 	@Override

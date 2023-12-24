@@ -10,6 +10,8 @@ public interface IMovimentacaoBusiness {
 
 	Movimentacao criaMovimentacao(Movimentacao movimentacao);
 
+	Movimentacao atualizaMovimentacao(Movimentacao movimentacao);
+
 	Movimentacao listaMovimentacaoPorId(Long id);
 
 	List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(Long idConta, Date dataInicio, Date dataFim);

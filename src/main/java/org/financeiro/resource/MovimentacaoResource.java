@@ -3,11 +3,16 @@ package org.financeiro.resource;
 import java.util.Date;
 import java.util.List;
 
+import org.financeiro.business.IMovimentacaoBusiness;
+import org.financeiro.dto.MovimentacaoDTO;
+import org.financeiro.entity.Movimentacao;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -15,10 +20,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import org.financeiro.business.IMovimentacaoBusiness;
-import org.financeiro.dto.MovimentacaoDTO;
-import org.financeiro.entity.Movimentacao;
 
 @Path("/movimentacao")
 @ApplicationScoped
@@ -34,6 +35,17 @@ public class MovimentacaoResource {
 		if (movimentacao != null) {
 			Movimentacao criado = business.criaMovimentacao(new Movimentacao(movimentacao));
 			return Response.ok(criado).build();
+		}
+		return Response.status(400).entity("Informe todos os dados corretamente").build();
+	}
+
+	@PATCH
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response atualizaMovimentacao(Movimentacao movimentacao) {
+		Movimentacao atualizada = business.atualizaMovimentacao(movimentacao);
+		if (atualizada != null) {
+			return Response.ok(atualizada).build();
 		}
 		return Response.status(400).entity("Informe todos os dados corretamente").build();
 	}

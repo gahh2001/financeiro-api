@@ -9,6 +9,8 @@ public interface IMovimentacaoRepository {
 
 	Movimentacao criaMovimentacao(Movimentacao movimentacao);
 
+	Movimentacao atualizaMovimentacao(Movimentacao movimentacao);
+
 	Movimentacao listaMovimentacaoPorId(Long id);
 
 	List<Movimentacao> listaMovimentacaosPorIdContaEPeriodo(Long idUsuario, Date dataInicio, Date dataFim);

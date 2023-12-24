@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.repository.IContaRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class MovimentacaoBusiness implements IMovimentacaoBusiness {
@@ -27,17 +27,8 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	@Override
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
 		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoConta();
-		Double investimentoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoInvestimento();
 		Double novoSaldo;
-		Double novoInvestimento;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
-			case "INVESTIMENTO": {
-				novoSaldo = saldoAtual - movimentacao.getValor();
-				novoInvestimento = investimentoAtual + movimentacao.getValor();
-				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
-				contaRepository.atualizaInvestimento(novoInvestimento, movimentacao.getIdConta());
-				break;
-			}
 			case "NEGATIVO": {
 				novoSaldo = saldoAtual - movimentacao.getValor();
 				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
@@ -50,6 +41,29 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		}
 
 		return movimentacaoRepository.criaMovimentacao(movimentacao);
+	}
+
+	@Override
+	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada) {
+		if (movimentacaoAtualizada == null || movimentacaoAtualizada.getId() == null) {
+			return null;
+		}
+		Double saldoAtual = contaRepository.listaContaPorId(movimentacaoAtualizada.getIdConta()).getSaldoConta();
+		Double novoSaldo;
+		Double valorAntigoMovimentacao = this.movimentacaoRepository.
+			listaMovimentacaoPorId(movimentacaoAtualizada.getId()).getValor();
+		switch (movimentacaoAtualizada.getTipoMovimentacao().toUpperCase()) {
+			case "NEGATIVO": {
+				novoSaldo = saldoAtual + valorAntigoMovimentacao - movimentacaoAtualizada.getValor();
+				contaRepository.atualizaSaldoConta(novoSaldo, movimentacaoAtualizada.getIdConta());
+				break;
+			}
+			default: {
+				novoSaldo = saldoAtual - valorAntigoMovimentacao + movimentacaoAtualizada.getValor();
+				contaRepository.atualizaSaldoConta(novoSaldo, movimentacaoAtualizada.getIdConta());
+			}
+		}
+		return movimentacaoRepository.atualizaMovimentacao(movimentacaoAtualizada);
 	}
 
 	@Override
@@ -98,15 +112,15 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		Double novoSaldo;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
 			case "NEGATIVO": {
-					novoSaldo = saldoAtual + movimentacao.getValor();
-					contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
-					break;
-				}
-				default: {
-					novoSaldo = saldoAtual - movimentacao.getValor();
-					contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
-				}
+				novoSaldo = saldoAtual + movimentacao.getValor();
+				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
+				break;
 			}
+			default: {
+				novoSaldo = saldoAtual - movimentacao.getValor();
+				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
+			}
+		}
 		return movimentacaoRepository.removeMovimentacao(idMovimentacao);
 	}
 
