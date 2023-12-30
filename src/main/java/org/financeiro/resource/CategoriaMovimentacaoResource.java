@@ -5,7 +5,7 @@ import java.util.List;
 import org.financeiro.business.ICategoriaMovimentacaoBusiness;
 import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorMes;
+import org.financeiro.entity.SomaCategoriasPorMesDTO;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -63,7 +63,7 @@ public class CategoriaMovimentacaoResource {
 	@GET
 	@Path("/mes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<SomaCategoriasPorMes> listaCategoriasEValoresNoMes(
+	public List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(
 			@QueryParam("idConta") Long idConta, @QueryParam("dataMes") Long dataMes) {
 		return business.listaCategoriasEValoresNoMes(idConta, dataMes);
 	}

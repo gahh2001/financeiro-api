@@ -8,7 +8,7 @@ import java.util.List;
 import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Movimentacao;
-import org.financeiro.entity.SomaCategoriasPorMes;
+import org.financeiro.entity.SomaCategoriasPorMesDTO;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 import org.financeiro.repository.ISomaCategoriasPorMesRepository;
@@ -71,7 +71,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<SomaCategoriasPorMes> listaCategoriasEValoresNoMes(Long idConta, Long dataMes) {
+	public List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Long dataMes) {
 		Date data = new Date(dataMes);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(data);
@@ -85,6 +85,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		Date fimMes = calendar.getTime();
 
-		return this.somaCategoriasPorMesRepository.listaCategoriasEValoresNoMes(idConta, inicioMes, fimMes);
+		return this.somaCategoriasPorMesRepository
+			.listaCategoriasEValoresNoMes(idConta, inicioMes, fimMes);
 	}
 }

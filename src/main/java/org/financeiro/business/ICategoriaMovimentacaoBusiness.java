@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorMes;
+import org.financeiro.entity.SomaCategoriasPorMesDTO;
 
 public interface ICategoriaMovimentacaoBusiness {
 
@@ -20,5 +20,5 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta);
 
-	List<SomaCategoriasPorMes> listaCategoriasEValoresNoMes(Long idConta, Long dataMes);
+	List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Long dataMes);
 }
