@@ -2,19 +2,19 @@ package org.financeiro.repository;
 
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
-
 import org.financeiro.entity.CategoriaMovimentacao;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class CategoriaMovimentacaoRepository implements PanacheRepository<CategoriaMovimentacao>, ICategoriaMovimentacaoRepository {
+public class CategoriaMovimentacaoRepository
+		implements PanacheRepository<CategoriaMovimentacao>, ICategoriaMovimentacaoRepository {
 
 	@Override
 	@Transactional
-	public CategoriaMovimentacao criaCategoriaMovimentacao( CategoriaMovimentacao categoria) {
+	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
 		persist(categoria);
 		return categoria;
 	}
@@ -33,8 +33,10 @@ public class CategoriaMovimentacaoRepository implements PanacheRepository<Catego
 
 	@Override
 	@Transactional
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta) {
-		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.idConta = ?2", tipoMovimentacao, idconta);
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
+			Long idconta) {
+		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.idConta = ?2",
+				tipoMovimentacao, idconta);
 	}
 
 	@Override
@@ -49,7 +51,4 @@ public class CategoriaMovimentacaoRepository implements PanacheRepository<Catego
 		update("update CategoriaMovimentacao t set t.nomeCategoria = ?1 where t.id = ?2", novoNome, idCategoria);
 		return findById(idCategoria);
 	}
-
-
-
 }
