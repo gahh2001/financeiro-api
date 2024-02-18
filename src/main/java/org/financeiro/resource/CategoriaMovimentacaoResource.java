@@ -48,7 +48,8 @@ public class CategoriaMovimentacaoResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(@PathParam(value = "id") Long idCategoria) {
+	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(
+			@PathParam(value = "id") Long idCategoria) {
 		return business.listaCategoriaMovimentacaoPorId(idCategoria);
 	}
 
@@ -56,16 +57,22 @@ public class CategoriaMovimentacaoResource {
 	@Path("/tipo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
-			@QueryParam("idConta") Long idConta, @QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+			@QueryParam("idConta") Long idConta,
+			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
 		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, idConta);
 	}
 
 	@GET
-	@Path("/mes")
+	@Path("/soma-categorias")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(
-			@QueryParam("idConta") Long idConta, @QueryParam("dataMes") Long dataMes) {
-		return business.listaCategoriasEValoresNoMes(idConta, dataMes);
+	public Response listaSomaCategorias(
+			@QueryParam("idConta") Long idConta,
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim,
+			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+		List<SomaCategoriasPorMesDTO> list = business
+			.listaSomaPorCategoria(idConta, dataInicio, dataFim, tipoMovimentacao);
+		return Response.ok(list).build();
 	}
 
 	@PUT
@@ -87,7 +94,7 @@ public class CategoriaMovimentacaoResource {
 			return Response.ok(apagada).build();
 		}
 		return Response.status(406).entity("Não é possível apagar esta categoria,"
-				+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
+			+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
 
 	}
 

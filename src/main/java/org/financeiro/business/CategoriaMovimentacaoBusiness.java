@@ -1,7 +1,6 @@
 package org.financeiro.business;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,21 +70,9 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Long dataMes) {
-		Date data = new Date(dataMes);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(data);
-
-		// primeiro dia do mês
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		Date inicioMes = calendar.getTime();
-
-		// último dia do mês
-		calendar.add(Calendar.MONTH, 1);
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		Date fimMes = calendar.getTime();
-
+	public List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+			Long dataFim, String tipoMovimentacao) {
 		return this.somaCategoriasPorMesRepository
-			.listaCategoriasEValoresNoMes(idConta, inicioMes, fimMes);
+			.listaSomaPorCategoria(idConta, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
 	}
 }

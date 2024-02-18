@@ -7,5 +7,6 @@ import org.financeiro.entity.SomaCategoriasPorMesDTO;
 
 public interface ISomaCategoriasPorMesRepository {
 
-	List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Date dataInicio, Date dataFim);
+	List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Date dataInicio,
+		Date dataFim, String tipoMovimentacao);
 }

@@ -15,13 +15,16 @@ public class SomaCategoriasPorMesRepository
 
 	@Override
 	@Transactional
-	public List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Date dataInicio, Date dataFim) {
+	public List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Date dataInicio,
+			Date dataFim, String tipoMovimentacao) {
 		return list("select new org.financeiro.entity.SomaCategoriasPorMesDTO("
-				+ "categoria.nomeCategoria, sum(movimentacao.valor) as somaMovimentacao, "
-				+ "movimentacao.tipoMovimentacao) "
+				+ "categoria.nomeCategoria, sum(movimentacao.valor) as somaMovimentacao) "
 				+ "from Movimentacao movimentacao "
 				+ "join CategoriaMovimentacao categoria on movimentacao.idCategoriaMovimentacao = categoria.id "
-				+ "where movimentacao.dataMovimentacao between ?1 and ?2 "
-				+ "group by categoria.nomeCategoria, movimentacao.tipoMovimentacao", dataInicio, dataFim);
+				+ "where movimentacao.idConta = ?1 "
+				+ "and movimentacao.dataMovimentacao between ?2 and ?3 "
+				+ "and movimentacao.tipoMovimentacao = ?4 "
+				+ "group by categoria.nomeCategoria",
+			idConta, dataInicio, dataFim, tipoMovimentacao);
 	}
 }

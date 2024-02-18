@@ -20,5 +20,6 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta);
 
-	List<SomaCategoriasPorMesDTO> listaCategoriasEValoresNoMes(Long idConta, Long dataMes);
+	List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+		Long dataFim, String tipoMovimentacao);
 }
