@@ -1,12 +1,5 @@
 package org.financeiro.resource;
 
-import java.util.List;
-
-import org.financeiro.business.ICategoriaMovimentacaoBusiness;
-import org.financeiro.dto.CategoriaMovimentacaoDTO;
-import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorMesDTO;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -20,6 +13,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import org.financeiro.business.ICategoriaMovimentacaoBusiness;
+import org.financeiro.dto.CategoriaMovimentacaoDTO;
+import org.financeiro.entity.CategoriaMovimentacao;
+import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
+
+
 
 @Path("/categoria-movimentacao")
 @ApplicationScoped
@@ -70,8 +70,21 @@ public class CategoriaMovimentacaoResource {
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
-		List<SomaCategoriasPorMesDTO> list = business
+		List<SomaCategoriasPorPeriodoDTO> list = business
 			.listaSomaPorCategoria(idConta, dataInicio, dataFim, tipoMovimentacao);
+		return Response.ok(list).build();
+	}
+
+	@GET
+	@Path("/soma-categorias-meses")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listaSomaCategoriasPorMes(
+			@QueryParam("idConta") Long idConta,
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim,
+			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+		List<SomaCategoriasPorPeriodoDTO> list = business
+			.listaSomaPorCategoriaEMeses(idConta, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
 	}
 

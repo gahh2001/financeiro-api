@@ -1,19 +1,19 @@
 package org.financeiro.business;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Movimentacao;
-import org.financeiro.entity.SomaCategoriasPorMesDTO;
+import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
-import org.financeiro.repository.ISomaCategoriasPorMesRepository;
+import org.financeiro.repository.ISomaCategoriasPorPeriodoRepository;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+
 
 @ApplicationScoped
 public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusiness {
@@ -23,7 +23,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	@Inject
 	IMovimentacaoRepository repositoryMovimentacao;
 	@Inject
-	ISomaCategoriasPorMesRepository somaCategoriasPorMesRepository;
+	ISomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
 
 	@Override
 	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
@@ -70,9 +70,17 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
 		return this.somaCategoriasPorMesRepository
 			.listaSomaPorCategoria(idConta, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
+	}
+
+	@Override
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Long dataInicio,
+			Long dataFim, String tipoMovimentacao) {
+		return this.somaCategoriasPorMesRepository
+			.listaSomaPorCategoriaEMeses(idConta, new Date(dataInicio),
+				new Date(dataFim), tipoMovimentacao);
 	}
 }

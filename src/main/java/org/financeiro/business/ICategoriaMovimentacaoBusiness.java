@@ -1,10 +1,10 @@
 package org.financeiro.business;
 
 import java.util.List;
-
 import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorMesDTO;
+import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
+
 
 public interface ICategoriaMovimentacaoBusiness {
 
@@ -20,6 +20,9 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta);
 
-	List<SomaCategoriasPorMesDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+		Long dataFim, String tipoMovimentacao);
+	
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
 }
