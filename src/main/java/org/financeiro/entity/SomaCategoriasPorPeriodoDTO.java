@@ -1,23 +1,23 @@
 package org.financeiro.entity;
 
+import java.util.Date;
+
 public class SomaCategoriasPorPeriodoDTO {
 
 	private String nomeCategoria;
 	private Double somaMovimentacao;
-	private Integer mes;
-	private Integer ano;
+	private Date data;
 
 	public SomaCategoriasPorPeriodoDTO(String nomeCategoria, Double somaMovimentacao) {
 		this.nomeCategoria = nomeCategoria;
 		this.somaMovimentacao = formatDouble(somaMovimentacao);
 	}
 
-	public SomaCategoriasPorPeriodoDTO( String nomeCategoria, Integer mes,
-			Integer ano, Double somaMovimentacao ) {
+	public SomaCategoriasPorPeriodoDTO( String nomeCategoria,
+			Date data, Double somaMovimentacao ) {
 		this.nomeCategoria = nomeCategoria;
 		this.somaMovimentacao = somaMovimentacao;
-		this.mes = mes;
-		this.ano = ano;
+		this.data = data;
 	}
 
 	public String getNomeCategoria() {
@@ -28,12 +28,8 @@ public class SomaCategoriasPorPeriodoDTO {
 		return somaMovimentacao;
 	}
 
-	public Integer getMes() {
-		return mes;
-	}
-
-	public Integer getAno() {
-		return ano;
+	public Date getData() {
+		return data;
 	}
 
 	private Double formatDouble(Double value) {

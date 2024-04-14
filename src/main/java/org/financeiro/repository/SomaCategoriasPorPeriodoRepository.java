@@ -7,12 +7,6 @@ import java.util.Date;
 import java.util.List;
 import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 
-
-
-
-
-
-
 @ApplicationScoped
 public class SomaCategoriasPorPeriodoRepository
 		implements PanacheRepository<SomaCategoriasPorPeriodoDTO>, ISomaCategoriasPorPeriodoRepository {
@@ -36,13 +30,13 @@ public class SomaCategoriasPorPeriodoRepository
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Date dataInicio,
 			Date dataFim, String tipoMovimentacao) {
-		return list("SELECT new org.financeiro.entity.SomaCategoriasPorPeriodoDTO ("
-			+ "cm.nomeCategoria, EXTRACT(MONTH FROM m.dataMovimentacao) "
-			+ "AS mes, EXTRACT(YEAR FROM m.dataMovimentacao) AS ano, SUM(m.valor) AS "
-			+ "somaMovimentacao) FROM Movimentacao m JOIN CategoriaMovimentacao cm ON "
-			+ "m.idCategoriaMovimentacao = cm.id WHERE m.idConta = ?1 and m.dataMovimentacao "
-			+ "BETWEEN ?2 AND ?3 and m.tipoMovimentacao = ?4 GROUP BY cm.nomeCategoria, "
-			+ "EXTRACT(MONTH FROM m.dataMovimentacao), EXTRACT(YEAR FROM m.dataMovimentacao)",
-			idConta, dataInicio, dataFim, tipoMovimentacao);
+		List<SomaCategoriasPorPeriodoDTO> teste =
+			list("SELECT new org.financeiro.entity.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
+				+ "m.dataMovimentacao as data, SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN "
+				+ "CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE m.idConta = "
+				+ "?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 AND m.tipoMovimentacao = ?4 GROUP BY "
+				+ "cm.nomeCategoria, m.dataMovimentacao ORDER BY m.dataMovimentacao ASC",
+				idConta, dataInicio, dataFim, tipoMovimentacao);
+		return teste;
 	}
 }
