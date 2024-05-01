@@ -1,15 +1,19 @@
 package org.financeiro.entity;
 
-import jakarta.persistence.Entity;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class Conta extends PanacheEntity {
 
 	private Double saldoConta;
 	private Double saldoInvestimento;
-	private Long idUsuario;
+	private String googleId;
+	private String primeiroNome;
+	private String sobrenome;
+	private String nome;
+	private String email;
+	private String foto;
 
 	public Conta() {
 	}
@@ -17,7 +21,6 @@ public class Conta extends PanacheEntity {
 	public Conta(Double saldo, Double investimento, Long idUsuario) {
 		this.saldoConta = saldo;
 		this.saldoInvestimento = investimento;
-		this.idUsuario = idUsuario;
 	}
 
 	public Double getSaldoConta() {
@@ -36,12 +39,52 @@ public class Conta extends PanacheEntity {
 		this.saldoInvestimento = investimento;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public String getGoogleId() {
+		return googleId;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setGoogleId( String googleId ) {
+		this.googleId = googleId;
+	}
+
+	public String getPrimeiroNome() {
+		return primeiroNome;
+	}
+
+	public void setPrimeiroNome( String firstName ) {
+		this.primeiroNome = firstName;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome( String secondName ) {
+		this.sobrenome = secondName;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome( String name ) {
+		this.nome = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail( String email ) {
+		this.email = email;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto( String picture ) {
+		this.foto = picture;
 	}
 
 }

@@ -1,13 +1,10 @@
 package org.financeiro.repository;
 
-import java.util.List;
-
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-
+import java.util.List;
 import org.financeiro.entity.Conta;
-
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
 public class ContaRepository implements IContaRepository, PanacheRepository<Conta>{
@@ -21,14 +18,28 @@ public class ContaRepository implements IContaRepository, PanacheRepository<Cont
 
 	@Override
 	@Transactional
+	public Conta updateAccount(Conta conta) {
+		Conta existente = this.getAccountByGoogleId(conta.getGoogleId());
+		existente.setEmail(conta.getEmail());
+		existente.setFoto(conta.getFoto());
+		existente.setNome(conta.getNome());
+		existente.setPrimeiroNome(conta.getPrimeiroNome());
+		existente.setSobrenome(conta.getSobrenome());
+		this.persistAndFlush(existente);
+		return conta;
+	}
+
+	@Override
+	@Transactional
 	public Conta listaContaPorId(Long idConta) {
 		return this.findById(idConta);
 	}
 
 	@Override
 	@Transactional
-	public List<Conta> listaContaPorIdUsuario(Long idUsuario) {
-		return list("select t from Conta t where t.idUsuario = ?1", idUsuario);
+	public Conta getAccountByGoogleId(String id) {
+		List<Conta> conta = list("select t from Conta t where t.googleId = ?1", id);
+		return conta == null || conta.isEmpty() ? null : conta.get(0);
 	}
 
 	@Override
