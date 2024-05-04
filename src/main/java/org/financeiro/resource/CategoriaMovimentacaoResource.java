@@ -15,9 +15,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.financeiro.business.ICategoriaMovimentacaoBusiness;
-import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
+import org.financeiro.exceptions.NonExistentAccount;
 
 @Path("/categoria-movimentacao")
 @ApplicationScoped
@@ -31,16 +31,21 @@ public class CategoriaMovimentacaoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
 		if (categoria != null) {
-			CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
-			return Response.ok(criada).build();
+			try {
+				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
+				return Response.ok(criada).build();
+			} catch ( NonExistentAccount e ) {
+				return Response.status(400)
+					.entity(e.getMessage()).build();
+			}
 		}
-		return Response.status(400).entity("Informe todos os dados corretamente").build();
+		return null;
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(@QueryParam("googleId") String googleId) {
-		return business.listaCategoriasMovimentacao(googleId);
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(@QueryParam("googleId") String googleId) {
+		return business.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
 	@GET

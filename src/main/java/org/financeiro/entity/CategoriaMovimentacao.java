@@ -10,16 +10,16 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	private Long id;
 	private String tipoMovimentacao;
 	private String nomeCategoria;
-	private Long idConta;
-	
+	private String googleId;
+
 	public CategoriaMovimentacao() {
 	}
 	
-	public CategoriaMovimentacao(Long id, String tipoMovimentacao, String nomeCategoria, Long idConta) {
+	public CategoriaMovimentacao(Long id, String tipoMovimentacao, String nomeCategoria, String googleId) {
 		this.id = id;
 		this.tipoMovimentacao = tipoMovimentacao;
 		this.nomeCategoria = nomeCategoria;
-		this.idConta = idConta;
+		this.googleId = googleId;
 	}
 
 	public Long getId() {
@@ -46,13 +46,11 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		this.nomeCategoria = nomeCategoria;
 	}
 
-	public Long getIdConta() {
-		return idConta;
+	public String getGoogleId() {
+		return googleId;
 	}
 
-	public void setIdConta(Long idconta) {
-		this.idConta = idconta;
+	public void setGoogleId( String googleId ) {
+		this.googleId = googleId;
 	}
-
-	
 }

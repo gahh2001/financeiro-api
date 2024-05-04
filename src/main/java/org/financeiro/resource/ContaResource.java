@@ -9,19 +9,20 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.financeiro.business.IContaBusiness;
 import org.financeiro.entity.Conta;
-import org.financeiro.repository.IContaRepository;
+
 
 @Path("/conta")
 public class ContaResource {
 
 	@Inject
-	IContaRepository repository;
+	IContaBusiness contaBusiness;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaContaPorId(@QueryParam(value = "googleId") String googleId) {
-		Conta encontrada = repository.getAccountByGoogleId(googleId);
+		Conta encontrada = this.contaBusiness.getAccountByGoogleId(googleId);
 		if (encontrada != null) {
 			return Response.ok(encontrada).build();
 		}
@@ -31,6 +32,6 @@ public class ContaResource {
 	@DELETE
 	@Path("/{id}")
 	public void removeConta(@PathParam(value = "id") Long idConta) {
-		repository.removeConta(idConta);
+		this.contaBusiness.removeConta(idConta);
 	}
 }

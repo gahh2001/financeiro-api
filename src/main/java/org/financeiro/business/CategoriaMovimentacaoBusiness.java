@@ -2,22 +2,22 @@ package org.financeiro.business;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
+import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
+import org.financeiro.exceptions.NonExistentAccount;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 import org.financeiro.repository.ISomaCategoriasPorPeriodoRepository;
 
-
-
 @ApplicationScoped
 public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusiness {
 
+	@Inject
+	IContaBusiness contaBusiness;
 	@Inject
 	ICategoriaMovimentacaoRepository repository;
 	@Inject
@@ -26,19 +26,17 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	ISomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
 
 	@Override
-	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
+	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount {
+		Conta existente = this.contaBusiness.getAccountByGoogleId(categoria.getGoogleId());
+		if (existente == null) {
+			throw new NonExistentAccount(categoria.getGoogleId());
+		}
 		return repository.criaCategoriaMovimentacao(categoria);
 	}
 
 	@Override
-	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(String googleId) {
-		List<CategoriaMovimentacao> categorias = repository.listaCategoriasMovimentacao(googleId);
-		List<CategoriaMovimentacaoDTO> categoriasDTO = new ArrayList<>();
-		categorias.forEach(categoria -> {
-			categoriasDTO.add(new CategoriaMovimentacaoDTO(categoria.getId(), categoria.getTipoMovimentacao(),
-					categoria.getNomeCategoria(), categoria.getIdConta()));
-		});
-		return categoriasDTO;
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId) {
+		return this.repository.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
 	@Override

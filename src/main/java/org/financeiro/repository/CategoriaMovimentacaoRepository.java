@@ -1,12 +1,12 @@
 package org.financeiro.repository;
 
-import java.util.List;
-
-import org.financeiro.entity.CategoriaMovimentacao;
-
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import java.util.List;
+import org.financeiro.entity.CategoriaMovimentacao;
+
+
 
 @ApplicationScoped
 public class CategoriaMovimentacaoRepository
@@ -21,8 +21,8 @@ public class CategoriaMovimentacaoRepository
 
 	@Override
 	@Transactional
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(String googleId) {
-		return list("select t from CategoriaMovimentacao t where t.idConta = ?1", googleId);
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId) {
+		return list("select t from CategoriaMovimentacao t where t.googleId = ?1", googleId);
 	}
 
 	@Override

@@ -1,14 +1,13 @@
 package org.financeiro.business;
 
 import java.util.List;
-import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
-
+import org.financeiro.exceptions.NonExistentAccount;
 
 public interface ICategoriaMovimentacaoBusiness {
 
-	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria);
+	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount;
 
 	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria);
 
@@ -16,7 +15,7 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria);
 
-	List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(String googleId);
+	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId);
 
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, String googleId);
 
