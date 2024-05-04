@@ -8,7 +8,6 @@ public interface IContaRepository {
 	Conta updateAccount(Conta conta);
 	Conta listaContaPorId(Long idConta);
 	Conta getAccountByGoogleId(String id);
-	void removeConta(Long idConta);
-	void atualizaSaldoConta(Double valorMovimentacao, Long idConta);
-	void atualizaInvestimento(double novoInvestimento, Long idConta);
+	void atualizaSaldoConta(Double valorMovimentacao, String googleId);
+	void atualizaInvestimento(double novoInvestimento, String googleId);
 }

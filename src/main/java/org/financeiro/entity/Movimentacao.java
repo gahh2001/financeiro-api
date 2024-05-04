@@ -1,45 +1,23 @@
 package org.financeiro.entity;
 
-import java.util.Date;
-
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
-import org.financeiro.dto.MovimentacaoDTO;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import java.util.Date;
 
 @Entity
 public class Movimentacao extends PanacheEntity {
 
 	private Long id;
-	private Long idConta;
 	private Double valor;
 	@Column(columnDefinition = "DATE")
 	private Date dataMovimentacao;
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
 	private String descricaoMovimentacao;
+	private String googleId;
 
 	public Movimentacao() {
-	}
-
-	public Movimentacao(MovimentacaoDTO movimentacaoDTO) {
-		this.id = movimentacaoDTO.getId();
-		this.idConta = movimentacaoDTO.getIdConta();
-		this.valor = movimentacaoDTO.getValor();
-		this.dataMovimentacao = movimentacaoDTO.getDataMovimentacao();
-		this.tipoMovimentacao = movimentacaoDTO.getTipoMovimentacao();
-		this.idCategoriaMovimentacao = movimentacaoDTO.getIdCategoriaMovimentacao();
-		this.descricaoMovimentacao = movimentacaoDTO.getDescricaoMovimentacao();
-	}
-
-	public Long getIdConta() {
-		return idConta;
-	}
-
-	public void setIdConta(Long usuario) {
-		this.idConta = usuario;
 	}
 
 	public Long getId() {
@@ -84,5 +62,13 @@ public class Movimentacao extends PanacheEntity {
 
 	public void setDescricaoMovimentacao(String descricaoMovimentacao) {
 		this.descricaoMovimentacao = descricaoMovimentacao;
+	}
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId( String googleId ) {
+		this.googleId = googleId;
 	}
 }

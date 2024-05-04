@@ -45,17 +45,12 @@ public class ContaBusiness implements IContaBusiness {
 	}
 
 	@Override
-	public void removeConta(Long idConta) {
-		this.contaRepository.removeConta(idConta);
+	public void atualizaSaldoConta(Double valorMovimentacao, String googleId) {
+		this.contaRepository.atualizaSaldoConta(valorMovimentacao, googleId);
 	}
 
 	@Override
-	public void atualizaSaldoConta(Double valorMovimentacao, Long idConta) {
-		this.contaRepository.atualizaSaldoConta(valorMovimentacao, idConta);
-	}
-
-	@Override
-	public void atualizaInvestimento(double novoInvestimento, Long idConta) {
-		this.contaRepository.atualizaInvestimento(novoInvestimento, idConta);
+	public void atualizaInvestimento(double novoInvestimento, String googleId) {
+		this.contaRepository.atualizaInvestimento(novoInvestimento, googleId);
 	}
 }

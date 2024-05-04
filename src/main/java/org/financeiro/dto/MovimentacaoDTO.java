@@ -7,7 +7,7 @@ import org.financeiro.entity.Movimentacao;
 public class MovimentacaoDTO {
 
 	private Long id;
-	private Long idConta;
+	private String googleId;
 	private Double valor;
 	private Date dataMovimentacao;
 	private String tipoMovimentacao;
@@ -17,7 +17,7 @@ public class MovimentacaoDTO {
 
 	public MovimentacaoDTO(Movimentacao movimentacao) {
 		this.id = movimentacao.getId();
-		this.idConta = movimentacao.getIdConta();
+		this.googleId = movimentacao.getGoogleId();
 		this.valor = movimentacao.getValor();
 		this.dataMovimentacao = movimentacao.getDataMovimentacao();
 		this.tipoMovimentacao = movimentacao.getTipoMovimentacao();
@@ -36,12 +36,12 @@ public class MovimentacaoDTO {
 		this.id = id;
 	}
 
-	public Long getIdConta() {
-		return idConta;
+	public String getGoogleId() {
+		return googleId;
 	}
 
-	public void setIdConta(Long idConta) {
-		this.idConta = idConta;
+	public void setGoogleId( String googleId ) {
+		this.googleId = googleId;
 	}
 
 	public Double getValor() {

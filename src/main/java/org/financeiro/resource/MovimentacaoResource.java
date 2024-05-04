@@ -26,14 +26,14 @@ import jakarta.ws.rs.core.Response;
 public class MovimentacaoResource {
 
 	@Inject
-	IMovimentacaoBusiness business;
+	IMovimentacaoBusiness movimentacaoBusiness;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criaMovimentacao(@QueryParam("googleId") String googleId, MovimentacaoDTO movimentacao) {
+	public Response criaMovimentacao(Movimentacao movimentacao) {
 		if (movimentacao != null) {
-			Movimentacao criado = business.criaMovimentacao(new Movimentacao(movimentacao), googleId);
+			Movimentacao criado = movimentacaoBusiness.criaMovimentacao(movimentacao);
 			return Response.ok(criado).build();
 		}
 		return Response.status(400).entity("Informe todos os dados corretamente").build();
@@ -42,8 +42,8 @@ public class MovimentacaoResource {
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizaMovimentacao(@QueryParam("googleId") String googleId, Movimentacao movimentacao) {
-		Movimentacao atualizada = business.atualizaMovimentacao(movimentacao, googleId);
+	public Response atualizaMovimentacao(Movimentacao movimentacao) {
+		Movimentacao atualizada = movimentacaoBusiness.atualizaMovimentacao(movimentacao);
 		if (atualizada != null) {
 			return Response.ok(atualizada).build();
 		}
@@ -56,7 +56,7 @@ public class MovimentacaoResource {
 			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
-		return business.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date(dataFim));
+		return movimentacaoBusiness.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date(dataFim));
 	}
 
 	@GET
@@ -67,7 +67,7 @@ public class MovimentacaoResource {
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao,
 			@QueryParam("dataInicio") String dataInicio,
 			@QueryParam("dataFim") String dataFim) {
-		return business.listaMovimentacoesPorTipoMovimentacao(googleId, tipoMovimentacao, dataInicio, dataFim);
+		return movimentacaoBusiness.listaMovimentacoesPorTipoMovimentacao(googleId, tipoMovimentacao, dataInicio, dataFim);
 	}
 
 	@GET
@@ -78,14 +78,14 @@ public class MovimentacaoResource {
 			@QueryParam("idCategoria") Long idCategoria,
 			@QueryParam("dataInicio") String dataInicio,
 			@QueryParam("dataFim") String dataFim) {
-		return business.listaMovimentacaoPorIdCategoria(googleId, idCategoria, dataInicio, dataFim);
+		return movimentacaoBusiness.listaMovimentacaoPorIdCategoria(googleId, idCategoria, dataInicio, dataFim);
 	}
 
 	@DELETE
 	@Path("/{id}")
 	public Response removeMovimentacao(@PathParam(value = "id") Long idMovimentacao,
 			@QueryParam("googleId") String googleId) {
-		Boolean deleted = business.removeMovimentacao(idMovimentacao, googleId);
+		Boolean deleted = movimentacaoBusiness.removeMovimentacao(idMovimentacao, googleId);
 		if (deleted) {
 			return Response.ok().build();
 		}

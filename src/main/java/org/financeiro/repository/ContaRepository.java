@@ -44,19 +44,13 @@ public class ContaRepository implements IContaRepository, PanacheRepository<Cont
 
 	@Override
 	@Transactional
-	public void removeConta(Long idConta) {
-		deleteById(idConta);
+	public void atualizaSaldoConta(Double novoSaldo, String googleId) {
+		update("update Conta t set t.saldoConta = ?1 where t.googleId = ?2 ", novoSaldo, googleId);
 	}
 
 	@Override
 	@Transactional
-	public void atualizaSaldoConta(Double novoSaldo, Long idConta) {
-		update("update Conta t set t.saldoConta = ?1 where t.id = ?2 ", novoSaldo, idConta);
-	}
-
-	@Override
-	@Transactional
-	public void atualizaInvestimento(double novoInvestimento, Long idConta) {
-		update("update Conta t set t.saldoInvestimento = ?1 where t.id = ?2", novoInvestimento, idConta);
+	public void atualizaInvestimento(double novoInvestimento, String googleId) {
+		update("update Conta t set t.saldoInvestimento = ?1 where t.googleId = ?2", novoInvestimento, googleId);
 	}
 }

@@ -7,9 +7,9 @@ import org.financeiro.entity.Movimentacao;
 
 public interface IMovimentacaoBusiness {
 
-	Movimentacao criaMovimentacao(Movimentacao movimentacao, String googleId);
+	Movimentacao criaMovimentacao(Movimentacao movimentacao);
 
-	Movimentacao atualizaMovimentacao(Movimentacao movimentacao, String googleId);
+	Movimentacao atualizaMovimentacao(Movimentacao movimentacao);
 
 	List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim);
 
