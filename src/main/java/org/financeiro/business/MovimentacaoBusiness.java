@@ -1,18 +1,21 @@
 package org.financeiro.business;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.financeiro.dto.MovimentacaoDTO;
+import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.repository.IContaRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+
+
+
 
 @ApplicationScoped
 public class MovimentacaoBusiness implements IMovimentacaoBusiness {
@@ -25,7 +28,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	ICategoriaMovimentacaoBusiness categoriaMovimentacaobusiness;
 
 	@Override
-	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
+	public Movimentacao criaMovimentacao(Movimentacao movimentacao, String googleId) {
 		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoConta();
 		Double novoSaldo;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
@@ -44,7 +47,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	}
 
 	@Override
-	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada) {
+	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada, String googleId) {
 		if (movimentacaoAtualizada == null || movimentacaoAtualizada.getId() == null) {
 			return null;
 		}
@@ -67,14 +70,9 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	}
 
 	@Override
-	public Movimentacao listaMovimentacaoPorId(Long id) {
-		return movimentacaoRepository.listaMovimentacaoPorId(id);
-	}
-
-	@Override
-	public List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(Long idConta, Date dataInicio, Date dataFim) {
+	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim) {
 		List<Movimentacao> movimentacoes = movimentacaoRepository
-				.listaMovimentacaosPorIdContaEPeriodo(idConta, dataInicio, dataFim);
+				.listaMovimentacoesPorIdContaEPeriodo(googleId, dataInicio, dataFim);
 		return movimentacoes.stream()
 				.map(movimentacao -> {
 					MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
@@ -87,28 +85,33 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao,
+	public List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			String dataInicio, String dataFim) {
-		return movimentacaoRepository.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao,
+		return movimentacaoRepository.listaMovimentacoesPorTipoMovimentacao(googleId, tipoMovimentacao,
 				stringToDate(dataInicio), stringToDate(dataFim));
 	};
 
 	@Override
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, String dataInicio,
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
 			String dataFim) {
-		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(idConta, idCategoria,
+		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(googleId, idCategoria,
 				stringToDate(dataInicio), stringToDate(dataFim));
 	};
 
 	@Override
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria) {
-		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(idConta, idCategoria);
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria) {
+		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(googleId, idCategoria);
 	};
 
 	@Override
-	public Boolean removeMovimentacao(Long idMovimentacao) {
-		Movimentacao movimentacao = movimentacaoRepository.listaMovimentacaoPorId(idMovimentacao);
-		Double saldoAtual = contaRepository.listaContaPorId(movimentacao.getIdConta()).getSaldoConta();
+	public Boolean removeMovimentacao(Long idMovimentacao, String googleId) {
+		Conta conta = this.contaRepository.getAccountByGoogleId(googleId);
+		if (conta == null) {
+			return false;
+		}
+		Movimentacao movimentacao = movimentacaoRepository
+			.listaMovimentacaoPorIdEConta(idMovimentacao, googleId);
+		Double saldoAtual = conta.getSaldoConta();
 		Double novoSaldo;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
 			case "NEGATIVO": {
@@ -121,7 +124,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 				contaRepository.atualizaSaldoConta(novoSaldo, movimentacao.getIdConta());
 			}
 		}
-		return movimentacaoRepository.removeMovimentacao(idMovimentacao);
+		return movimentacaoRepository.removeMovimentacao(idMovimentacao, googleId);
 	}
 
 	private Date stringToDate(String dataString) {

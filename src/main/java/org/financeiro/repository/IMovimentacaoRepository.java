@@ -2,8 +2,8 @@ package org.financeiro.repository;
 
 import java.util.Date;
 import java.util.List;
-
 import org.financeiro.entity.Movimentacao;
+
 
 public interface IMovimentacaoRepository {
 
@@ -13,15 +13,17 @@ public interface IMovimentacaoRepository {
 
 	Movimentacao listaMovimentacaoPorId(Long id);
 
-	List<Movimentacao> listaMovimentacaosPorIdContaEPeriodo(Long idUsuario, Date dataInicio, Date dataFim);
+	Movimentacao listaMovimentacaoPorIdEConta(Long id, String googleId);
 
-	List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao, Date dataInicio,
+	List<Movimentacao> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim);
+
+	List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao, Date dataInicio,
 			Date dataFim);
 
-	List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, Date dataInicio, Date dataFim);
+	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, Date dataInicio, Date dataFim);
 
-	List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria);
+	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria);
 
-	Boolean removeMovimentacao(Long idMovimentacao);
+	Boolean removeMovimentacao(Long idMovimentacao, String googleId);
 
 }

@@ -31,9 +31,9 @@ public class MovimentacaoResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criaMovimentacao(MovimentacaoDTO movimentacao) {
+	public Response criaMovimentacao(@QueryParam("googleId") String googleId, MovimentacaoDTO movimentacao) {
 		if (movimentacao != null) {
-			Movimentacao criado = business.criaMovimentacao(new Movimentacao(movimentacao));
+			Movimentacao criado = business.criaMovimentacao(new Movimentacao(movimentacao), googleId);
 			return Response.ok(criado).build();
 		}
 		return Response.status(400).entity("Informe todos os dados corretamente").build();
@@ -42,8 +42,8 @@ public class MovimentacaoResource {
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizaMovimentacao(Movimentacao movimentacao) {
-		Movimentacao atualizada = business.atualizaMovimentacao(movimentacao);
+	public Response atualizaMovimentacao(@QueryParam("googleId") String googleId, Movimentacao movimentacao) {
+		Movimentacao atualizada = business.atualizaMovimentacao(movimentacao, googleId);
 		if (atualizada != null) {
 			return Response.ok(atualizada).build();
 		}
@@ -51,47 +51,41 @@ public class MovimentacaoResource {
 	}
 
 	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Movimentacao listaMovimentacaosPorId(@PathParam(value = "id") Long idMovimentacao) {
-		return business.listaMovimentacaoPorId(idMovimentacao);
-	}
-
-	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
-		return business.listaMovimentacaosPorIdContaEPeriodo(idConta, new Date(dataInicio), new Date(dataFim));
+		return business.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date(dataFim));
 	}
 
 	@GET
 	@Path("/tipoMovimentacao")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao,
 			@QueryParam("dataInicio") String dataInicio,
 			@QueryParam("dataFim") String dataFim) {
-		return business.listaMovimentacaosPorTipoMovimentacao(idConta, tipoMovimentacao, dataInicio, dataFim);
+		return business.listaMovimentacoesPorTipoMovimentacao(googleId, tipoMovimentacao, dataInicio, dataFim);
 	}
 
 	@GET
 	@Path("/categoria")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Movimentacao> listaMovimentacaoPorIdCategoria(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("idCategoria") Long idCategoria,
 			@QueryParam("dataInicio") String dataInicio,
 			@QueryParam("dataFim") String dataFim) {
-		return business.listaMovimentacaoPorIdCategoria(idConta, idCategoria, dataInicio, dataFim);
+		return business.listaMovimentacaoPorIdCategoria(googleId, idCategoria, dataInicio, dataFim);
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response removeMovimentacao(@PathParam(value = "id") Long idMovimentacao) {
-		Boolean deleted = business.removeMovimentacao(idMovimentacao);
+	public Response removeMovimentacao(@PathParam(value = "id") Long idMovimentacao,
+			@QueryParam("googleId") String googleId) {
+		Boolean deleted = business.removeMovimentacao(idMovimentacao, googleId);
 		if (deleted) {
 			return Response.ok().build();
 		}

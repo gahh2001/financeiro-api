@@ -14,7 +14,7 @@ public interface ICategoriaMovimentacaoRepository {
 
 	void removeCategoriaMovimentacao(Long idCategoria);
 
-	List<CategoriaMovimentacao> listaCategoriasMovimentacao(Long idConta);
+	List<CategoriaMovimentacao> listaCategoriasMovimentacao(String googleId);
 
-	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta);
+	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, String googleId);
 }

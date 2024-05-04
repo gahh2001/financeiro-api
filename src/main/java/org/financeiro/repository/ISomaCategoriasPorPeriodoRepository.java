@@ -7,8 +7,8 @@ import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 
 public interface ISomaCategoriasPorPeriodoRepository {
 
-	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(Long idConta, Date dataInicio,
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Date dataInicio,
 		Date dataFim, String tipoMovimentacao);
-	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Date dataInicio,
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Date dataInicio,
 		Date dataFim, String tipoMovimentacao);
 }

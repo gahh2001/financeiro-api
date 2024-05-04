@@ -21,8 +21,8 @@ public class CategoriaMovimentacaoRepository
 
 	@Override
 	@Transactional
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(Long idConta) {
-		return list("select t from CategoriaMovimentacao t where t.idConta = ?1", idConta);
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(String googleId) {
+		return list("select t from CategoriaMovimentacao t where t.idConta = ?1", googleId);
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class CategoriaMovimentacaoRepository
 	@Override
 	@Transactional
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
-			Long idconta) {
+			String googleId) {
 		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.idConta = ?2",
-				tipoMovimentacao, idconta);
+				tipoMovimentacao, googleId);
 	}
 
 	@Override

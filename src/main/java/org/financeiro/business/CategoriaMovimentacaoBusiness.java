@@ -31,8 +31,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(Long idConta) {
-		List<CategoriaMovimentacao> categorias = repository.listaCategoriasMovimentacao(idConta);
+	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(String googleId) {
+		List<CategoriaMovimentacao> categorias = repository.listaCategoriasMovimentacao(googleId);
 		List<CategoriaMovimentacaoDTO> categoriasDTO = new ArrayList<>();
 		categorias.forEach(categoria -> {
 			categoriasDTO.add(new CategoriaMovimentacaoDTO(categoria.getId(), categoria.getTipoMovimentacao(),
@@ -48,13 +48,13 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 
 	@Override
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
-			Long idconta) {
-		return repository.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, idconta);
+			String googleId) {
+		return repository.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
 	}
 
 	@Override
-	public CategoriaMovimentacao removeCategoriaMovimentacao(Long idConta, Long idCategoria) {
-		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao.listaMovimentacaoPorIdCategoria(idConta,
+	public CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria) {
+		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao.listaMovimentacaoPorIdCategoria(googleId,
 				idCategoria);
 		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria);
 		if (movimentacoesExistentes == null | movimentacoesExistentes.isEmpty()) {
@@ -70,17 +70,17 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
 		return this.somaCategoriasPorMesRepository
-			.listaSomaPorCategoria(idConta, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
+			.listaSomaPorCategoria(googleId, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
 	}
 
 	@Override
-	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
 		return this.somaCategoriasPorMesRepository
-			.listaSomaPorCategoriaEMeses(idConta, new Date(dataInicio),
+			.listaSomaPorCategoriaEMeses(googleId, new Date(dataInicio),
 				new Date(dataFim), tipoMovimentacao);
 	}
 }

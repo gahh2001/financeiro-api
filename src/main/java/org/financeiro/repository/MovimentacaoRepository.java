@@ -33,43 +33,51 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 
 	@Override
 	@Transactional
+	public Movimentacao listaMovimentacaoPorIdEConta(Long id, String googleId) {
+		List<Movimentacao> movimentacao = list(
+			"select m from  Movimentacao where t.id = ?1 and t.idConta = ?2", id, googleId);
+		return movimentacao != null && !movimentacao.isEmpty() ? movimentacao.get(0) : null;
+	}
+
+	@Override
+	@Transactional
 	public Movimentacao listaMovimentacaoPorId(Long id) {
-		return findById(id);
+		return this.findById(id);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaosPorIdContaEPeriodo(Long idConta, Date dataInicio, Date dataFim) {
+	public List<Movimentacao> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim) {
 		return list("select t from Movimentacao t where t.idConta = ?1 "
-				+ "and (t.dataMovimentacao between ?2 and ?3)", idConta, dataInicio, dataFim);
+				+ "and (t.dataMovimentacao between ?2 and ?3)", googleId, dataInicio, dataFim);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao,
+	public List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			Date dataInicio, Date dataFim) {
 		return list("select t from Movimentacao t where t.idConta = ?1 and t.tipoMovimentacao = ?2 "
-				+ "and (t.dataMovimentacao between ?3 and ?4)", idConta, tipoMovimentacao, dataInicio, dataFim);
+				+ "and (t.dataMovimentacao between ?3 and ?4)", googleId, tipoMovimentacao, dataInicio, dataFim);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, Date dataInicio,
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, Date dataInicio,
 			Date dataFim) {
 		return list("select t from Movimentacao t where t.idConta = ?1 and t.idCategoriaMovimentacao = ?2 "
-				+ "and (t.dataMovimentacao between ?3 and ?4)", idConta, idCategoria, dataInicio, dataFim);
+				+ "and (t.dataMovimentacao between ?3 and ?4)", googleId, idCategoria, dataInicio, dataFim);
 	}
 
 	@Override
 	@Transactional
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria) {
-		return list("select t from Movimentacao t where t.idConta = ?1 and t.idCategoriaMovimentacao = ?2", idConta,
-				idCategoria);
+	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria) {
+		return list("select t from Movimentacao t where t.idConta = ?1 and t.idCategoriaMovimentacao = ?2",
+			googleId, idCategoria);
 	}
 
 	@Override
 	@Transactional
-	public Boolean removeMovimentacao(Long idMovimentacao) {
+	public Boolean removeMovimentacao(Long idMovimentacao, String googleId) {
 		return deleteById(idMovimentacao);
 	}
 }

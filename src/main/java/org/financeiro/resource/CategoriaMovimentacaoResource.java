@@ -19,8 +19,6 @@ import org.financeiro.dto.CategoriaMovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 
-
-
 @Path("/categoria-movimentacao")
 @ApplicationScoped
 public class CategoriaMovimentacaoResource {
@@ -41,8 +39,8 @@ public class CategoriaMovimentacaoResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(@QueryParam("idConta") Long idConta) {
-		return business.listaCategoriasMovimentacao(idConta);
+	public List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(@QueryParam("googleId") String googleId) {
+		return business.listaCategoriasMovimentacao(googleId);
 	}
 
 	@GET
@@ -57,21 +55,21 @@ public class CategoriaMovimentacaoResource {
 	@Path("/tipo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
-		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, idConta);
+		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
 	}
 
 	@GET
 	@Path("/soma-categorias")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaCategorias(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorCategoria(idConta, dataInicio, dataFim, tipoMovimentacao);
+			.listaSomaPorCategoria(googleId, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
 	}
 
@@ -79,12 +77,12 @@ public class CategoriaMovimentacaoResource {
 	@Path("/soma-categorias-meses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaCategoriasPorMes(
-			@QueryParam("idConta") Long idConta,
+			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorCategoriaEMeses(idConta, dataInicio, dataFim, tipoMovimentacao);
+			.listaSomaPorCategoriaEMeses(googleId, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
 	}
 
@@ -101,8 +99,8 @@ public class CategoriaMovimentacaoResource {
 	@Path("/{idCategoria}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeCategoriaMovimentacao(@PathParam(value = "idCategoria") Long idCategoria,
-			@QueryParam("idConta") Long idConta) {
-		CategoriaMovimentacao apagada = business.removeCategoriaMovimentacao(idConta, idCategoria);
+			@QueryParam("googleId") String googleId) {
+		CategoriaMovimentacao apagada = business.removeCategoriaMovimentacao(googleId, idCategoria);
 		if (apagada != null) {
 			return Response.ok(apagada).build();
 		}

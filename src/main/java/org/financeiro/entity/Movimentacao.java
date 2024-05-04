@@ -46,10 +46,6 @@ public class Movimentacao extends PanacheEntity {
 		return id;
 	}
 
-	public void setId(Long idMovimentacao) {
-		this.id = idMovimentacao;
-	}
-
 	public Double getValor() {
 		return valor;
 	}

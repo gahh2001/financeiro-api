@@ -2,28 +2,25 @@ package org.financeiro.business;
 
 import java.util.Date;
 import java.util.List;
-
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 
 public interface IMovimentacaoBusiness {
 
-	Movimentacao criaMovimentacao(Movimentacao movimentacao);
+	Movimentacao criaMovimentacao(Movimentacao movimentacao, String googleId);
 
-	Movimentacao atualizaMovimentacao(Movimentacao movimentacao);
+	Movimentacao atualizaMovimentacao(Movimentacao movimentacao, String googleId);
 
-	Movimentacao listaMovimentacaoPorId(Long id);
+	List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim);
 
-	List<MovimentacaoDTO> listaMovimentacaosPorIdContaEPeriodo(Long idConta, Date dataInicio, Date dataFim);
-
-	List<Movimentacao> listaMovimentacaosPorTipoMovimentacao(Long idConta, String tipoMovimentacao,
+	List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			String dataInicio, String dataFim);
 
-	List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria, String dataInicio,
+	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
 			String dataFim);
 
-	List<Movimentacao> listaMovimentacaoPorIdCategoria(Long idConta, Long idCategoria);
+	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria);
 
-	Boolean removeMovimentacao(Long idMovimentacao);
+	Boolean removeMovimentacao(Long idMovimentacao, String googleId);
 
 }

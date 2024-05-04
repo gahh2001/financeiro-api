@@ -14,15 +14,15 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria);
 
-	CategoriaMovimentacao removeCategoriaMovimentacao(Long idConta, Long idCategoria);
+	CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria);
 
-	List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(Long idConta);
+	List<CategoriaMovimentacaoDTO> listaCategoriasMovimentacao(String googleId);
 
-	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, Long idconta);
+	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, String googleId);
 
-	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(Long idConta, Long dataInicio,
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
 	
-	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(Long idConta, Long dataInicio,
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
 }
