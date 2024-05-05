@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
+import org.financeiro.exceptions.NonExistentAccount;
 import org.financeiro.repository.IMovimentacaoRepository;
 
 @ApplicationScoped
@@ -20,62 +21,65 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	@Inject
 	IContaBusiness contaBusiness;
 	@Inject
-	ICategoriaMovimentacaoBusiness categoriaMovimentacaobusiness;
+	ICategoriaMovimentacaoBusiness categoriaBusiness;
 
 	@Override
-	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
-		Double saldoAtual = contaBusiness.getAccountByGoogleId(movimentacao.getGoogleId())
-			.getSaldoConta();
+	public Movimentacao criaMovimentacao(Movimentacao movimentacao) throws NonExistentAccount {
+		Conta existente = this.contaBusiness.getAccountByGoogleId(movimentacao.getGoogleId());
+		if (existente == null) {
+			throw new NonExistentAccount(movimentacao.getGoogleId());
+		}
 		Double novoSaldo;
 		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
 			case "NEGATIVO": {
-				novoSaldo = saldoAtual - movimentacao.getValor();
+				novoSaldo = existente.getSaldoConta() - movimentacao.getValor();
 				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
 				break;
 			}
 			default: {
-				novoSaldo = saldoAtual + movimentacao.getValor();
+				novoSaldo = existente.getSaldoConta() + movimentacao.getValor();
 				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
 			}
 		}
-
 		return movimentacaoRepository.criaMovimentacao(movimentacao);
 	}
 
 	@Override
-	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada) {
-		if (movimentacaoAtualizada == null || movimentacaoAtualizada.getId() == null) {
-			return null;
-		}
-		Double saldoAtual = contaBusiness.getAccountByGoogleId(movimentacaoAtualizada.getGoogleId())
-			.getSaldoConta();
-		Double novoSaldo;
-		Double valorAntigoMovimentacao = this.movimentacaoRepository.
-			listaMovimentacaoPorId(movimentacaoAtualizada.getId()).getValor();
-		switch (movimentacaoAtualizada.getTipoMovimentacao().toUpperCase()) {
-			case "NEGATIVO": {
-				novoSaldo = saldoAtual + valorAntigoMovimentacao - movimentacaoAtualizada.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacaoAtualizada.getGoogleId());
-				break;
+	public Movimentacao atualizaMovimentacao(Movimentacao atualizada) throws NonExistentAccount {
+		try {
+			Double saldoAtual = contaBusiness.getAccountByGoogleId(atualizada.getGoogleId())
+				.getSaldoConta();
+			Double novoSaldo;
+			Double valorAntigoMovimentacao = this.movimentacaoRepository.
+				listaMovimentacaoPorId(atualizada.getId()).getValor();
+			switch (atualizada.getTipoMovimentacao().toUpperCase()) {
+				case "NEGATIVO": {
+					novoSaldo = saldoAtual + valorAntigoMovimentacao - atualizada.getValor();
+					contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
+					break;
+				}
+				default: {
+					novoSaldo = saldoAtual - valorAntigoMovimentacao + atualizada.getValor();
+					contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
+				}
 			}
-			default: {
-				novoSaldo = saldoAtual - valorAntigoMovimentacao + movimentacaoAtualizada.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacaoAtualizada.getGoogleId());
-			}
+			return movimentacaoRepository.atualizaMovimentacao(atualizada);
+		} catch (NullPointerException e) {
+			throw new NonExistentAccount("");
 		}
-		return movimentacaoRepository.atualizaMovimentacao(movimentacaoAtualizada);
+		
 	}
 
 	@Override
-	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim) {
+	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Long dataInicio, Long dataFim) {
 		List<Movimentacao> movimentacoes = movimentacaoRepository
-				.listaMovimentacoesPorIdContaEPeriodo(googleId, dataInicio, dataFim);
+				.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date (dataFim));
 		return movimentacoes.stream()
 			.map(movimentacao -> {
 				MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
-				dto.setNomeCategoriaMovimentacao(categoriaMovimentacaobusiness
-						.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao())
-						.getNomeCategoria());
+				dto.setNomeCategoriaMovimentacao(categoriaBusiness
+					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId)
+					.getNomeCategoria());
 				return dto;
 			})
 			.collect(Collectors.toList());

@@ -9,7 +9,7 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount;
 
-	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria);
+	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId);
 
 	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria);
 

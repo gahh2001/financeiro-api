@@ -19,7 +19,7 @@ public class SomaCategoriasPorPeriodoRepository
 			+ "categoria.nomeCategoria, sum(movimentacao.valor) as somaMovimentacao) "
 			+ "from Movimentacao movimentacao "
 			+ "join CategoriaMovimentacao categoria on movimentacao.idCategoriaMovimentacao = categoria.id "
-			+ "where movimentacao.idConta = ?1 "
+			+ "where movimentacao.googleId = ?1 "
 			+ "and movimentacao.dataMovimentacao between ?2 and ?3 "
 			+ "and movimentacao.tipoMovimentacao = ?4 "
 			+ "group by categoria.nomeCategoria",
@@ -33,7 +33,7 @@ public class SomaCategoriasPorPeriodoRepository
 		List<SomaCategoriasPorPeriodoDTO> teste =
 			list("SELECT new org.financeiro.entity.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
 				+ "m.dataMovimentacao as data, SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN "
-				+ "CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE m.idConta = "
+				+ "CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = "
 				+ "?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 AND m.tipoMovimentacao = ?4 GROUP BY "
 				+ "cm.nomeCategoria, m.dataMovimentacao ORDER BY m.dataMovimentacao ASC",
 				googleId, dataInicio, dataFim, tipoMovimentacao);

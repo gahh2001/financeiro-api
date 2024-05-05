@@ -27,16 +27,18 @@ public class CategoriaMovimentacaoRepository
 
 	@Override
 	@Transactional
-	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria) {
-		return findById(idCategoria);
+	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId) {
+		List<CategoriaMovimentacao> categoria = list ("select c from CategoriaMovimentacao c "
+			+ "where c.id = ?1 and c.googleId = ?2", idCategoria, googleId);
+		return categoria != null && !categoria.isEmpty() ? categoria.get(0) : null;
 	}
 
 	@Override
 	@Transactional
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
 			String googleId) {
-		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.idConta = ?2",
-				tipoMovimentacao, googleId);
+		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.googleId = ?2",
+			tipoMovimentacao, googleId);
 	}
 
 	@Override

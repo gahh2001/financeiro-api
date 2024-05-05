@@ -8,7 +8,7 @@ public interface ICategoriaMovimentacaoRepository {
 
 	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria);
 
-	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria);
+	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId);
 
 	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria);
 

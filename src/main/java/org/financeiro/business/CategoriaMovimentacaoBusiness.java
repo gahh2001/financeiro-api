@@ -40,8 +40,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria) {
-		return repository.listaCategoriaMovimentacaoPorId(idCategoria);
+	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId) {
+		return repository.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	public CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria) {
 		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao.listaMovimentacaoPorIdCategoria(googleId,
 				idCategoria);
-		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria);
+		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 		if (movimentacoesExistentes == null | movimentacoesExistentes.isEmpty()) {
 			repository.removeCategoriaMovimentacao(idCategoria);
 			return paraApagar;

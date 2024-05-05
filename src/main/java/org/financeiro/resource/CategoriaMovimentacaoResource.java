@@ -44,7 +44,7 @@ public class CategoriaMovimentacaoResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacao(@QueryParam("googleId") String googleId) {
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(@QueryParam("googleId") String googleId) {
 		return business.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
@@ -52,8 +52,9 @@ public class CategoriaMovimentacaoResource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(
-			@PathParam(value = "id") Long idCategoria) {
-		return business.listaCategoriaMovimentacaoPorId(idCategoria);
+			@PathParam(value = "id") Long idCategoria,
+			@QueryParam("googleId") String googleId) {
+		return business.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 	}
 
 	@GET
@@ -111,7 +112,5 @@ public class CategoriaMovimentacaoResource {
 		}
 		return Response.status(406).entity("Não é possível apagar esta categoria,"
 			+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
-
 	}
-
 }
