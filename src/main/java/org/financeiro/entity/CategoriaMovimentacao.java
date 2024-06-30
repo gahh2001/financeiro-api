@@ -11,6 +11,8 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	private String tipoMovimentacao;
 	private String nomeCategoria;
 	private String googleId;
+	private String simbolo;
+	private String corSimbolo;
 
 	public CategoriaMovimentacao() {
 	}
@@ -52,5 +54,21 @@ public class CategoriaMovimentacao extends PanacheEntity{
 
 	public void setGoogleId( String googleId ) {
 		this.googleId = googleId;
+	}
+
+	public String getSimbolo() {
+		return simbolo;
+	}
+
+	public void setSimbolo( String simbolo ) {
+		this.simbolo = simbolo;
+	}
+
+	public String getCorSimbolo() {
+		return corSimbolo;
+	}
+
+	public void setCorSimbolo( String corSimbolo ) {
+		this.corSimbolo = corSimbolo;
 	}
 }

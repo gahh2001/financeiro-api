@@ -15,8 +15,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.financeiro.business.ICategoriaMovimentacaoBusiness;
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.exceptions.NonExistentAccount;
 
 @Path("/categoria-movimentacao")

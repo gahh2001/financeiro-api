@@ -1,8 +1,9 @@
 package org.financeiro.business;
 
 import java.util.List;
+
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.exceptions.NonExistentAccount;
 
 public interface ICategoriaMovimentacaoBusiness {

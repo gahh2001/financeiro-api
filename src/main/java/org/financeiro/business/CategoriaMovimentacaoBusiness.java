@@ -4,10 +4,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.Date;
 import java.util.List;
+
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
-import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.exceptions.NonExistentAccount;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
@@ -55,7 +56,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao.listaMovimentacaoPorIdCategoria(googleId,
 				idCategoria);
 		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria, googleId);
-		if (movimentacoesExistentes == null | movimentacoesExistentes.isEmpty()) {
+		if (movimentacoesExistentes == null || movimentacoesExistentes.isEmpty()) {
 			repository.removeCategoriaMovimentacao(idCategoria);
 			return paraApagar;
 		}

@@ -1,4 +1,4 @@
-package org.financeiro.entity;
+package org.financeiro.dto;
 
 import java.util.Date;
 

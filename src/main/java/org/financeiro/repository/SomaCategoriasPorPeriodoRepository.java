@@ -1,11 +1,13 @@
 package org.financeiro.repository;
 
+import java.util.Date;
+import java.util.List;
+
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
 
 @ApplicationScoped
 public class SomaCategoriasPorPeriodoRepository
@@ -15,7 +17,7 @@ public class SomaCategoriasPorPeriodoRepository
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Date dataInicio,
 			Date dataFim, String tipoMovimentacao) {
-		return list("select new org.financeiro.entity.SomaCategoriasPorPeriodoDTO("
+		return list("select new org.financeiro.dto.SomaCategoriasPorPeriodoDTO("
 			+ "categoria.nomeCategoria, sum(movimentacao.valor) as somaMovimentacao) "
 			+ "from Movimentacao movimentacao "
 			+ "join CategoriaMovimentacao categoria on movimentacao.idCategoriaMovimentacao = categoria.id "
@@ -31,7 +33,7 @@ public class SomaCategoriasPorPeriodoRepository
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Date dataInicio,
 			Date dataFim, String tipoMovimentacao) {
 		List<SomaCategoriasPorPeriodoDTO> teste =
-			list("SELECT new org.financeiro.entity.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
+			list("SELECT new org.financeiro.dto.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
 				+ "m.dataMovimentacao as data, SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN "
 				+ "CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = "
 				+ "?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 AND m.tipoMovimentacao = ?4 GROUP BY "

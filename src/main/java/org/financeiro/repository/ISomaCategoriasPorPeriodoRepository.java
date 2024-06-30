@@ -2,7 +2,8 @@ package org.financeiro.repository;
 
 import java.util.Date;
 import java.util.List;
-import org.financeiro.entity.SomaCategoriasPorPeriodoDTO;
+
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 
 
 public interface ISomaCategoriasPorPeriodoRepository {
