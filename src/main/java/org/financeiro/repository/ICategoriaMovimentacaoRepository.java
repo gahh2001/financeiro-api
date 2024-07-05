@@ -1,6 +1,7 @@
 package org.financeiro.repository;
 
 import java.util.List;
+
 import org.financeiro.entity.CategoriaMovimentacao;
 
 
@@ -10,7 +11,7 @@ public interface ICategoriaMovimentacaoRepository {
 
 	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId);
 
-	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria);
+	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria);
 
 	void removeCategoriaMovimentacao(Long idCategoria);
 

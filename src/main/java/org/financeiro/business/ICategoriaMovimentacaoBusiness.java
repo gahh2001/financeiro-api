@@ -12,7 +12,7 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId);
 
-	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria);
+	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria);
 
 	CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria);
 

@@ -1,10 +1,12 @@
 package org.financeiro.repository;
 
+import java.util.List;
+
+import org.financeiro.entity.CategoriaMovimentacao;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import java.util.List;
-import org.financeiro.entity.CategoriaMovimentacao;
 
 
 
@@ -49,8 +51,12 @@ public class CategoriaMovimentacaoRepository
 
 	@Override
 	@Transactional
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria) {
-		update("update CategoriaMovimentacao t set t.nomeCategoria = ?1 where t.id = ?2", novoNome, idCategoria);
-		return findById(idCategoria);
+	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+		CategoriaMovimentacao antiga = findById(novaCategoria.getId());
+		antiga.setNomeCategoria(novaCategoria.getNomeCategoria());
+		antiga.setIcone(novaCategoria.getIcone());
+		antiga.setCorIcone(novaCategoria.getCorIcone());
+		antiga.persistAndFlush();
+		return antiga;
 	}
 }

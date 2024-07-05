@@ -1,23 +1,25 @@
 package org.financeiro.resource;
 
+import java.util.List;
+
+import org.financeiro.business.ICategoriaMovimentacaoBusiness;
+import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
+import org.financeiro.entity.CategoriaMovimentacao;
+import org.financeiro.exceptions.NonExistentAccount;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
-import org.financeiro.business.ICategoriaMovimentacaoBusiness;
-import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
-import org.financeiro.entity.CategoriaMovimentacao;
-import org.financeiro.exceptions.NonExistentAccount;
 
 @Path("/categoria-movimentacao")
 @ApplicationScoped
@@ -92,13 +94,11 @@ public class CategoriaMovimentacaoResource {
 		return Response.ok(list).build();
 	}
 
-	@PUT
-	@Path("/{idCategoria}")
+	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome,
-			@PathParam(value = "idCategoria") Long idCategoria) {
-		return business.atualizaNomeCategoriaMovimentacao(novoNome, idCategoria);
+	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+		return business.atualizaNomeCategoriaMovimentacao(novaCategoria);
 	}
 
 	@DELETE

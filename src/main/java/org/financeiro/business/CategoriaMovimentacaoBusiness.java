@@ -64,8 +64,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(String novoNome, Long idCategoria) {
-		return repository.atualizaNomeCategoriaMovimentacao(novoNome, idCategoria);
+	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+		return repository.atualizaNomeCategoriaMovimentacao(novaCategoria);
 	}
 
 	@Override

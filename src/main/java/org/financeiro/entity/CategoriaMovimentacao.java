@@ -1,8 +1,7 @@
 package org.financeiro.entity;
 
-import jakarta.persistence.Entity;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class CategoriaMovimentacao extends PanacheEntity{
@@ -11,8 +10,8 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	private String tipoMovimentacao;
 	private String nomeCategoria;
 	private String googleId;
-	private String simbolo;
-	private String corSimbolo;
+	private String icone;
+	private String corIcone;
 
 	public CategoriaMovimentacao() {
 	}
@@ -56,19 +55,19 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		this.googleId = googleId;
 	}
 
-	public String getSimbolo() {
-		return simbolo;
+	public String getIcone() {
+		return icone;
 	}
 
-	public void setSimbolo( String simbolo ) {
-		this.simbolo = simbolo;
+	public void setIcone( String simbolo ) {
+		this.icone = simbolo;
 	}
 
-	public String getCorSimbolo() {
-		return corSimbolo;
+	public String getCorIcone() {
+		return corIcone;
 	}
 
-	public void setCorSimbolo( String corSimbolo ) {
-		this.corSimbolo = corSimbolo;
+	public void setCorIcone( String corSimbolo ) {
+		this.corIcone = corSimbolo;
 	}
 }
