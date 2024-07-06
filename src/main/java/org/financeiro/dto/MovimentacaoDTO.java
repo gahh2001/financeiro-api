@@ -14,6 +14,8 @@ public class MovimentacaoDTO {
 	private Long idCategoriaMovimentacao;
 	private String nomeCategoriaMovimentacao;
 	private String descricaoMovimentacao;
+	private String icone;
+	private String corIcone;
 
 	public MovimentacaoDTO(Movimentacao movimentacao) {
 		this.id = movimentacao.getId();
@@ -90,5 +92,21 @@ public class MovimentacaoDTO {
 
 	public void setDescricaoMovimentacao(String descricaoMovimentacao) {
 		this.descricaoMovimentacao = descricaoMovimentacao;
+	}
+
+	public String getIcone() {
+		return icone;
+	}
+
+	public void setIcone( String icone ) {
+		this.icone = icone;
+	}
+
+	public String getCorIcone() {
+		return corIcone;
+	}
+
+	public void setCorIcone( String corIcone ) {
+		this.corIcone = corIcone;
 	}
 }

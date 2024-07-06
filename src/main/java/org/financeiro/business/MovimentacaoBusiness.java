@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.financeiro.dto.MovimentacaoDTO;
+import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
@@ -77,10 +78,12 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		return movimentacoes.stream()
 			.map(movimentacao -> {
 				MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
-				dto.setNomeCategoriaMovimentacao(categoriaBusiness
-					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId)
-					.getNomeCategoria());
-				return dto;
+				CategoriaMovimentacao categoria = categoriaBusiness
+					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId);
+				dto.setNomeCategoriaMovimentacao(categoria.getNomeCategoria());
+				dto.setIcone(categoria.getIcone());
+				dto.setCorIcone(categoria.getCorIcone());
+				return dto; //seria bacana já buscar esses dados adicionais na propria query
 			})
 			.collect(Collectors.toList());
 	}

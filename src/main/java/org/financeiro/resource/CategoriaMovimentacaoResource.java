@@ -96,7 +96,7 @@ public class CategoriaMovimentacaoResource {
 
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
 		return business.atualizaNomeCategoriaMovimentacao(novaCategoria);
 	}
