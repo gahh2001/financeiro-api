@@ -94,6 +94,18 @@ public class CategoriaMovimentacaoResource {
 		return Response.ok(list).build();
 	}
 
+	@GET
+	@Path("/soma-tipos-meses")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listaSomaPorTipoEMeses(
+			@QueryParam("googleId") String googleId,
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim) {
+		List<SomaCategoriasPorPeriodoDTO> list = business
+			.listaSomaPorTipoEMeses(googleId, dataInicio, dataFim);
+		return Response.ok(list).build();
+	}
+
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

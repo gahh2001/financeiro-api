@@ -12,4 +12,6 @@ public interface ISomaCategoriasPorPeriodoRepository {
 		Date dataFim, String tipoMovimentacao);
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Date dataInicio,
 		Date dataFim, String tipoMovimentacao);
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Date dataInicio,
+		Date dataFim);
 }

@@ -25,4 +25,8 @@ public interface ICategoriaMovimentacaoBusiness {
 	
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
+
+	List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Long dataInicio,
+		Long dataFim);
+
 }

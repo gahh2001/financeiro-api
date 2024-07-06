@@ -82,4 +82,12 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 			.listaSomaPorCategoriaEMeses(googleId, new Date(dataInicio),
 				new Date(dataFim), tipoMovimentacao);
 	}
+
+	@Override
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Long dataInicio,
+			Long dataFim) {
+		return this.somaCategoriasPorMesRepository
+			.listaSomaPorTipoEMeses(googleId, new Date(dataInicio),
+				new Date(dataFim));
+	}
 }
