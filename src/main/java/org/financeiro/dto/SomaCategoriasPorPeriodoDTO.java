@@ -32,6 +32,10 @@ public class SomaCategoriasPorPeriodoDTO {
 		return data;
 	}
 
+	public void setNomeCategoria( String nomeCategoria ) {
+		this.nomeCategoria = nomeCategoria;
+	}
+
 	private Double formatDouble(Double value) {
 		String stringDouble = value.toString();
 		String stringFormated = stringDouble.length() >= 5

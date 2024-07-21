@@ -45,9 +45,9 @@ public class SomaCategoriasPorPeriodoRepository
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Date dataInicio,
 			Date dataFim) {
 		return list("select new org.financeiro.dto.SomaCategoriasPorPeriodoDTO(cm.tipoMovimentacao "
-		+ "AS nomeCategoria, m.dataMovimentacao as data, SUM(m.valor) AS somaMovimentacao) FROM "
+		+ "AS nomeCategoria, DATE_TRUNC('month', m.dataMovimentacao) as data, SUM(m.valor) AS somaMovimentacao) FROM "
 		+ "Movimentacao m JOIN CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE "
 		+ "m.googleId = ?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 GROUP BY cm.tipoMovimentacao, "
-		+ "m.dataMovimentacao ORDER BY m.dataMovimentacao ASC", googleId, dataInicio, dataFim);
+		+ "DATE_TRUNC('month', m.dataMovimentacao) ORDER BY data ASC, cm.tipoMovimentacao", googleId, dataInicio, dataFim);
 	}
 }

@@ -86,8 +86,10 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	@Override
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Long dataInicio,
 			Long dataFim) {
-		return this.somaCategoriasPorMesRepository
-			.listaSomaPorTipoEMeses(googleId, new Date(dataInicio),
-				new Date(dataFim));
+		List<SomaCategoriasPorPeriodoDTO> result = this.somaCategoriasPorMesRepository
+			.listaSomaPorTipoEMeses(googleId, new Date(dataInicio), new Date(dataFim));
+		result.forEach( soma -> 
+			soma.setNomeCategoria("POSITIVO".equals(soma.getNomeCategoria()) ? "Rendimentos" : "Despesas"));
+		return result;
 	}
 }
