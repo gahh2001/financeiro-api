@@ -24,7 +24,8 @@ public class SomaCategoriasPorPeriodoRepository
 			+ "where movimentacao.googleId = ?1 "
 			+ "and movimentacao.dataMovimentacao between ?2 and ?3 "
 			+ "and movimentacao.tipoMovimentacao = ?4 "
-			+ "group by categoria.nomeCategoria",
+			+ "group by categoria.nomeCategoria "
+			+ "order by somaMovimentacao desc",
 			googleId, dataInicio, dataFim, tipoMovimentacao);
 	}
 
