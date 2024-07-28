@@ -20,7 +20,10 @@ public class MediasGeraisBusiness implements IMediasGeraisBusiness{
 		MediasGeraisDTO maisGasta = this.mediasRepository.obtemCategoriaMaisGasta(googleId, dataInicio, dataFim);
 		Double mediaGanhos = this.mediasRepository.obtemMediaMensalPorTipo(googleId, dataInicio, dataFim, "POSITIVO");
 		Double mediaGastos = this.mediasRepository.obtemMediaMensalPorTipo(googleId, dataInicio, dataFim, "NEGATIVO");
-		return new MediasGeraisDTO(maisGanha.getCategoriaMaisGasta() , maisGasta.getCategoriaMaisGasta(),
-			mediaGanhos, mediaGastos);
+		if (maisGanha != null && maisGasta != null) {
+			return new MediasGeraisDTO(maisGanha.getCategoriaMaisGasta() , maisGasta.getCategoriaMaisGasta(),
+				mediaGanhos, mediaGastos);
+		}
+		return new MediasGeraisDTO(null);
 	}
 }
