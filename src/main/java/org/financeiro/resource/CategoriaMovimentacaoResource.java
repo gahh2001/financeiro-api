@@ -1,8 +1,11 @@
 package org.financeiro.resource;
 
+import java.util.Date;
 import java.util.List;
 
 import org.financeiro.business.ICategoriaMovimentacaoBusiness;
+import org.financeiro.business.IMediasGeraisBusiness;
+import org.financeiro.dto.MediasGeraisDTO;
 import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
@@ -27,6 +30,9 @@ public class CategoriaMovimentacaoResource {
 
 	@Inject
 	ICategoriaMovimentacaoBusiness business;
+
+	@Inject
+	IMediasGeraisBusiness mediasBusiness;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -124,5 +130,15 @@ public class CategoriaMovimentacaoResource {
 		}
 		return Response.status(406).entity("Não é possível apagar esta categoria,"
 			+ " pois existem registros com ela! Você pode editar o nome dela, se preferir :)").build();
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/soma-informacoes-gerais")
+	public MediasGeraisDTO obtemMediasGeraisAnalitico(
+			@QueryParam("googleId") String googleId,
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim) {
+		return mediasBusiness.obtemMediasGerais(googleId, new Date(dataInicio), new Date(dataFim));
 	}
 }
