@@ -6,7 +6,7 @@ import org.financeiro.dto.MediasGeraisDTO;
 
 public interface IMediasGeraisRepository {
 
-	MediasGeraisDTO obtemCategoriaMaisGanha(String googleId, Date dataInicio, Date dataFim);
-	MediasGeraisDTO obtemCategoriaMaisGasta(String googleId, Date dataInicio, Date dataFim);
+	MediasGeraisDTO obtemCategoriaMaisRegistradaPorTipo(String googleId, Date dataInicio,
+		Date dataFim, String tipo);
 	Double obtemMediaMensalPorTipo(String googleId, Date dataInicio, Date dataFim, String tipo);
 }

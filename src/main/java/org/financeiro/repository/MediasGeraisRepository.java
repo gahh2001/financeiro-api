@@ -20,25 +20,14 @@ public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO
 
 	@Override
 	@Transactional
-	public MediasGeraisDTO obtemCategoriaMaisGanha(String googleId, Date dataInicio, Date dataFim) {
+	public MediasGeraisDTO obtemCategoriaMaisRegistradaPorTipo(String googleId, Date dataInicio,
+			Date dataFim, String tipo) {
 		List<MediasGeraisDTO> result = list(
 			"select new org.financeiro.dto.MediasGeraisDTO( cm.nomeCategoria as categoriaMaisGasta, "
 			+ "SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN CategoriaMovimentacao cm "
 			+ "ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = ?1 and m.dataMovimentacao BETWEEN "
-			+ "?2 AND ?3 and m.tipoMovimentacao = 'POSITIVO' GROUP BY cm.nomeCategoria ORDER BY somaMovimentacao "
-			+ "DESC LIMIT 1", googleId, dataInicio, dataFim);
-		return result != null && !result.isEmpty() ? result.get(0) : null;
-	}
-
-	@Override
-	@Transactional
-	public MediasGeraisDTO obtemCategoriaMaisGasta(String googleId, Date dataInicio, Date dataFim) {
-		List<MediasGeraisDTO> result = list(
-			"select new org.financeiro.dto.MediasGeraisDTO( cm.nomeCategoria as categoriaMaisGasta, "
-			+ "SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN CategoriaMovimentacao cm "
-			+ "ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = ?1 and m.dataMovimentacao BETWEEN "
-			+ "?2 AND ?3 and m.tipoMovimentacao = 'NEGATIVO' GROUP BY cm.nomeCategoria ORDER BY somaMovimentacao "
-			+ "DESC LIMIT 1", googleId, dataInicio, dataFim);
+			+ "?2 AND ?3 and m.tipoMovimentacao = ?4 GROUP BY cm.nomeCategoria ORDER BY somaMovimentacao "
+			+ "DESC LIMIT 1", googleId, dataInicio, dataFim, tipo);
 		return result != null && !result.isEmpty() ? result.get(0) : null;
 	}
 
@@ -56,6 +45,6 @@ public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO
 		query.setParameter("tipo", tipo);
 
 		Object result = query.getSingleResult();
-		return result != null ? ((Number) result).doubleValue() : null;
+		return result != null ? ((Number) result).doubleValue() : 0L;
 	}
 }
