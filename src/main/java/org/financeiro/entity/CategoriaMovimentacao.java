@@ -23,6 +23,15 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		this.googleId = googleId;
 	}
 
+	public CategoriaMovimentacao(String tipoMovimentacao, String nomeCategoria, String googleId,
+			String cor, String icone) {
+		this.tipoMovimentacao = tipoMovimentacao;
+		this.nomeCategoria = nomeCategoria;
+		this.googleId = googleId;
+		this.corIcone = cor;
+		this.icone = icone;
+	}
+
 	public Long getId() {
 		return id;
 	}

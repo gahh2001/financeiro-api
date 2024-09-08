@@ -1,7 +1,5 @@
 package org.financeiro.business;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +11,10 @@ import org.financeiro.exceptions.NonExistentAccount;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 import org.financeiro.repository.ISomaCategoriasPorPeriodoRepository;
+import org.jboss.logging.Logger;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusiness {
@@ -25,6 +27,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	IMovimentacaoRepository repositoryMovimentacao;
 	@Inject
 	ISomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
+
+	private static final Logger log = Logger.getLogger(CategoriaMovimentacaoBusiness.class);
 
 	@Override
 	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount {
@@ -91,5 +95,25 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		result.forEach( soma -> 
 			soma.setNomeCategoria("POSITIVO".equals(soma.getNomeCategoria()) ? "Rendimentos" : "Despesas"));
 		return result;
+	}
+
+	@Override
+	public void criaCategoriasIniciais(String googleId) {
+		CategoriaMovimentacao primeira = new CategoriaMovimentacao(
+			"POSITIVO", "Depósito", googleId, "#239d12", "DINHEIRO");
+		CategoriaMovimentacao segunda = new CategoriaMovimentacao(
+			"POSITIVO", "Salário", googleId, "#FFD141", "CARTEIRA");
+		CategoriaMovimentacao terceira = new CategoriaMovimentacao(
+			"NEGATIVO", "Despesa", googleId, "#e15734db", "CARTAO");
+		CategoriaMovimentacao quarta = new CategoriaMovimentacao(
+			"NEGATIVO", "Gastos", googleId, "#f45dfa", "FAVORITO");
+		try {
+			this.criaCategoriaMovimentacao(primeira);
+			this.criaCategoriaMovimentacao(segunda);
+			this.criaCategoriaMovimentacao(terceira);
+			this.criaCategoriaMovimentacao(quarta);
+		} catch (NonExistentAccount e) {
+			log.error("Erro ao criar categorias padrão para a conta " + googleId);
+		}
 	}
 }

@@ -12,6 +12,9 @@ public class ContaBusiness implements IContaBusiness {
 	@Inject
 	IContaRepository contaRepository;
 
+	@Inject
+	ICategoriaMovimentacaoBusiness categoriasBusiness;
+
 	@Override
 	public void processAccount(Conta conta) {
 		Conta contaExistente = this.contaRepository.getAccountByGoogleId(conta.getGoogleId());
@@ -19,6 +22,7 @@ public class ContaBusiness implements IContaBusiness {
 			conta.setSaldoConta(0.0);
 			conta.setSaldoInvestimento(0.0);
 			this.contaRepository.criaconta(conta);
+			this.categoriasBusiness.criaCategoriasIniciais(conta.getGoogleId());
 		}
 		this.contaRepository.updateAccount(conta);
 	}
