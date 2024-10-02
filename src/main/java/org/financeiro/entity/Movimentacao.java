@@ -1,17 +1,23 @@
 package org.financeiro.entity;
 
+import java.util.Date;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import java.util.Date;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
 public class Movimentacao extends PanacheEntity {
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Double valor;
+
 	@Column(columnDefinition = "DATE")
 	private Date dataMovimentacao;
+	
+	private Double valor;
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
 	private String descricaoMovimentacao;
