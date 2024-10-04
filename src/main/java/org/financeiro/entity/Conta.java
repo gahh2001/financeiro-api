@@ -2,14 +2,9 @@ package org.financeiro.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 public class Conta extends PanacheEntity {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	private Double saldoConta;
 	private Double saldoInvestimento;

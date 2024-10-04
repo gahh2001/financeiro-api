@@ -5,14 +5,9 @@ import java.util.Date;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 public class Movimentacao extends PanacheEntity {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(columnDefinition = "DATE")
 	private Date dataMovimentacao;
