@@ -1,10 +1,10 @@
 package org.financeiro.business;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.financeiro.entity.Conta;
 import org.financeiro.repository.IContaRepository;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ContaBusiness implements IContaBusiness {
@@ -56,5 +56,10 @@ public class ContaBusiness implements IContaBusiness {
 	@Override
 	public void atualizaInvestimento(double novoInvestimento, String googleId) {
 		this.contaRepository.atualizaInvestimento(novoInvestimento, googleId);
+	}
+
+	@Override
+	public void zeraSaldo( Conta conta ) {
+		this.contaRepository.atualizaSaldoConta( 0D, conta.getGoogleId());
 	}
 }

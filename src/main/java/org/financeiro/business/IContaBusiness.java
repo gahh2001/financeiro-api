@@ -11,4 +11,5 @@ public interface IContaBusiness {
 	Conta getAccountByGoogleId(String id);
 	void atualizaSaldoConta(Double valorMovimentacao, String googleId);
 	void atualizaInvestimento(double novoInvestimento, String googleId);
+	void zeraSaldo( Conta conta );
 }
