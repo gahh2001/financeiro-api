@@ -5,7 +5,6 @@ import org.financeiro.entity.Conta;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -29,7 +28,7 @@ public class ContaResource {
 			.entity("Nenhuma conta encontrada para o ID").build();
 	}
 
-	@POST
+	@GET
 	@Path("/zerar-saldo")
 	public Response zerarSaldo(@QueryParam(value = "googleId") String googleId) {
 		Conta encontrada = this.contaBusiness.getAccountByGoogleId(googleId);
