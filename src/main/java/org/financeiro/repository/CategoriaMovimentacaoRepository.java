@@ -39,8 +39,10 @@ public class CategoriaMovimentacaoRepository
 	@Transactional
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
 			String googleId) {
-		return list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.googleId = ?2",
-			tipoMovimentacao, googleId);
+		return "TODOS".equals(tipoMovimentacao)
+			? this.listaCategoriasMovimentacaoPorConta( googleId )
+			: list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 and t.googleId = ?2",
+				tipoMovimentacao, googleId);
 	}
 
 	@Override
