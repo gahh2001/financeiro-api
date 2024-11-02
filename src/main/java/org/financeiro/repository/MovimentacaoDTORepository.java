@@ -17,10 +17,20 @@ public class MovimentacaoDTORepository implements PanacheRepository<Movimentacao
 	@Transactional
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Date dataInicio, Date dataFim,
 			String tipo, List<String> categorias) {
+		List<Object> parametros = new ArrayList<>();
+		parametros.add(googleId);
+		parametros.add(dataInicio);
+		parametros.add(dataFim);
 		String criterioTipo = tipo != null && !"TODOS".equals(tipo)
-			? "and c.tipoMovimentacao = ?4 " : "";
+			? "and c.tipoMovimentacao = ?" + (parametros.size() + 1) : "";
+		if (!criterioTipo.isEmpty()) {
+			parametros.add(tipo);
+		}
 		String criterioCategoria = categorias != null && !categorias.isEmpty() && !categorias.contains("Todas")
-			? "and c.nomeCategoria in (?5)" : "";
+			? "and c.nomeCategoria in (?" + (parametros.size() + 1) + ")" : "";
+		if (!criterioCategoria.isEmpty()) {
+			parametros.add(categorias);
+		}
 		String query = "select new org.financeiro.dto.MovimentacaoDTO(m.id, m.valor, "
 			+ "m.dataMovimentacao, m.tipoMovimentacao, "
 			+ "c.id as idCategoriaMovimentacao, c.nomeCategoria, m.descricaoMovimentacao "
@@ -29,16 +39,6 @@ public class MovimentacaoDTORepository implements PanacheRepository<Movimentacao
 			+ "m.dataMovimentacao between ?2 and ?3 "
 			+ criterioTipo
 			+ criterioCategoria;
-		List<Object> parametros = new ArrayList<>();
-		parametros.add(googleId);
-		parametros.add(dataInicio);
-		parametros.add(dataFim);
-		if (!criterioTipo.isEmpty()) {
-			parametros.add(tipo);
-		}
-		if (!criterioCategoria.isEmpty()) {
-			parametros.add(categorias);
-		}
 		return list(query, parametros.toArray());
 	}
 }
