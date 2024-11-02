@@ -1,18 +1,22 @@
 package org.financeiro.business;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
+import org.financeiro.repository.IMovimentacaoDTORepository;
 import org.financeiro.repository.IMovimentacaoRepository;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class MovimentacaoBusiness implements IMovimentacaoBusiness {
@@ -23,6 +27,8 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	IContaBusiness contaBusiness;
 	@Inject
 	ICategoriaMovimentacaoBusiness categoriaBusiness;
+	@Inject
+	IMovimentacaoDTORepository movimentacaoDTORepository;
 
 	@Override
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) throws NonExistentAccount {
@@ -129,6 +135,13 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			}
 		}
 		return movimentacaoRepository.removeMovimentacao(idMovimentacao, googleId);
+	}
+
+	@Override
+	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Long dataInicio, Long dataFim,
+			String tipo, String categorias) {
+		return  this.movimentacaoDTORepository.listaMovimentacoesPorParametros( googleId,
+			new Date(dataInicio), new Date(dataFim), tipo, Arrays.asList(categorias.split(",")));
 	}
 
 	private Date stringToDate(String dataString) {

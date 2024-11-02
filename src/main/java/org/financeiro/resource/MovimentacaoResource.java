@@ -1,5 +1,12 @@
 package org.financeiro.resource;
 
+import java.util.List;
+
+import org.financeiro.business.IMovimentacaoBusiness;
+import org.financeiro.dto.MovimentacaoDTO;
+import org.financeiro.entity.Movimentacao;
+import org.financeiro.exceptions.NonExistentAccount;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -13,11 +20,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
-import org.financeiro.business.IMovimentacaoBusiness;
-import org.financeiro.dto.MovimentacaoDTO;
-import org.financeiro.entity.Movimentacao;
-import org.financeiro.exceptions.NonExistentAccount;
 
 @Path("/movimentacao")
 @ApplicationScoped
@@ -61,6 +63,19 @@ public class MovimentacaoResource {
 			@QueryParam("dataFim") Long dataFim) {
 		return movimentacaoBusiness.
 			listaMovimentacoesPorIdContaEPeriodo(googleId, dataInicio, dataFim);
+	}
+	
+	@GET
+	@Path("/parametros")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(
+			@QueryParam("googleId") String googleId,
+			@QueryParam("dataInicio") Long dataInicio,
+			@QueryParam("dataFim") Long dataFim,
+			@QueryParam("tipoMovimentacao") String tipo,
+			@QueryParam("categorias") String categorias) {
+		return movimentacaoBusiness.
+			listaMovimentacoesPorParametros(googleId, dataInicio, dataFim, tipo, categorias);
 	}
 
 	@GET

@@ -1,10 +1,10 @@
 package org.financeiro.business;
 
 import java.util.List;
+
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
-
 
 public interface IMovimentacaoBusiness {
 
@@ -13,6 +13,9 @@ public interface IMovimentacaoBusiness {
 	Movimentacao atualizaMovimentacao(Movimentacao movimentacao) throws NonExistentAccount;
 
 	List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Long dataInicio, Long dataFim);
+
+	List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Long dataInicio, Long dataFim,
+		String tipo, String categorias);
 
 	List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			String dataInicio, String dataFim);

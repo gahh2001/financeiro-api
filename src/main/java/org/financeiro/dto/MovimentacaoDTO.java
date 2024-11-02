@@ -30,6 +30,20 @@ public class MovimentacaoDTO {
 	public MovimentacaoDTO() {
 	}
 
+	public MovimentacaoDTO( Long id, Double valor, Date dataMovimentacao, String tipoMovimentacao,
+			Long idCategoriaMovimentacao, String nomeCategoriaMovimentacao,
+			String descricaoMovimentacao, String icone, String corIcone ) {
+		this.id = id;
+		this.valor = valor;
+		this.dataMovimentacao = dataMovimentacao;
+		this.tipoMovimentacao = tipoMovimentacao;
+		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
+		this.nomeCategoriaMovimentacao = nomeCategoriaMovimentacao;
+		this.descricaoMovimentacao = descricaoMovimentacao;
+		this.icone = icone;
+		this.corIcone = corIcone;
+	}
+
 	public Long getId() {
 		return id;
 	}
