@@ -17,8 +17,10 @@ public class MovimentacaoDTORepository implements PanacheRepository<Movimentacao
 	@Transactional
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Date dataInicio, Date dataFim,
 			String tipo, List<String> categorias) {
-		String criterioTipo = tipo != null && !"TODOS".equals(tipo) ? "and c.tipoMovimentacao = ?4 " : "";
-		String criterioCategoria = categorias != null && !categorias.isEmpty() && !categorias.contains("Todas") ? "and c.nomeCategoria in (?5)" : "";
+		String criterioTipo = tipo != null && !"TODOS".equals(tipo)
+			? "and c.tipoMovimentacao = ?4 " : "";
+		String criterioCategoria = categorias != null && !categorias.isEmpty() && !categorias.contains("Todas")
+			? "and c.nomeCategoria in (?5)" : "";
 		String query = "select new org.financeiro.dto.MovimentacaoDTO(m.id, m.valor, "
 			+ "m.dataMovimentacao, m.tipoMovimentacao, "
 			+ "c.id as idCategoriaMovimentacao, c.nomeCategoria, m.descricaoMovimentacao "
