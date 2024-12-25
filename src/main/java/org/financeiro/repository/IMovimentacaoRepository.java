@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.financeiro.entity.Movimentacao;
 
-
 public interface IMovimentacaoRepository {
 
 	Movimentacao criaMovimentacao(Movimentacao movimentacao);

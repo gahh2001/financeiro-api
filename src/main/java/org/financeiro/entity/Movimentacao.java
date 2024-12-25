@@ -11,7 +11,7 @@ public class Movimentacao extends PanacheEntity {
 
 	@Column(columnDefinition = "DATE")
 	private Date dataMovimentacao;
-	
+
 	private Double valor;
 	private String tipoMovimentacao;
 	private Long idCategoriaMovimentacao;
