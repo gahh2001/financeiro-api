@@ -59,7 +59,7 @@ public class ContaBusiness implements IContaBusiness {
 	}
 
 	@Override
-	public void zeraSaldo( Conta conta ) {
-		this.contaRepository.atualizaSaldoConta( 0D, conta.getGoogleId());
+	public void editarSaldo( Conta conta, Double valor ) {
+		this.contaRepository.atualizaSaldoConta( valor, conta.getGoogleId());
 	}
 }

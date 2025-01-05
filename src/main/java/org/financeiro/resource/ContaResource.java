@@ -5,6 +5,7 @@ import org.financeiro.entity.Conta;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -28,14 +29,14 @@ public class ContaResource {
 			.entity("Nenhuma conta encontrada para o ID").build();
 	}
 
-	@GET
-	@Path("/zerar-saldo")
-	public Response zerarSaldo(@QueryParam(value = "googleId") String googleId) {
+	@POST
+	@Path("/editar-saldo")
+	public Response editarSaldo(@QueryParam(value = "googleId" ) String googleId, Conta novo) {
 		Conta encontrada = this.contaBusiness.getAccountByGoogleId(googleId);
 		if (encontrada == null) {
 			return Response.status(404).build();
 		}
-		this.contaBusiness.zeraSaldo(encontrada);
+		this.contaBusiness.editarSaldo(encontrada, novo.getSaldoConta());
 		return Response.ok().build();
 	}
 }
