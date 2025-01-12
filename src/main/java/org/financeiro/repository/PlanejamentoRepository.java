@@ -24,7 +24,7 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 
 	@Override
 	public List< Planejamento > listarPorConta( String googleId ) {
-		return this.list("select p from Planejamento p where p.googleId = ?1", googleId);
+		return this.list("select p from Planejamento p where p.googleId = ?1 order by p.dataInicio asc", googleId);
 	}
 
 	@Override

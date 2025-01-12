@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 public class PlanejamentoDTO {
 
 	private Long id;
+	private Boolean ativo;
 	private Date dataInicio;
 	private Date dataFim;
 	private String nome;
@@ -100,9 +101,18 @@ public class PlanejamentoDTO {
 		this.googleId = googleId;
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo( Boolean ativo ) {
+		this.ativo = ativo;
+	}
+
 	public Planejamento entidade() {
 		Planejamento entidade = new Planejamento();
 		entidade.setId(this.id);
+		entidade.setAtivo(this.ativo);
 		entidade.setDataInicio(this.dataInicio);
 		entidade.setDataFim(this.dataFim);
 		entidade.setNome(this.nome);

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.financeiro.dto.PlanejamentoDTO;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
@@ -121,6 +121,7 @@ public class Planejamento extends PanacheEntity {
 	public PlanejamentoDTO dto() {
 		PlanejamentoDTO dto = new PlanejamentoDTO();
 		dto.setId(this.id);
+		dto.setAtivo(this.ativo);
 		dto.setDataInicio(this.dataInicio);
 		dto.setDataFim(this.dataFim);
 		dto.setNome(this.nome);
