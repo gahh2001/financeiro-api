@@ -1,3 +1,4 @@
+version: '3.9'
 services:
   db:
     image: postgres:14
@@ -28,11 +29,25 @@ services:
       context: ./financeiro-web
     container_name: frontend-container
     ports:
-      - 3000:3000
+      - 3000:80
     depends_on:
+      - app
+
+  nginx:
+    image: nginx:stable
+    container_name: nginx-container
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./financeiro-web/build:/usr/share/nginx/html:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - frontend
       - app
 
 volumes:
   postgres-data:
+
 # este docker-compose, vai na pasta raiz onde estão os projetos back e front.
 # mova este arquivo para esta pasta, para subir os containers na mesma network
