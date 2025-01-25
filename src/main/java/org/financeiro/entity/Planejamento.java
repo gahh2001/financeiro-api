@@ -25,7 +25,6 @@ public class Planejamento extends PanacheEntity {
 	private String tipo; // meta/limite
 	private String recorrencia; // mensal/anual
 	private Double valor;
-	private String tipoCategorias; // rendimentos/despesas/categorias
 	private String categorias;
 	private String googleId;
 	private Boolean ativo;
@@ -86,14 +85,6 @@ public class Planejamento extends PanacheEntity {
 		this.valor = valor;
 	}
 
-	public String getTipoCategorias() {
-		return tipoCategorias;
-	}
-
-	public void setTipoCategorias( String tipoCategorias ) {
-		this.tipoCategorias = tipoCategorias;
-	}
-
 	public String getCategorias() {
 		return categorias;
 	}
@@ -128,7 +119,6 @@ public class Planejamento extends PanacheEntity {
 		dto.setTipo(this.tipo);
 		dto.setRecorrencia(this.recorrencia);
 		dto.setValor(this.valor);
-		dto.setTipoCategorias(this.tipoCategorias);
 		if (this.categorias != null) {
 			dto.setCategorias(new Gson().fromJson(this.categorias, new TypeToken<List<Integer>>() {}.getType()));
 		}

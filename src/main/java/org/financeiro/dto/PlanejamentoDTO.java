@@ -17,7 +17,6 @@ public class PlanejamentoDTO {
 	private String tipo;
 	private String recorrencia;
 	private Double valor;
-	private String tipoCategorias;
 	private List<Integer> categorias;
 	private String googleId;
 
@@ -47,10 +46,6 @@ public class PlanejamentoDTO {
 
 	public Double getValor() {
 		return valor;
-	}
-
-	public String getTipoCategorias() {
-		return tipoCategorias;
 	}
 
 	public List< Integer > getCategorias() {
@@ -89,10 +84,6 @@ public class PlanejamentoDTO {
 		this.valor = valor;
 	}
 
-	public void setTipoCategorias( String tipoCategorias ) {
-		this.tipoCategorias = tipoCategorias;
-	}
-
 	public void setCategorias( List< Integer > categorias ) {
 		this.categorias = categorias;
 	}
@@ -119,7 +110,6 @@ public class PlanejamentoDTO {
 		entidade.setTipo(this.tipo);
 		entidade.setRecorrencia(this.recorrencia);
 		entidade.setValor(this.valor);
-		entidade.setTipoCategorias(this.tipoCategorias);
 		if (this.categorias != null) {
 			entidade.setCategorias(new Gson().toJson(this.categorias));
 		}
