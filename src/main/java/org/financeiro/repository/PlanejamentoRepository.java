@@ -23,6 +23,7 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 	public Planejamento atualizar( Planejamento planejamento ) {
 		Planejamento existente = this.findById(planejamento.getId());
 		if (existente != null) {
+			existente.setAtivo(planejamento.getAtivo());
 			existente.setNome(planejamento.getNome());
 			existente.setTipo(planejamento.getTipo());
 			existente.setRecorrencia(planejamento.getRecorrencia());
