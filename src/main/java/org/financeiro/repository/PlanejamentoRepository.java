@@ -21,7 +21,17 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 	@Override
 	@Transactional
 	public Planejamento atualizar( Planejamento planejamento ) {
-		this.persistAndFlush(planejamento);
+		Planejamento existente = this.findById(planejamento.getId());
+		if (existente != null) {
+			existente.setNome(planejamento.getNome());
+			existente.setTipo(planejamento.getTipo());
+			existente.setRecorrencia(planejamento.getRecorrencia());
+			existente.setValor(planejamento.getValor());
+			existente.setDataInicio(planejamento.getDataInicio());
+			existente.setDataFim(planejamento.getDataFim());
+			existente.setCategorias(planejamento.getCategorias());
+			this.persistAndFlush(existente);
+		}
 		return planejamento;
 	}
 
