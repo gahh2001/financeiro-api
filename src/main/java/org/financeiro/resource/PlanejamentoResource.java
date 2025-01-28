@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.financeiro.business.IPlanejamentoBusiness;
 import org.financeiro.dto.PlanejamentoDTO;
+import org.financeiro.dto.ProgressosPlanejamentoDTO;
 import org.financeiro.entity.Planejamento;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -47,6 +48,14 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaPlanejamentosPorConta(@QueryParam("googleId") String googleId) {
 		List<PlanejamentoDTO> resultado = this.business.listarPorConta(googleId);
+		return Response.ok(resultado).build();
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{id}/progressos")
+	public Response obtemProgressos(@PathParam(value = "id") Long id) {
+		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id);
 		return Response.ok(resultado).build();
 	}
 

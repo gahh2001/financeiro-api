@@ -1,5 +1,6 @@
 package org.financeiro.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.financeiro.entity.Planejamento;
@@ -10,4 +11,6 @@ public interface IPlanejamentoRepository {
 	Planejamento atualizar(Planejamento planejamento);
 	List<Planejamento> listarPorConta(String googleId);
 	void apagar(Long idPlanejamento);
+	Planejamento obtemPorId(Long id);
+	Double obtemProgressoPorCategoriasEPeriodo(Date inicio, Date fim, List<Integer> idCategorias, String gooogleId);
 }
