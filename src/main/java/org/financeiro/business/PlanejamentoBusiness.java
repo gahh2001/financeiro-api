@@ -79,6 +79,7 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 
 	private Date obtemDataFimAnual(Date fim) {
 		Calendar agora = Calendar.getInstance();
+		agora.set(Calendar.DAY_OF_MONTH, agora.getActualMaximum(Calendar.DAY_OF_MONTH));
 		Calendar fimCalendar = Calendar.getInstance();
 		fimCalendar.setTimeInMillis(fim.getTime());
 		Integer anoAtual = (Integer) agora.get(Calendar.YEAR);
