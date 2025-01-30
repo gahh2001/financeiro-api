@@ -36,13 +36,14 @@ public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO
 	public Double obtemMediaMensalPorTipo(String googleId, Date dataInicio, Date dataFim, String tipo) {
 		String sql = "WITH MovimentacaoMensal AS (SELECT DATE_TRUNC('month', m.dataMovimentacao) AS mes,"
 			+ "SUM(m.valor) AS somaMensal FROM Movimentacao m WHERE m.dataMovimentacao BETWEEN :dataInicio "
-			+ "AND :dataFim AND m.tipoMovimentacao = :tipo GROUP BY DATE_TRUNC('month', m.dataMovimentacao)) "
-			+ "SELECT AVG(somaMensal) AS mediaMensal FROM MovimentacaoMensal";
+			+ "AND :dataFim AND m.tipoMovimentacao = :tipo and m.googleid = :googleid GROUP BY "
+			+ "DATE_TRUNC('month', m.dataMovimentacao)) SELECT AVG(somaMensal) AS mediaMensal FROM MovimentacaoMensal";
 
 		Query query = entityManager.createNativeQuery(sql);
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		query.setParameter("tipo", tipo);
+		query.setParameter("googleid", googleId);
 
 		Object result = query.getSingleResult();
 		return result != null ? ((Number) result).doubleValue() : 0L;
