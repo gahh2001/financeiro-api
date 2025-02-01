@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.financeiro.dto.DesempenhoPlanejamentoDTO;
 import org.financeiro.dto.PlanejamentoDTO;
 import org.financeiro.dto.ProgressosPlanejamentoDTO;
 import org.financeiro.entity.Planejamento;
@@ -48,6 +49,9 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	public ProgressosPlanejamentoDTO buscaProgressos(Long id) {
 		ProgressosPlanejamentoDTO dto = new ProgressosPlanejamentoDTO();
 		Planejamento planejamento = this.repository.obtemPorId(id);
+		if (planejamento == null) {
+			return dto;
+		}
 		List<Integer> categorias = new Gson().fromJson(planejamento.getCategorias(),
 			new TypeToken<List<Integer>>() {}.getType());
 		Double progressoTotal = this.repository.obtemProgressoPorCategoriasEPeriodo(planejamento.getDataInicio(),
@@ -64,6 +68,15 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 		dto.setTodo(progressoTotal);
 		dto.setAnual(progressoAnual);
 		return dto;
+	}
+
+	@Override
+	public List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id) {
+		Planejamento planejamento = this.repository.obtemPorId(id);
+		if (planejamento == null) {
+			return null;
+		}
+		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(new Date()));
 	}
 
 	private Date obtemDataInicioAnual(Date inicio) {

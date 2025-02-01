@@ -3,6 +3,7 @@ package org.financeiro.resource;
 import java.util.List;
 
 import org.financeiro.business.IPlanejamentoBusiness;
+import org.financeiro.dto.DesempenhoPlanejamentoDTO;
 import org.financeiro.dto.PlanejamentoDTO;
 import org.financeiro.dto.ProgressosPlanejamentoDTO;
 import org.financeiro.entity.Planejamento;
@@ -56,6 +57,14 @@ public class PlanejamentoResource {
 	@Path("/{id}/progressos")
 	public Response obtemProgressos(@PathParam(value = "id") Long id) {
 		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id);
+		return Response.ok(resultado).build();
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{id}/desempenho")
+	public Response obtemDesempenhos(@PathParam(value = "id") Long id) {
+		List<DesempenhoPlanejamentoDTO> resultado = this.business.buscaDesempenho(id);
 		return Response.ok(resultado).build();
 	}
 
