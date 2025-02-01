@@ -81,7 +81,7 @@ public class MovimentacaoResource {
 	@GET
 	@Path("/tipoMovimentacao")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(
+	public List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(
 			@QueryParam("googleId") String googleId,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao,
 			@QueryParam("dataInicio") String dataInicio,
@@ -90,17 +90,17 @@ public class MovimentacaoResource {
 			tipoMovimentacao, dataInicio, dataFim);
 	}
 
-	@GET
-	@Path("/categoria")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(
-			@QueryParam("googleId") String googleId,
-			@QueryParam("idCategoria") Long idCategoria,
-			@QueryParam("dataInicio") String dataInicio,
-			@QueryParam("dataFim") String dataFim) {
-		return movimentacaoBusiness.listaMovimentacaoPorIdCategoria(googleId,
-			idCategoria, dataInicio, dataFim);
-	}
+	// @GET
+	// @Path("/categoria")
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public List<Movimentacao> listaMovimentacaoPorIdCategoria(
+	// 		@QueryParam("googleId") String googleId,
+	// 		@QueryParam("idCategoria") Long idCategoria,
+	// 		@QueryParam("dataInicio") String dataInicio,
+	// 		@QueryParam("dataFim") String dataFim) {
+	// 	return movimentacaoBusiness.listaMovimentacaoPorIdCategoria(googleId,
+	// 		idCategoria, dataInicio, dataFim);
+	// }
 
 	@DELETE
 	@Path("/{id}")

@@ -17,10 +17,10 @@ public interface IMovimentacaoBusiness {
 	List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Long dataInicio, Long dataFim,
 		String tipo, String categorias);
 
-	List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
+	List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			String dataInicio, String dataFim);
 
-	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
+	List<MovimentacaoDTO> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
 			String dataFim);
 
 	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria);

@@ -95,17 +95,39 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	}
 
 	@Override
-	public List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
+	public List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			String dataInicio, String dataFim) {
 		return movimentacaoRepository.listaMovimentacoesPorTipoMovimentacao(googleId, tipoMovimentacao,
-			stringToDate(dataInicio), stringToDate(dataFim));
+			stringToDate(dataInicio), stringToDate(dataFim))
+				.stream()
+				.map(movimentacao -> {
+					MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
+					CategoriaMovimentacao categoria = categoriaBusiness
+						.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId);
+					dto.setNomeCategoriaMovimentacao(categoria.getNomeCategoria());
+					dto.setIcone(categoria.getIcone());
+					dto.setCorIcone(categoria.getCorIcone());
+					return dto;
+				})
+				.collect(Collectors.toList());
 	};
 
 	@Override
-	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
+	public List<MovimentacaoDTO> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
 			String dataFim) {
 		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(googleId, idCategoria,
-			stringToDate(dataInicio), stringToDate(dataFim));
+			stringToDate(dataInicio), stringToDate(dataFim))
+			.stream()
+			.map(movimentacao -> {
+				MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
+				CategoriaMovimentacao categoria = categoriaBusiness
+					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId);
+				dto.setNomeCategoriaMovimentacao(categoria.getNomeCategoria());
+				dto.setIcone(categoria.getIcone());
+				dto.setCorIcone(categoria.getCorIcone());
+				return dto;
+			})
+			.collect(Collectors.toList());
 	};
 
 	@Override

@@ -3,8 +3,10 @@ package org.financeiro.business;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.financeiro.dto.DesempenhoPlanejamentoDTO;
+import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.dto.PlanejamentoDTO;
 import org.financeiro.dto.ProgressosPlanejamentoDTO;
 import org.financeiro.entity.Planejamento;
@@ -21,6 +23,9 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 
 	@Inject
 	IPlanejamentoRepository repository;
+
+	@Inject
+	IMovimentacaoBusiness movimentacoes;
 
 	@Override
 	public Planejamento criar(PlanejamentoDTO planejamento) {
@@ -77,6 +82,31 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 			return null;
 		}
 		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(new Date()));
+	}
+	
+	@Override
+	public List<MovimentacaoDTO> buscaMovimentacoes(Long id) {
+		Planejamento planejamento = this.repository.obtemPorId(id);
+		if (planejamento == null) {
+			return null;
+		}
+		List<Integer> categorias = new Gson().fromJson(planejamento.getCategorias(),
+			new TypeToken<List<Integer>>() {}.getType());
+		if (categorias.contains(-1)) {
+			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(planejamento.getGoogleId(),
+				"POSITIVO", planejamento.getDataInicio().toString(), planejamento.getDataFim().toString());
+		} else if (categorias.contains(-2)){
+			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(planejamento.getGoogleId(),
+				"NEGATIVO", planejamento.getDataInicio().toString(), planejamento.getDataFim().toString());
+		} else {
+			return categorias.stream()
+				.map(categ -> this.movimentacoes
+					.listaMovimentacaoPorIdCategoria(planejamento.getGoogleId(), categ.longValue(),
+						planejamento.getDataInicio().toString(),
+						planejamento.getDataFim().toString()))
+				.flatMap(List::stream)
+				.collect(Collectors.toList());
+		}
 	}
 
 	private Date obtemDataInicioAnual(Date inicio) {
