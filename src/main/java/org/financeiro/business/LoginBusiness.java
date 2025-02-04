@@ -1,20 +1,26 @@
 package org.financeiro.business;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+
+import org.financeiro.dto.LoginDTO;
+import org.financeiro.entity.Conta;
+import org.financeiro.enumeration.GoogleClientId;
+import org.financeiro.enumeration.JWTChave;
+import org.financeiro.exceptions.LoginException;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import org.financeiro.dto.LoginDTO;
-import org.financeiro.entity.Conta;
-import org.financeiro.enumeration.GoogleClientId;
-import org.financeiro.exceptions.LoginException;
 
 @ApplicationScoped
 public class LoginBusiness implements ILoginBusiness {
@@ -56,6 +62,14 @@ public class LoginBusiness implements ILoginBusiness {
 		conta.setSobrenome((String) payload.get("family_name"));
 		conta.setPrimeiroNome((String) payload.get("given_name"));
 		this.contaBusiness.processAccount(conta);
-		return new LoginDTO(conta.getGoogleId(), conta.getFoto());
+		String token = this.geraToken(conta.getGoogleId());
+		return new LoginDTO(conta.getGoogleId(), conta.getFoto(), token);
+	}
+
+	private String geraToken( String googleId ) {
+		Algorithm algoritmo = Algorithm.HMAC512(JWTChave.CHAVE.getValue());
+		return JWT.create()
+			.withClaim( "googleId", googleId )
+			.sign( algoritmo );
 	}
 }
