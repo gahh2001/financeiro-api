@@ -63,7 +63,7 @@ public class LoginBusiness implements ILoginBusiness {
 		conta.setPrimeiroNome((String) payload.get("given_name"));
 		this.contaBusiness.processAccount(conta);
 		String token = this.geraToken(conta.getGoogleId());
-		return new LoginDTO(conta.getGoogleId(), conta.getFoto(), token);
+		return new LoginDTO(conta.getFoto(), token);
 	}
 
 	private String geraToken( String googleId ) {

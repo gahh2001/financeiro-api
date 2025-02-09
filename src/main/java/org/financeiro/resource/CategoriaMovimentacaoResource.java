@@ -21,12 +21,17 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/categoria-movimentacao")
 @ApplicationScoped
 public class CategoriaMovimentacaoResource {
+
+	@Context
+	ContainerRequestContext requestContext;
 
 	@Inject
 	ICategoriaMovimentacaoBusiness business;
@@ -40,6 +45,8 @@ public class CategoriaMovimentacaoResource {
 	public Response criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
 		if (categoria != null) {
 			try {
+				String googleId = (String) requestContext.getProperty("googleId");
+				categoria.setGoogleId(googleId);
 				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
 				return Response.ok(criada).build();
 			} catch ( NonExistentAccount e ) {
@@ -52,7 +59,8 @@ public class CategoriaMovimentacaoResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(@QueryParam("googleId") String googleId) {
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta() {
+		String googleId = (String) requestContext.getProperty("googleId");
 		return business.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
@@ -60,8 +68,8 @@ public class CategoriaMovimentacaoResource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(
-			@PathParam(value = "id") Long idCategoria,
-			@QueryParam("googleId") String googleId) {
+			@PathParam(value = "id") Long idCategoria) {
+		String googleId = (String) requestContext.getProperty("googleId");
 		return business.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 	}
 
@@ -69,8 +77,8 @@ public class CategoriaMovimentacaoResource {
 	@Path("/tipo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
-			@QueryParam("googleId") String googleId,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+		String googleId = (String) requestContext.getProperty("googleId");
 		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
 	}
 
@@ -78,10 +86,10 @@ public class CategoriaMovimentacaoResource {
 	@Path("/soma-categorias")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaCategorias(
-			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+		String googleId = (String) requestContext.getProperty("googleId");
 		List<SomaCategoriasPorPeriodoDTO> list = business
 			.listaSomaPorCategoria(googleId, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
@@ -136,9 +144,9 @@ public class CategoriaMovimentacaoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/soma-informacoes-gerais")
 	public MediasGeraisDTO obtemMediasGeraisAnalitico(
-			@QueryParam("googleId") String googleId,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
+		String googleId = (String) requestContext.getProperty("googleId");
 		return mediasBusiness.obtemMediasGerais(googleId, new Date(dataInicio), new Date(dataFim));
 	}
 }

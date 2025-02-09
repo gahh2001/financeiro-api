@@ -19,13 +19,17 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/planejamento")
 @ApplicationScoped
 public class PlanejamentoResource {
+
+	@Context
+	ContainerRequestContext requestContext;
 
 	@Inject
 	IPlanejamentoBusiness business;
@@ -34,6 +38,8 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criar(PlanejamentoDTO planejamento) {
+		String googleId = (String) requestContext.getProperty("googleId");
+		planejamento.setGoogleId(googleId);
 		Planejamento criado = this.business.criar(planejamento);
 		return Response.ok(criado).build();
 	}
@@ -42,13 +48,16 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response atualizar(PlanejamentoDTO planejamento) {
+		String googleId = (String) requestContext.getProperty("googleId");
+		planejamento.setGoogleId(googleId);
 		this.business.atualizar(planejamento);
 		return Response.ok(planejamento).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listaPlanejamentosPorConta(@QueryParam("googleId") String googleId) {
+	public Response listaPlanejamentosPorConta() {
+		String googleId = (String) requestContext.getProperty("googleId");
 		List<PlanejamentoDTO> resultado = this.business.listarPorConta(googleId);
 		return Response.ok(resultado).build();
 	}
@@ -57,7 +66,8 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/progressos")
 	public Response obtemProgressos(@PathParam(value = "id") Long id) {
-		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id);
+		String googleId = (String) requestContext.getProperty("googleId");
+		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id, googleId);
 		return Response.ok(resultado).build();
 	}
 
@@ -65,7 +75,8 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/desempenho")
 	public Response obtemDesempenhos(@PathParam(value = "id") Long id) {
-		List<DesempenhoPlanejamentoDTO> resultado = this.business.buscaDesempenho(id);
+		String googleId = (String) requestContext.getProperty("googleId");
+		List<DesempenhoPlanejamentoDTO> resultado = this.business.buscaDesempenho(id, googleId);
 		return Response.ok(resultado).build();
 	}
 
@@ -73,14 +84,15 @@ public class PlanejamentoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/movimentacoes")
 	public Response obtemMovimentacoes(@PathParam(value = "id") Long id) {
-		List<MovimentacaoDTO> resultado = this.business.buscaMovimentacoes(id);
+		String googleId = (String) requestContext.getProperty("googleId");
+		List<MovimentacaoDTO> resultado = this.business.buscaMovimentacoes(id, googleId);
 		return Response.ok(resultado).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response remover(@PathParam(value = "id") Long idPlanejamento,
-			@QueryParam("googleId") String googleId) {
+	public Response remover(@PathParam(value = "id") Long idPlanejamento) {
+		//ainda não usado
 		this.business.apagar(idPlanejamento);
 		return Response.ok().build();
 	}

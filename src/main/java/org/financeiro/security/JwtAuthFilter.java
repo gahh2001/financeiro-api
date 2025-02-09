@@ -21,6 +21,10 @@ public class JwtAuthFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+		String path = requestContext.getUriInfo().getPath();
+		if (path.equals("/login")) {  
+			return;
+		}
 		DecodedJWT decodificador;
 		String auth = requestContext.getHeaderString("Authentication");
 		try {
@@ -28,6 +32,8 @@ public class JwtAuthFilter implements ContainerRequestFilter {
 				Algorithm algoritmo = Algorithm.HMAC512(JWTChave.CHAVE.getValue());
 				JWTVerifier verificador = JWT.require(algoritmo).build();
 				decodificador = verificador.verify(auth.substring(7));
+				String googleId = decodificador.getClaim("googleId").asString();
+				requestContext.setProperty("googleId", googleId);
 				return;
 			}
 			throw new IOException();

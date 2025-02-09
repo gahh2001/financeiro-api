@@ -51,10 +51,10 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	}
 
 	@Override
-	public ProgressosPlanejamentoDTO buscaProgressos(Long id) {
+	public ProgressosPlanejamentoDTO buscaProgressos(Long id, String googleId) {
 		ProgressosPlanejamentoDTO dto = new ProgressosPlanejamentoDTO();
 		Planejamento planejamento = this.repository.obtemPorId(id);
-		if (planejamento == null) {
+		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return dto;
 		}
 		List<Integer> categorias = new Gson().fromJson(planejamento.getCategorias(),
@@ -76,18 +76,18 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	}
 
 	@Override
-	public List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id) {
+	public List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String googleId) {
 		Planejamento planejamento = this.repository.obtemPorId(id);
-		if (planejamento == null) {
+		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return null;
 		}
 		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(new Date()));
 	}
 	
 	@Override
-	public List<MovimentacaoDTO> buscaMovimentacoes(Long id) {
+	public List<MovimentacaoDTO> buscaMovimentacoes(Long id, String googleId) {
 		Planejamento planejamento = this.repository.obtemPorId(id);
-		if (planejamento == null) {
+		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return null;
 		}
 		List<Integer> categorias = new Gson().fromJson(planejamento.getCategorias(),

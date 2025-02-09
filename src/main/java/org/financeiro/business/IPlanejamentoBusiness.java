@@ -14,7 +14,7 @@ public interface IPlanejamentoBusiness {
 	Planejamento atualizar(PlanejamentoDTO planejamento);
 	List< PlanejamentoDTO > listarPorConta(String googleId);
 	void apagar(Long idPlanejamento);
-	ProgressosPlanejamentoDTO buscaProgressos(Long id);
-	List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id);
-	List<MovimentacaoDTO> buscaMovimentacoes(Long id);
+	ProgressosPlanejamentoDTO buscaProgressos(Long id, String googleId);
+	List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String googleId);
+	List<MovimentacaoDTO> buscaMovimentacoes(Long id, String googleId);
 }

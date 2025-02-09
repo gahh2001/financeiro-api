@@ -8,8 +8,7 @@ public class LoginDTO {
 
 	public LoginDTO(){}
 
-	public LoginDTO(String credential, String urlPicture, String token) {
-		this.credential = credential;
+	public LoginDTO(String urlPicture, String token) {
 		this.urlPicture = urlPicture;
 		this.accessToken = token;
 	}
