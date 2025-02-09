@@ -1,14 +1,16 @@
 package org.financeiro.repository;
 
+import java.util.List;
+
+import org.financeiro.entity.Conta;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import java.util.List;
-import org.financeiro.entity.Conta;
 
 @ApplicationScoped
 public class ContaRepository implements IContaRepository, PanacheRepository<Conta>{
-	
+
 	@Override
 	@Transactional
 	public Conta criaconta(Conta conta) {

@@ -94,7 +94,7 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 		}
 		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(new Date()));
 	}
-	
+
 	@Override
 	public List<MovimentacaoDTO> buscaMovimentacoes(Long id, String token) {
 		String googleId = tokenBusiness.getToken(token);

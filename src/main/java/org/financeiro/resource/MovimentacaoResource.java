@@ -65,7 +65,7 @@ public class MovimentacaoResource {
 		return movimentacaoBusiness.
 			listaMovimentacoesPorIdContaEPeriodo(token, dataInicio, dataFim);
 	}
-	
+
 	@GET
 	@Path("/parametros")
 	@Produces(MediaType.APPLICATION_JSON)

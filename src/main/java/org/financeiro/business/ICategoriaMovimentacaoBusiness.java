@@ -22,7 +22,7 @@ public interface ICategoriaMovimentacaoBusiness {
 
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String token, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
-	
+
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String token, Long dataInicio,
 		Long dataFim, String tipoMovimentacao);
 

@@ -14,7 +14,7 @@ public class CategoriaMovimentacao extends PanacheEntity{
 
 	public CategoriaMovimentacao() {
 	}
-	
+
 	public CategoriaMovimentacao(Long id, String tipoMovimentacao, String nomeCategoria, String googleId) {
 		this.id = id;
 		this.tipoMovimentacao = tipoMovimentacao;
