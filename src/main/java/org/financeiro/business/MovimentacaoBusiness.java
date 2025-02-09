@@ -87,7 +87,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		}
 		
 	}
-
+	
 	@Override
 	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String token, Long dataInicio, Long dataFim) {
 		String googleId = tokenBusiness.getToken(token);

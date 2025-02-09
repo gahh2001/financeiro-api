@@ -4,8 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
-
-
+	
 public interface ISomaCategoriasPorPeriodoRepository {
 
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Date dataInicio,
