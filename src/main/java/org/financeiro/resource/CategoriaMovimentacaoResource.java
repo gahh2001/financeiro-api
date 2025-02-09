@@ -15,23 +15,19 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/categoria-movimentacao")
 @ApplicationScoped
 public class CategoriaMovimentacaoResource {
-
-	@Context
-	ContainerRequestContext requestContext;
 
 	@Inject
 	ICategoriaMovimentacaoBusiness business;
@@ -42,11 +38,10 @@ public class CategoriaMovimentacaoResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
+	public Response criaCategoriaMovimentacao(@HeaderParam("Authorization") String token,
+			CategoriaMovimentacao categoria) {
 		if (categoria != null) {
 			try {
-				String googleId = (String) requestContext.getProperty("googleId");
-				categoria.setGoogleId(googleId);
 				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
 				return Response.ok(criada).build();
 			} catch ( NonExistentAccount e ) {
@@ -59,39 +54,39 @@ public class CategoriaMovimentacaoResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta() {
-		String googleId = (String) requestContext.getProperty("googleId");
-		return business.listaCategoriasMovimentacaoPorConta(googleId);
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(
+			@HeaderParam("Authorization") String token) {
+		return business.listaCategoriasMovimentacaoPorConta(token);
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(
+			@HeaderParam("Authorization") String token,
 			@PathParam(value = "id") Long idCategoria) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		return business.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
+		return business.listaCategoriaMovimentacaoPorId(idCategoria, token);
 	}
 
 	@GET
 	@Path("/tipo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
+			@HeaderParam("Authorization") String token,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
+		return business.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, token);
 	}
 
 	@GET
 	@Path("/soma-categorias")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaCategorias(
+			@HeaderParam("Authorization") String token,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
-		String googleId = (String) requestContext.getProperty("googleId");
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorCategoria(googleId, dataInicio, dataFim, tipoMovimentacao);
+			.listaSomaPorCategoria(token, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
 	}
 
@@ -99,12 +94,12 @@ public class CategoriaMovimentacaoResource {
 	@Path("/soma-categorias-meses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaCategoriasPorMes(
-			@QueryParam("googleId") String googleId,
+			@HeaderParam("Authorization") String token,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorCategoriaEMeses(googleId, dataInicio, dataFim, tipoMovimentacao);
+			.listaSomaPorCategoriaEMeses(token, dataInicio, dataFim, tipoMovimentacao);
 		return Response.ok(list).build();
 	}
 
@@ -112,27 +107,28 @@ public class CategoriaMovimentacaoResource {
 	@Path("/soma-tipos-meses")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listaSomaPorTipoEMeses(
-			@QueryParam("googleId") String googleId,
+			@HeaderParam("Authorization") String token,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorTipoEMeses(googleId, dataInicio, dataFim);
+			.listaSomaPorTipoEMeses(token, dataInicio, dataFim);
 		return Response.ok(list).build();
 	}
 
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(@HeaderParam("Authorization") String token,
+			CategoriaMovimentacao novaCategoria) {
 		return business.atualizaNomeCategoriaMovimentacao(novaCategoria);
 	}
 
 	@DELETE
 	@Path("/{idCategoria}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeCategoriaMovimentacao(@PathParam(value = "idCategoria") Long idCategoria,
-			@QueryParam("googleId") String googleId) {
-		CategoriaMovimentacao apagada = business.removeCategoriaMovimentacao(googleId, idCategoria);
+	public Response removeCategoriaMovimentacao(@HeaderParam("Authorization") String token,
+			@PathParam(value = "idCategoria") Long idCategoria) {
+		CategoriaMovimentacao apagada = business.removeCategoriaMovimentacao(token, idCategoria);
 		if (apagada != null) {
 			return Response.ok(apagada).build();
 		}
@@ -144,9 +140,9 @@ public class CategoriaMovimentacaoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/soma-informacoes-gerais")
 	public MediasGeraisDTO obtemMediasGeraisAnalitico(
+			@HeaderParam("Authorization") String token,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		return mediasBusiness.obtemMediasGerais(googleId, new Date(dataInicio), new Date(dataFim));
+		return mediasBusiness.obtemMediasGerais(token, new Date(dataInicio), new Date(dataFim));
 	}
 }

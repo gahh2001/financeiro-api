@@ -11,6 +11,7 @@ import org.financeiro.exceptions.NonExistentAccount;
 import org.financeiro.repository.ICategoriaMovimentacaoRepository;
 import org.financeiro.repository.IMovimentacaoRepository;
 import org.financeiro.repository.ISomaCategoriasPorPeriodoRepository;
+import org.financeiro.security.TokenSecurity;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,12 +22,18 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 
 	@Inject
 	IContaBusiness contaBusiness;
+
 	@Inject
 	ICategoriaMovimentacaoRepository repository;
+
 	@Inject
 	IMovimentacaoRepository repositoryMovimentacao;
+
 	@Inject
 	ISomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
+
+	@Inject
+	TokenSecurity tokenBusiness;
 
 	private static final Logger log = Logger.getLogger(CategoriaMovimentacaoBusiness.class);
 
@@ -40,25 +47,29 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId) {
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String token) {
+		String googleId = tokenBusiness.getToken(token);
 		return this.repository.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
 	@Override
-	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId) {
+	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String token) {
+		String googleId = tokenBusiness.getToken(token);
 		return repository.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 	}
 
 	@Override
-	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
-			String googleId) {
+	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
+			String tipoMovimentacao, String token) {
+		String googleId = tokenBusiness.getToken(token);
 		return repository.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
 	}
 
 	@Override
-	public CategoriaMovimentacao removeCategoriaMovimentacao(String googleId, Long idCategoria) {
-		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao.listaMovimentacaoPorIdCategoria(googleId,
-				idCategoria);
+	public CategoriaMovimentacao removeCategoriaMovimentacao(String token, Long idCategoria) {
+		String googleId = tokenBusiness.getToken(token);
+		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao
+			.listaMovimentacaoPorIdCategoria(googleId, idCategoria);
 		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 		if (movimentacoesExistentes == null || movimentacoesExistentes.isEmpty()) {
 			repository.removeCategoriaMovimentacao(idCategoria);
@@ -73,23 +84,26 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String token, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
+		String googleId = tokenBusiness.getToken(token);
 		return this.somaCategoriasPorMesRepository
 			.listaSomaPorCategoria(googleId, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
 	}
 
 	@Override
-	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String token, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
+		String googleId = tokenBusiness.getToken(token);
 		return this.somaCategoriasPorMesRepository
 			.listaSomaPorCategoriaEMeses(googleId, new Date(dataInicio),
 				new Date(dataFim), tipoMovimentacao);
 	}
 
 	@Override
-	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Long dataInicio,
+	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String token, Long dataInicio,
 			Long dataFim) {
+		String googleId = tokenBusiness.getToken(token);
 		List<SomaCategoriasPorPeriodoDTO> result = this.somaCategoriasPorMesRepository
 			.listaSomaPorTipoEMeses(googleId, new Date(dataInicio), new Date(dataFim));
 		result.forEach( soma -> 

@@ -10,11 +10,11 @@ import org.financeiro.entity.Planejamento;
 
 public interface IPlanejamentoBusiness {
 
-	Planejamento criar(PlanejamentoDTO planejamento);
-	Planejamento atualizar(PlanejamentoDTO planejamento);
-	List< PlanejamentoDTO > listarPorConta(String googleId);
+	Planejamento criar(String token, PlanejamentoDTO planejamento);
+	Planejamento atualizar(String token, PlanejamentoDTO planejamento);
+	List< PlanejamentoDTO > listarPorConta(String token);
 	void apagar(Long idPlanejamento);
-	ProgressosPlanejamentoDTO buscaProgressos(Long id, String googleId);
-	List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String googleId);
-	List<MovimentacaoDTO> buscaMovimentacoes(Long id, String googleId);
+	ProgressosPlanejamentoDTO buscaProgressos(Long id, String token);
+	List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String token);
+	List<MovimentacaoDTO> buscaMovimentacoes(Long id, String token);
 }

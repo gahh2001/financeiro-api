@@ -7,33 +7,30 @@ import org.financeiro.enumeration.JWTChave;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 
-import io.quarkus.security.Authenticated;
+import jakarta.annotation.Priority;
+import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-@Authenticated
+@Priority(Priorities.AUTHENTICATION)// não sei se precisa mesmo
 public class JwtAuthFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		String path = requestContext.getUriInfo().getPath();
-		if (path.equals("/login")) {  
+		if (path.equals("/login")) {
 			return;
 		}
-		DecodedJWT decodificador;
-		String auth = requestContext.getHeaderString("Authentication");
+		String auth = requestContext.getHeaderString("Authorization");
 		try {
 			if (auth != null && auth.startsWith("Bearer ")) {
 				Algorithm algoritmo = Algorithm.HMAC512(JWTChave.CHAVE.getValue());
 				JWTVerifier verificador = JWT.require(algoritmo).build();
-				decodificador = verificador.verify(auth.substring(7));
-				String googleId = decodificador.getClaim("googleId").asString();
-				requestContext.setProperty("googleId", googleId);
+				verificador.verify(auth.substring(7));
 				return;
 			}
 			throw new IOException();

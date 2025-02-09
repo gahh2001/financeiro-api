@@ -14,13 +14,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -28,64 +27,53 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class PlanejamentoResource {
 
-	@Context
-	ContainerRequestContext requestContext;
-
 	@Inject
 	IPlanejamentoBusiness business;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criar(PlanejamentoDTO planejamento) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		planejamento.setGoogleId(googleId);
-		Planejamento criado = this.business.criar(planejamento);
+	public Response criar(@HeaderParam("Authorization") String token, PlanejamentoDTO planejamento) {
+		Planejamento criado = this.business.criar(token, planejamento);
 		return Response.ok(criado).build();
 	}
 
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizar(PlanejamentoDTO planejamento) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		planejamento.setGoogleId(googleId);
-		this.business.atualizar(planejamento);
+	public Response atualizar(@HeaderParam("Authorization") String token, PlanejamentoDTO planejamento) {
+		this.business.atualizar(token, planejamento);
 		return Response.ok(planejamento).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listaPlanejamentosPorConta() {
-		String googleId = (String) requestContext.getProperty("googleId");
-		List<PlanejamentoDTO> resultado = this.business.listarPorConta(googleId);
+	public Response listaPlanejamentosPorConta(@HeaderParam("Authorization") String token) {
+		List<PlanejamentoDTO> resultado = this.business.listarPorConta(token);
 		return Response.ok(resultado).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/progressos")
-	public Response obtemProgressos(@PathParam(value = "id") Long id) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id, googleId);
+	public Response obtemProgressos(@HeaderParam("Authorization") String token, @PathParam(value = "id") Long id) {
+		ProgressosPlanejamentoDTO resultado = this.business.buscaProgressos(id, token);
 		return Response.ok(resultado).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/desempenho")
-	public Response obtemDesempenhos(@PathParam(value = "id") Long id) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		List<DesempenhoPlanejamentoDTO> resultado = this.business.buscaDesempenho(id, googleId);
+	public Response obtemDesempenhos(@HeaderParam("Authorization") String token, @PathParam(value = "id") Long id) {
+		List<DesempenhoPlanejamentoDTO> resultado = this.business.buscaDesempenho(id, token);
 		return Response.ok(resultado).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}/movimentacoes")
-	public Response obtemMovimentacoes(@PathParam(value = "id") Long id) {
-		String googleId = (String) requestContext.getProperty("googleId");
-		List<MovimentacaoDTO> resultado = this.business.buscaMovimentacoes(id, googleId);
+	public Response obtemMovimentacoes(@HeaderParam("Authorization") String token, @PathParam(value = "id") Long id) {
+		List<MovimentacaoDTO> resultado = this.business.buscaMovimentacoes(id, token);
 		return Response.ok(resultado).build();
 	}
 

@@ -11,6 +11,7 @@ import org.financeiro.dto.PlanejamentoDTO;
 import org.financeiro.dto.ProgressosPlanejamentoDTO;
 import org.financeiro.entity.Planejamento;
 import org.financeiro.repository.IPlanejamentoRepository;
+import org.financeiro.security.TokenSecurity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,18 +28,26 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	@Inject
 	IMovimentacaoBusiness movimentacoes;
 
+	@Inject
+	TokenSecurity tokenBusiness;
+
 	@Override
-	public Planejamento criar(PlanejamentoDTO planejamento) {
+	public Planejamento criar(String token, PlanejamentoDTO planejamento) {
+		String googleId = tokenBusiness.getToken(token);
+		planejamento.setGoogleId(googleId);
 		return this.repository.criar(planejamento.entidade());
 	}
 
 	@Override
-	public Planejamento atualizar(PlanejamentoDTO planejamento) {
+	public Planejamento atualizar(String token, PlanejamentoDTO planejamento) {
+		String googleId = tokenBusiness.getToken(token);
+		planejamento.setGoogleId(googleId);
 		return this.repository.atualizar(planejamento.entidade());
 	}
 
 	@Override
-	public List<PlanejamentoDTO> listarPorConta(String googleId) {
+	public List<PlanejamentoDTO> listarPorConta(String token) {
+		String googleId = tokenBusiness.getToken(token);
 		return this.repository.listarPorConta(googleId)
 			.stream()
 			.map(entidade -> entidade.dto())
@@ -51,7 +60,8 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	}
 
 	@Override
-	public ProgressosPlanejamentoDTO buscaProgressos(Long id, String googleId) {
+	public ProgressosPlanejamentoDTO buscaProgressos(Long id, String token) {
+		String googleId = tokenBusiness.getToken(token);
 		ProgressosPlanejamentoDTO dto = new ProgressosPlanejamentoDTO();
 		Planejamento planejamento = this.repository.obtemPorId(id);
 		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
@@ -76,7 +86,8 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	}
 
 	@Override
-	public List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String googleId) {
+	public List<DesempenhoPlanejamentoDTO> buscaDesempenho(Long id, String token) {
+		String googleId = tokenBusiness.getToken(token);
 		Planejamento planejamento = this.repository.obtemPorId(id);
 		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return null;
@@ -85,7 +96,8 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 	}
 	
 	@Override
-	public List<MovimentacaoDTO> buscaMovimentacoes(Long id, String googleId) {
+	public List<MovimentacaoDTO> buscaMovimentacoes(Long id, String token) {
+		String googleId = tokenBusiness.getToken(token);
 		Planejamento planejamento = this.repository.obtemPorId(id);
 		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return null;

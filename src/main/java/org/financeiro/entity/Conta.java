@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 public class Conta extends PanacheEntity {
 
 	private Double saldoConta;
-	private Double saldoInvestimento;
 	private String googleId;
 	private String primeiroNome;
 	private String sobrenome;
@@ -18,9 +17,8 @@ public class Conta extends PanacheEntity {
 	public Conta() {
 	}
 
-	public Conta(Double saldo, Double investimento, Long idUsuario) {
+	public Conta(Double saldo, Long idUsuario) {
 		this.saldoConta = saldo;
-		this.saldoInvestimento = investimento;
 	}
 
 	public Long getId() {
@@ -33,14 +31,6 @@ public class Conta extends PanacheEntity {
 
 	public void setSaldoConta(Double saldoDisponível) {
 		this.saldoConta = saldoDisponível;
-	}
-
-	public Double getSaldoInvestimento() {
-		return saldoInvestimento;
-	}
-
-	public void setSaldoInvestimento(Double investimento) {
-		this.saldoInvestimento = investimento;
 	}
 
 	public String getGoogleId() {

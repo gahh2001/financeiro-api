@@ -8,7 +8,7 @@ public interface IContaBusiness {
 	Conta criaconta(Conta conta);
 	Conta updateAccount(Conta conta);
 	Conta listaContaPorId(Long idConta);
-	Conta getAccountByGoogleId(String id);
+	Conta getAccountByGoogleId(String token);
 	void atualizaSaldoConta(Double valorMovimentacao, String googleId);
 	void atualizaInvestimento(double novoInvestimento, String googleId);
 	void editarSaldo( Conta conta, Double valor );

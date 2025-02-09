@@ -2,6 +2,7 @@ package org.financeiro.business;
 
 import org.financeiro.entity.Conta;
 import org.financeiro.repository.IContaRepository;
+import org.financeiro.security.TokenSecurity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -15,12 +16,14 @@ public class ContaBusiness implements IContaBusiness {
 	@Inject
 	ICategoriaMovimentacaoBusiness categoriasBusiness;
 
+	@Inject
+	TokenSecurity tokenBusiness;
+
 	@Override
 	public void processAccount(Conta conta) {
 		Conta contaExistente = this.contaRepository.getAccountByGoogleId(conta.getGoogleId());
 		if (contaExistente == null) {
 			conta.setSaldoConta(0.0);
-			conta.setSaldoInvestimento(0.0);
 			this.contaRepository.criaconta(conta);
 			this.categoriasBusiness.criaCategoriasIniciais(conta.getGoogleId());
 		}
@@ -44,8 +47,9 @@ public class ContaBusiness implements IContaBusiness {
 	}
 
 	@Override
-	public Conta getAccountByGoogleId(String id) {
-		return this.contaRepository.getAccountByGoogleId(id);
+	public Conta getAccountByGoogleId(String token) {
+		String googleId = tokenBusiness.getToken(token);
+		return this.contaRepository.getAccountByGoogleId(googleId);
 	}
 
 	@Override

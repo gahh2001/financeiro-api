@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.financeiro.dto.MediasGeraisDTO;
 import org.financeiro.repository.IMediasGeraisRepository;
+import org.financeiro.security.TokenSecurity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -14,8 +15,12 @@ public class MediasGeraisBusiness implements IMediasGeraisBusiness{
 	@Inject
 	IMediasGeraisRepository mediasRepository;
 
+	@Inject
+	TokenSecurity tokenBusiness;
+
 	@Override
-	public MediasGeraisDTO obtemMediasGerais(String googleId, Date dataInicio, Date dataFim) {
+	public MediasGeraisDTO obtemMediasGerais(String token, Date dataInicio, Date dataFim) {
+		String googleId = tokenBusiness.getToken(token);
 		MediasGeraisDTO maisGanha = this.mediasRepository
 			.obtemCategoriaMaisRegistradaPorTipo(googleId, dataInicio, dataFim, "POSITIVO");
 		MediasGeraisDTO maisGasta = this.mediasRepository
