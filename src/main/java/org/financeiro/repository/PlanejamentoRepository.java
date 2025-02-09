@@ -89,7 +89,7 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 			? "and m.tipomovimentacao = 'NEGATIVO' " : "and m.idcategoriamovimentacao in :categorias ";
 		String sql = "select sum(m.valor) as valor, DATE_TRUNC('month', m.dataMovimentacao) as data "
 			+ "from Movimentacao m where m.googleId = :googleId and m.dataMovimentacao between :inicio "
-			+ "and :fim "  + criterioCategoria + "group by DATE_TRUNC('month', m.dataMovimentacao)";
+			+ "and :fim " + criterioCategoria + "group by DATE_TRUNC('month', m.dataMovimentacao)";
 		Query query = getEntityManager()
 			.createNativeQuery(sql)
 			.unwrap(org.hibernate.query.NativeQuery.class)
