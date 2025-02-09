@@ -37,7 +37,7 @@ public class Conta extends PanacheEntity {
 		return googleId;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 
@@ -45,7 +45,7 @@ public class Conta extends PanacheEntity {
 		return primeiroNome;
 	}
 
-	public void setPrimeiroNome( String firstName ) {
+	public void setPrimeiroNome(String firstName) {
 		this.primeiroNome = firstName;
 	}
 
@@ -53,7 +53,7 @@ public class Conta extends PanacheEntity {
 		return sobrenome;
 	}
 
-	public void setSobrenome( String secondName ) {
+	public void setSobrenome(String secondName) {
 		this.sobrenome = secondName;
 	}
 
@@ -61,7 +61,7 @@ public class Conta extends PanacheEntity {
 		return nome;
 	}
 
-	public void setNome( String name ) {
+	public void setNome(String name) {
 		this.nome = name;
 	}
 
@@ -69,7 +69,7 @@ public class Conta extends PanacheEntity {
 		return email;
 	}
 
-	public void setEmail( String email ) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -77,7 +77,7 @@ public class Conta extends PanacheEntity {
 		return foto;
 	}
 
-	public void setFoto( String picture ) {
+	public void setFoto(String picture) {
 		this.foto = picture;
 	}
 

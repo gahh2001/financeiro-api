@@ -11,5 +11,5 @@ public interface IContaBusiness {
 	Conta getAccountByGoogleId(String token);
 	void atualizaSaldoConta(Double valorMovimentacao, String googleId);
 	void atualizaInvestimento(double novoInvestimento, String googleId);
-	void editarSaldo( Conta conta, Double valor );
+	void editarSaldo(Conta conta, Double valor);
 }

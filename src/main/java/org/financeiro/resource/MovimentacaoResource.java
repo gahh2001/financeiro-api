@@ -37,7 +37,7 @@ public class MovimentacaoResource {
 			try {
 				Movimentacao criado = movimentacaoBusiness.criaMovimentacao(token, movimentacao);
 				return Response.ok(criado).build();
-			} catch ( NonExistentAccount e ) {}
+			} catch (NonExistentAccount e) {}
 		}
 		return Response.status(400)
 			.entity("Informe todos os dados corretamente").build();
@@ -50,7 +50,7 @@ public class MovimentacaoResource {
 		try {
 			Movimentacao atualizada = movimentacaoBusiness.atualizaMovimentacao(token, movimentacao);
 			return Response.ok(atualizada).build();
-		} catch ( NonExistentAccount e ) {
+		} catch (NonExistentAccount e) {
 			return Response.status(400)
 				.entity("Informe todos os dados corretamente").build();
 		}

@@ -13,8 +13,8 @@ public class SomaCategoriasPorPeriodoDTO {
 		this.somaMovimentacao = formatDouble(somaMovimentacao);
 	}
 
-	public SomaCategoriasPorPeriodoDTO( String nomeCategoria,
-			Date data, Double somaMovimentacao ) {
+	public SomaCategoriasPorPeriodoDTO(String nomeCategoria,
+			Date data, Double somaMovimentacao) {
 		this.nomeCategoria = nomeCategoria;
 		this.somaMovimentacao = somaMovimentacao;
 		this.data = data;
@@ -32,7 +32,7 @@ public class SomaCategoriasPorPeriodoDTO {
 		return data;
 	}
 
-	public void setNomeCategoria( String nomeCategoria ) {
+	public void setNomeCategoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
 

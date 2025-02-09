@@ -59,7 +59,7 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		return googleId;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 
@@ -67,7 +67,7 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		return icone;
 	}
 
-	public void setIcone( String simbolo ) {
+	public void setIcone(String simbolo) {
 		this.icone = simbolo;
 	}
 
@@ -75,7 +75,7 @@ public class CategoriaMovimentacao extends PanacheEntity{
 		return corIcone;
 	}
 
-	public void setCorIcone( String corSimbolo ) {
+	public void setCorIcone(String corSimbolo) {
 		this.corIcone = corSimbolo;
 	}
 }

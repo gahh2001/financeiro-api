@@ -44,7 +44,7 @@ public class CategoriaMovimentacaoResource {
 			try {
 				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
 				return Response.ok(criada).build();
-			} catch ( NonExistentAccount e ) {
+			} catch (NonExistentAccount e) {
 				return Response.status(400)
 					.entity(e.getMessage()).build();
 			}

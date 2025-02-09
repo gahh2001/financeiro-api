@@ -24,7 +24,7 @@ public class LoginResource {
 		try {
 			LoginDTO id = this.loginBusiness.validateLogin(login.getCredential());
 			return Response.ok(id).build();
-		} catch ( LoginException e ) {
+		} catch (LoginException e) {
 			return Response.status(401).build();
 		}
 	}

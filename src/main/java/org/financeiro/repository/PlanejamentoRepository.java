@@ -20,14 +20,14 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 
 	@Override
 	@Transactional
-	public Planejamento criar( Planejamento planejamento ) {
+	public Planejamento criar(Planejamento planejamento) {
 		this.persist(planejamento);
 		return planejamento;
 	}
 
 	@Override
 	@Transactional
-	public Planejamento atualizar( Planejamento planejamento ) {
+	public Planejamento atualizar(Planejamento planejamento) {
 		Planejamento existente = this.findById(planejamento.getId());
 		if (existente != null) {
 			existente.setAtivo(planejamento.getAtivo());
@@ -45,13 +45,13 @@ public class PlanejamentoRepository implements IPlanejamentoRepository, PanacheR
 
 	@Override
 	@Transactional
-	public List< Planejamento > listarPorConta( String googleId ) {
+	public List< Planejamento > listarPorConta(String googleId) {
 		return this.list("select p from Planejamento p where p.googleId = ?1 order by p.dataInicio asc", googleId);
 	}
 
 	@Override
 	@Transactional
-	public void apagar( Long idPlanejamento ) {
+	public void apagar(Long idPlanejamento) {
 		this.deleteById(idPlanejamento);
 	}
 

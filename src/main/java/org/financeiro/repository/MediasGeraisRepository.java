@@ -23,7 +23,7 @@ public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO
 	public MediasGeraisDTO obtemCategoriaMaisRegistradaPorTipo(String googleId, Date dataInicio,
 			Date dataFim, String tipo) {
 		List<MediasGeraisDTO> result = list(
-			"select new org.financeiro.dto.MediasGeraisDTO( cm.nomeCategoria as categoriaMaisGasta, "
+			"select new org.financeiro.dto.MediasGeraisDTO(cm.nomeCategoria as categoriaMaisGasta, "
 			+ "SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN CategoriaMovimentacao cm "
 			+ "ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = ?1 and m.dataMovimentacao BETWEEN "
 			+ "?2 AND ?3 and m.tipoMovimentacao = ?4 GROUP BY cm.nomeCategoria ORDER BY somaMovimentacao "

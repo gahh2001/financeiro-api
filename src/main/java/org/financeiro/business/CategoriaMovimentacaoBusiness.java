@@ -106,7 +106,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		String googleId = tokenBusiness.getToken(token);
 		List<SomaCategoriasPorPeriodoDTO> result = this.somaCategoriasPorMesRepository
 			.listaSomaPorTipoEMeses(googleId, new Date(dataInicio), new Date(dataFim));
-		result.forEach( soma -> 
+		result.forEach(soma -> 
 			soma.setNomeCategoria("POSITIVO".equals(soma.getNomeCategoria()) ? "Rendimentos" : "Despesas"));
 		return result;
 	}

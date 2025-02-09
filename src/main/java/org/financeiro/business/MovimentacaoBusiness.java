@@ -177,7 +177,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String token, Long dataInicio, Long dataFim,
 			String tipo, String categorias) {
 		String googleId = tokenBusiness.getToken(token);
-		return  this.movimentacaoDTORepository.listaMovimentacoesPorParametros( googleId,
+		return  this.movimentacaoDTORepository.listaMovimentacoesPorParametros(googleId,
 			new Date(dataInicio), new Date(dataFim), tipo, Arrays.asList(categorias.split(",")));
 	}
 

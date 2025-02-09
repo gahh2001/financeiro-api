@@ -30,9 +30,9 @@ public class MovimentacaoDTO {
 	public MovimentacaoDTO() {
 	}
 
-	public MovimentacaoDTO( Long id, Double valor, Date dataMovimentacao, String tipoMovimentacao,
+	public MovimentacaoDTO(Long id, Double valor, Date dataMovimentacao, String tipoMovimentacao,
 			Long idCategoriaMovimentacao, String nomeCategoriaMovimentacao,
-			String descricaoMovimentacao, String icone, String corIcone ) {
+			String descricaoMovimentacao, String icone, String corIcone) {
 		this.id = id;
 		this.valor = valor;
 		this.dataMovimentacao = dataMovimentacao;
@@ -56,7 +56,7 @@ public class MovimentacaoDTO {
 		return googleId;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 
@@ -112,7 +112,7 @@ public class MovimentacaoDTO {
 		return icone;
 	}
 
-	public void setIcone( String icone ) {
+	public void setIcone(String icone) {
 		this.icone = icone;
 	}
 
@@ -120,7 +120,7 @@ public class MovimentacaoDTO {
 		return corIcone;
 	}
 
-	public void setCorIcone( String corIcone ) {
+	public void setCorIcone(String corIcone) {
 		this.corIcone = corIcone;
 	}
 }

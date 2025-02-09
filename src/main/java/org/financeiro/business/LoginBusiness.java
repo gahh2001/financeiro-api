@@ -43,7 +43,7 @@ public class LoginBusiness implements ILoginBusiness {
 			} else {
 				throw new LoginException();
 			}
-		} catch ( GeneralSecurityException | IOException e ) {
+		} catch (GeneralSecurityException | IOException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -66,10 +66,10 @@ public class LoginBusiness implements ILoginBusiness {
 		return new LoginDTO(conta.getFoto(), token);
 	}
 
-	private String geraToken( String googleId ) {
+	private String geraToken(String googleId) {
 		Algorithm algoritmo = Algorithm.HMAC512(JWTChave.CHAVE.getValue());
 		return JWT.create()
-			.withClaim( "googleId", googleId )
-			.sign( algoritmo );
+			.withClaim("googleId", googleId)
+			.sign(algoritmo);
 	}
 }

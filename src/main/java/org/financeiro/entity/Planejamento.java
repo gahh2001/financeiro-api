@@ -41,7 +41,7 @@ public class Planejamento extends PanacheEntity {
 		this.id = id;
 	}
 
-	public void setNome( String nome ) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -49,7 +49,7 @@ public class Planejamento extends PanacheEntity {
 		return dataInicio;
 	}
 
-	public void setDataInicio( Date dataInicio ) {
+	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
@@ -57,7 +57,7 @@ public class Planejamento extends PanacheEntity {
 		return dataFim;
 	}
 
-	public void setDataFim( Date dataFim ) {
+	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
 
@@ -65,7 +65,7 @@ public class Planejamento extends PanacheEntity {
 		return tipo;
 	}
 
-	public void setTipo( String tipo ) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -73,7 +73,7 @@ public class Planejamento extends PanacheEntity {
 		return recorrencia;
 	}
 
-	public void setRecorrencia( String recorrencia ) {
+	public void setRecorrencia(String recorrencia) {
 		this.recorrencia = recorrencia;
 	}
 
@@ -81,7 +81,7 @@ public class Planejamento extends PanacheEntity {
 		return valor;
 	}
 
-	public void setValor( Double valor ) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
@@ -89,7 +89,7 @@ public class Planejamento extends PanacheEntity {
 		return categorias;
 	}
 
-	public void setCategorias( String categorias ) {
+	public void setCategorias(String categorias) {
 		this.categorias = categorias;
 	}
 
@@ -97,7 +97,7 @@ public class Planejamento extends PanacheEntity {
 		return googleId;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 
@@ -105,7 +105,7 @@ public class Planejamento extends PanacheEntity {
 		return ativo;
 	}
 
-	public void setAtivo( Boolean ativo ) {
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
 

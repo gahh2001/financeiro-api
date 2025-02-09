@@ -56,39 +56,39 @@ public class PlanejamentoDTO {
 		return googleId;
 	}
 
-	public void setId( Long id ) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setDataInicio( Date dataInicio ) {
+	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public void setDataFim( Date dataFim ) {
+	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
 
-	public void setNome( String nome ) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public void setTipo( String tipo ) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-	public void setRecorrencia( String recorrencia ) {
+	public void setRecorrencia(String recorrencia) {
 		this.recorrencia = recorrencia;
 	}
 
-	public void setValor( Double valor ) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
-	public void setCategorias( List< Integer > categorias ) {
+	public void setCategorias(List< Integer > categorias) {
 		this.categorias = categorias;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 
@@ -96,7 +96,7 @@ public class PlanejamentoDTO {
 		return ativo;
 	}
 
-	public void setAtivo( Boolean ativo ) {
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
 

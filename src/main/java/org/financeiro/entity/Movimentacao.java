@@ -69,7 +69,7 @@ public class Movimentacao extends PanacheEntity {
 		return googleId;
 	}
 
-	public void setGoogleId( String googleId ) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 }

@@ -40,7 +40,7 @@ public class CategoriaMovimentacaoRepository
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
 			String googleId) {
 		return "TODOS".equals(tipoMovimentacao)
-			? this.listaCategoriasMovimentacaoPorConta( googleId )
+			? this.listaCategoriasMovimentacaoPorConta(googleId)
 			: list("select t from CategoriaMovimentacao t where t.tipoMovimentacao = ?1 "
 				+ "and t.googleId = ?2 order by t.nomeCategoria asc",
 				tipoMovimentacao, googleId);

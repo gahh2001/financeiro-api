@@ -9,19 +9,19 @@ public class ProgressosPlanejamentoDTO {
 	public Double getMensal() {
 		return mensal;
 	}
-	public void setMensal( Double mensal ) {
+	public void setMensal(Double mensal) {
 		this.mensal = mensal;
 	}
 	public Double getAnual() {
 		return anual;
 	}
-	public void setAnual( Double anual ) {
+	public void setAnual(Double anual) {
 		this.anual = anual;
 	}
 	public Double getTodo() {
 		return todo;
 	}
-	public void setTodo( Double todo ) {
+	public void setTodo(Double todo) {
 		this.todo = todo;
 	}
 }
