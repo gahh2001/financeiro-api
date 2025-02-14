@@ -3,6 +3,7 @@ package org.financeiro.security;
 import java.io.IOException;
 
 import org.financeiro.enumeration.JWTChave;
+import org.jboss.logging.Logger;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -19,10 +20,12 @@ import jakarta.ws.rs.ext.Provider;
 @Priority(Priorities.AUTHENTICATION)// não sei se precisa mesmo
 public class JwtAuthFilter implements ContainerRequestFilter {
 
+	private static final Logger LOG = Logger.getLogger(JwtAuthFilter.class);
+
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		System.out.println(requestContext.getUriInfo().getPath());
-		System.out.println(requestContext.getHeaderString("Authorization"));
+		LOG.info(requestContext.getUriInfo().getPath());
+		LOG.info(requestContext.getHeaderString("Authorization"));
 		String path = requestContext.getUriInfo().getPath();
 		if (path.equals("/login")) {
 			return;
