@@ -17,6 +17,7 @@ public class TokenSecurity {
 		Algorithm algoritmo = Algorithm.HMAC512(JWTChave.CHAVE.getValue());
 		JWTVerifier verificador = JWT.require(algoritmo).build();
 		decodificador = verificador.verify(token.substring(7));
+		System.out.println("googleId: " + decodificador.getClaim("googleId").asString());
 		return decodificador.getClaim("googleId").asString();
 	}
 }
