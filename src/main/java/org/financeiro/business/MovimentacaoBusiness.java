@@ -40,7 +40,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	@Override
 	public Movimentacao criaMovimentacao(String token, Movimentacao movimentacao) throws NonExistentAccount {
 		String googleId = tokenBusiness.getToken(token);
-		Conta existente = this.contaBusiness.getAccountByGoogleId(movimentacao.getGoogleId());
+		Conta existente = this.contaBusiness.getAccountByGoogleId(token);
 		if (existente == null) {
 			throw new NonExistentAccount(movimentacao.getGoogleId());
 		}
@@ -151,7 +151,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	@Override
 	public Boolean removeMovimentacao(Long idMovimentacao, String token) {
 		String googleId = tokenBusiness.getToken(token);
-		Conta conta = this.contaBusiness.getAccountByGoogleId(googleId);
+		Conta conta = this.contaBusiness.getAccountByGoogleId(token);
 		if (conta == null) {
 			return false;
 		}
