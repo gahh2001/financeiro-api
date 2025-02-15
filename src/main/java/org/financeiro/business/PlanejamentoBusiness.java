@@ -105,10 +105,10 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 		List<Integer> categorias = new Gson().fromJson(planejamento.getCategorias(),
 			new TypeToken<List<Integer>>() {}.getType());
 		if (categorias.contains(-1)) {
-			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(planejamento.getGoogleId(),
-				"POSITIVO", planejamento.getDataInicio().toString(), planejamento.getDataFim().toString());
+			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(token, "POSITIVO",
+				planejamento.getDataInicio().toString(), planejamento.getDataFim().toString());
 		} else if (categorias.contains(-2)){
-			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(planejamento.getGoogleId(),
+			return this.movimentacoes.listaMovimentacoesPorTipoMovimentacao(token,
 				"NEGATIVO", planejamento.getDataInicio().toString(), planejamento.getDataFim().toString());
 		} else {
 			return categorias.stream()
