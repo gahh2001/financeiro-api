@@ -113,7 +113,7 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 		} else {
 			return categorias.stream()
 				.map(categ -> this.movimentacoes
-					.listaMovimentacaoPorIdCategoria(planejamento.getGoogleId(), categ.longValue(),
+					.listaMovimentacaoPorIdCategoria(token, categ.longValue(),
 						planejamento.getDataInicio().toString(),
 						planejamento.getDataFim().toString()))
 				.flatMap(List::stream)

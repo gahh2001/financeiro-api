@@ -20,7 +20,7 @@ public interface IMovimentacaoBusiness {
 	List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(String token, String tipoMovimentacao,
 			String dataInicio, String dataFim);
 
-	List<MovimentacaoDTO> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, String dataInicio,
+	List<MovimentacaoDTO> listaMovimentacaoPorIdCategoria(String token, Long idCategoria, String dataInicio,
 			String dataFim);
 
 	List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria);

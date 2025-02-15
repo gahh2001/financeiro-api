@@ -73,7 +73,7 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		String googleId = tokenBusiness.getToken(token);
 		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao
 			.listaMovimentacaoPorIdCategoria(googleId, idCategoria);
-		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria, googleId);
+		CategoriaMovimentacao paraApagar = listaCategoriaMovimentacaoPorId(idCategoria, token);
 		if (movimentacoesExistentes == null || movimentacoesExistentes.isEmpty()) {
 			repository.removeCategoriaMovimentacao(idCategoria);
 			return paraApagar;
