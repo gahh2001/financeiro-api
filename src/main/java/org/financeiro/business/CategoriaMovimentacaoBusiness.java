@@ -38,8 +38,10 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	private static final Logger log = Logger.getLogger(CategoriaMovimentacaoBusiness.class);
 
 	@Override
-	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount {
-		Conta existente = this.contaBusiness.getAccountByGoogleId(categoria.getGoogleId());
+	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria,
+			String token) throws NonExistentAccount {
+		String googleId = tokenBusiness.getToken(token);
+		Conta existente = this.contaBusiness.getAccountByGoogleId(googleId);
 		if (existente == null) {
 			throw new NonExistentAccount(categoria.getGoogleId());
 		}
@@ -122,10 +124,10 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		CategoriaMovimentacao quarta = new CategoriaMovimentacao(
 			"NEGATIVO", "Gastos", googleId, "#f45dfa", "FAVORITO");
 		try {
-			this.criaCategoriaMovimentacao(primeira);
-			this.criaCategoriaMovimentacao(segunda);
-			this.criaCategoriaMovimentacao(terceira);
-			this.criaCategoriaMovimentacao(quarta);
+			this.criaCategoriaMovimentacao(primeira, googleId);
+			this.criaCategoriaMovimentacao(segunda, googleId);
+			this.criaCategoriaMovimentacao(terceira, googleId);
+			this.criaCategoriaMovimentacao(quarta, googleId);
 		} catch (NonExistentAccount e) {
 			log.error("Erro ao criar categorias padrão para a conta " + googleId);
 		}

@@ -8,7 +8,7 @@ import org.financeiro.exceptions.NonExistentAccount;
 
 public interface ICategoriaMovimentacaoBusiness {
 
-	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) throws NonExistentAccount;
+	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria, String token) throws NonExistentAccount;
 
 	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String token);
 

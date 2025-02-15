@@ -42,7 +42,7 @@ public class CategoriaMovimentacaoResource {
 			CategoriaMovimentacao categoria) {
 		if (categoria != null) {
 			try {
-				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria);
+				CategoriaMovimentacao criada = business.criaCategoriaMovimentacao(categoria, token);
 				return Response.ok(criada).build();
 			} catch (NonExistentAccount e) {
 				return Response.status(400)
