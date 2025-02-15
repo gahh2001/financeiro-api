@@ -40,6 +40,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	@Override
 	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria,
 			String token) throws NonExistentAccount {
+		String googleId = tokenBusiness.getToken(token);
+		categoria.setGoogleId(googleId);
 		Conta existente = this.contaBusiness.getAccountByGoogleId(token);
 		if (existente == null) {
 			throw new NonExistentAccount(categoria.getGoogleId());
