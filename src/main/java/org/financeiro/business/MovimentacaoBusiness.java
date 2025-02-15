@@ -65,7 +65,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		String googleId = tokenBusiness.getToken(token);
 		try {
 			atualizada.setGoogleId(googleId);
-			Double saldoAtual = contaBusiness.getAccountByGoogleId(atualizada.getGoogleId())
+			Double saldoAtual = contaBusiness.getAccountByGoogleId(token)
 				.getSaldoConta();
 			Double novoSaldo;
 			Double valorAntigoMovimentacao = this.movimentacaoRepository.
