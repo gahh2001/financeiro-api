@@ -135,7 +135,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			.map(movimentacao -> {
 				MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
 				CategoriaMovimentacao categoria = categoriaBusiness
-					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), googleId);
+					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), token);
 				dto.setNomeCategoriaMovimentacao(categoria.getNomeCategoria());
 				dto.setIcone(categoria.getIcone());
 				dto.setCorIcone(categoria.getCorIcone());
