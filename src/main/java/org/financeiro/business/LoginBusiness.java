@@ -61,8 +61,8 @@ public class LoginBusiness implements ILoginBusiness {
 		conta.setFoto((String) payload.get("picture"));
 		conta.setSobrenome((String) payload.get("family_name"));
 		conta.setPrimeiroNome((String) payload.get("given_name"));
-		this.contaBusiness.processAccount(conta);
 		String token = this.geraToken(conta.getGoogleId());
+		this.contaBusiness.processAccount(conta, "Bearer " + token);
 		return new LoginDTO(conta.getFoto(), token);
 	}
 

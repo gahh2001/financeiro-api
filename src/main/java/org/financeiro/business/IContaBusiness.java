@@ -4,7 +4,7 @@ import org.financeiro.entity.Conta;
 
 public interface IContaBusiness {
 
-	void processAccount(Conta conta);
+	void processAccount(Conta conta, String token);
 	Conta criaconta(Conta conta);
 	Conta updateAccount(Conta conta);
 	Conta listaContaPorId(Long idConta);

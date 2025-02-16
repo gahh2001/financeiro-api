@@ -115,7 +115,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public void criaCategoriasIniciais(String googleId) {
+	public void criaCategoriasIniciais(String token) {
+		String googleId = tokenBusiness.getToken(token);
 		CategoriaMovimentacao primeira = new CategoriaMovimentacao(
 			"POSITIVO", "Depósito", googleId, "#239d12", "DINHEIRO");
 		CategoriaMovimentacao segunda = new CategoriaMovimentacao(
@@ -125,10 +126,10 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		CategoriaMovimentacao quarta = new CategoriaMovimentacao(
 			"NEGATIVO", "Gastos", googleId, "#f45dfa", "FAVORITO");
 		try {
-			this.criaCategoriaMovimentacao(primeira, googleId);
-			this.criaCategoriaMovimentacao(segunda, googleId);
-			this.criaCategoriaMovimentacao(terceira, googleId);
-			this.criaCategoriaMovimentacao(quarta, googleId);
+			this.criaCategoriaMovimentacao(primeira, token);
+			this.criaCategoriaMovimentacao(segunda, token);
+			this.criaCategoriaMovimentacao(terceira, token);
+			this.criaCategoriaMovimentacao(quarta, token);
 		} catch (NonExistentAccount e) {
 			log.error("Erro ao criar categorias padrão para a conta " + googleId);
 		}
