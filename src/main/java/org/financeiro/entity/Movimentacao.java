@@ -17,6 +17,7 @@ public class Movimentacao extends PanacheEntity {
 	private Long idCategoriaMovimentacao;
 	private String descricaoMovimentacao;
 	private String googleId;
+	private Boolean alteraSaldo;
 
 	public Movimentacao() {
 	}
@@ -71,5 +72,13 @@ public class Movimentacao extends PanacheEntity {
 
 	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
+	}
+
+	public Boolean getAlteraSaldo() {
+		return alteraSaldo;
+	}
+
+	public void setAlteraSaldo( Boolean alteraSaldo ) {
+		this.alteraSaldo = alteraSaldo;
 	}
 }

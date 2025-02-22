@@ -38,26 +38,17 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 	TokenSecurity tokenBusiness;
 
 	@Override
-	public Movimentacao criaMovimentacao(String token, Movimentacao movimentacao) throws NonExistentAccount {
+	public Movimentacao criaMovimentacao(String token, Movimentacao novaMovimentacao) throws NonExistentAccount {
 		String googleId = tokenBusiness.getToken(token);
-		Conta existente = this.contaBusiness.getAccountByGoogleId(token);
-		if (existente == null) {
-			throw new NonExistentAccount(movimentacao.getGoogleId());
+		Conta conta = this.contaBusiness.getAccountByGoogleId(token);
+		if (conta == null) {
+			throw new NonExistentAccount(novaMovimentacao.getGoogleId());
 		}
-		movimentacao.setGoogleId(googleId);
-		Double novoSaldo;
-		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
-			case "NEGATIVO": {
-				novoSaldo = existente.getSaldoConta() - movimentacao.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
-				break;
-			}
-			default: {
-				novoSaldo = existente.getSaldoConta() + movimentacao.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
-			}
+		novaMovimentacao.setGoogleId(googleId);
+		if (novaMovimentacao.getAlteraSaldo()) {
+			this.atualizaSaldoAoCriar(novaMovimentacao, conta);
 		}
-		return movimentacaoRepository.criaMovimentacao(movimentacao);
+		return movimentacaoRepository.criaMovimentacao(novaMovimentacao);
 	}
 
 	@Override
@@ -65,27 +56,13 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		String googleId = tokenBusiness.getToken(token);
 		try {
 			atualizada.setGoogleId(googleId);
-			Double saldoAtual = contaBusiness.getAccountByGoogleId(token)
-				.getSaldoConta();
-			Double novoSaldo;
-			Double valorAntigoMovimentacao = this.movimentacaoRepository.
-				listaMovimentacaoPorId(atualizada.getId()).getValor();
-			switch (atualizada.getTipoMovimentacao().toUpperCase()) {
-				case "NEGATIVO": {
-					novoSaldo = saldoAtual + valorAntigoMovimentacao - atualizada.getValor();
-					contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
-					break;
-				}
-				default: {
-					novoSaldo = saldoAtual - valorAntigoMovimentacao + atualizada.getValor();
-					contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
-				}
+			if (atualizada.getAlteraSaldo()) {
+				this.atualizaSaldoAoEditar(atualizada, token);
 			}
 			return movimentacaoRepository.atualizaMovimentacao(atualizada);
 		} catch (NullPointerException e) {
 			throw new NonExistentAccount("");
 		}
-		
 	}
 	
 	@Override
@@ -160,15 +137,17 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			.listaMovimentacaoPorIdEConta(idMovimentacao, googleId);
 		Double saldoAtual = conta.getSaldoConta();
 		Double novoSaldo;
-		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
-			case "NEGATIVO": {
-				novoSaldo = saldoAtual + movimentacao.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
-				break;
-			}
-			default: {
-				novoSaldo = saldoAtual - movimentacao.getValor();
-				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
+		if (movimentacao.getAlteraSaldo()) {
+			switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
+				case "NEGATIVO": {
+					novoSaldo = saldoAtual + movimentacao.getValor();
+					contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
+					break;
+				}
+				default: {
+					novoSaldo = saldoAtual - movimentacao.getValor();
+					contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
+				}
 			}
 		}
 		return movimentacaoRepository.removeMovimentacao(idMovimentacao, googleId);
@@ -193,6 +172,43 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	private void atualizaSaldoAoCriar(Movimentacao movimentacao, Conta conta) {
+		Double novoSaldo;
+		switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
+			case "NEGATIVO": {
+				novoSaldo = conta.getSaldoConta() - movimentacao.getValor();
+				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
+				break;
+			}
+			default: {
+				novoSaldo = conta.getSaldoConta() + movimentacao.getValor();
+				contaBusiness.atualizaSaldoConta(novoSaldo, movimentacao.getGoogleId());
+			}
+		}
+	}
+
+	private void atualizaSaldoAoEditar(Movimentacao atualizada, String token) {
+		Movimentacao antiga = this.movimentacaoRepository.listaMovimentacaoPorId(atualizada.getId());
+		if (Boolean.FALSE.equals(antiga.getAlteraSaldo() && atualizada.getAlteraSaldo())) {
+			Conta conta = this.contaBusiness.getAccountByGoogleId(token);
+			this.atualizaSaldoAoCriar(antiga, conta);
+			return;
+		}
+		Double saldoAtual = contaBusiness.getAccountByGoogleId(token).getSaldoConta();
+		Double novoSaldo;
+		switch (atualizada.getTipoMovimentacao().toUpperCase()) {
+			case "NEGATIVO": {
+				novoSaldo = saldoAtual + antiga.getValor() - atualizada.getValor();
+				contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
+				break;
+			}
+			default: {
+				novoSaldo = saldoAtual - antiga.getValor() + atualizada.getValor();
+				contaBusiness.atualizaSaldoConta(novoSaldo, atualizada.getGoogleId());
+			}
 		}
 	}
 }
