@@ -138,7 +138,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			.listaMovimentacaoPorIdEConta(idMovimentacao, googleId);
 		Double saldoAtual = conta.getSaldoConta();
 		Double novoSaldo;
-		if (movimentacao.getAlteraSaldo()) {
+		if (Objects.isNull(movimentacao.getAlteraSaldo()) || movimentacao.getAlteraSaldo()) {
 			switch (movimentacao.getTipoMovimentacao().toUpperCase()) {
 				case "NEGATIVO": {
 					novoSaldo = saldoAtual + movimentacao.getValor();
