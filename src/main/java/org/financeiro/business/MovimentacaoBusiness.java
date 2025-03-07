@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.financeiro.dto.MovimentacaoDTO;
@@ -56,7 +57,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		String googleId = tokenBusiness.getToken(token);
 		try {
 			atualizada.setGoogleId(googleId);
-			if (atualizada.getAlteraSaldo()) {
+			if (Boolean.TRUE.equals(atualizada.getAlteraSaldo())) {
 				this.atualizaSaldoAoEditar(atualizada, token);
 			}
 			return movimentacaoRepository.atualizaMovimentacao(atualizada);
@@ -192,7 +193,8 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 
 	private void atualizaSaldoAoEditar(Movimentacao atualizada, String token) {
 		Movimentacao antiga = this.movimentacaoRepository.listaMovimentacaoPorId(atualizada.getId());
-		if (Boolean.FALSE.equals(antiga.getAlteraSaldo() && atualizada.getAlteraSaldo())) {
+		if ( Objects.nonNull(antiga.getAlteraSaldo()) && Objects.nonNull(atualizada.getAlteraSaldo())
+				&& Boolean.FALSE.equals(antiga.getAlteraSaldo() && Boolean.TRUE.equals(atualizada.getAlteraSaldo()))) {
 			Conta conta = this.contaBusiness.getAccountByGoogleId(token);
 			this.atualizaSaldoAoCriar(antiga, conta);
 			return;
