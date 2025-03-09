@@ -92,7 +92,7 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 		if (planejamento == null || !planejamento.getGoogleId().equals(googleId)) {
 			return null;
 		}
-		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(new Date()));
+		return this.repository.obtemDesempenho(planejamento, this.obtemDataFimMes(planejamento.getDataFim()));
 	}
 
 	@Override
