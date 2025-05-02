@@ -65,7 +65,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			throw new NonExistentAccount("");
 		}
 	}
-	
+
 	@Override
 	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String token, Long dataInicio, Long dataFim) {
 		String googleId = tokenBusiness.getToken(token);

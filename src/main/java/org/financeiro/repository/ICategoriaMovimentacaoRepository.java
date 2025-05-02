@@ -3,7 +3,7 @@ package org.financeiro.repository;
 import java.util.List;
 
 import org.financeiro.entity.CategoriaMovimentacao;
-	
+
 public interface ICategoriaMovimentacaoRepository {
 
 	CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria);
