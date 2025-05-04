@@ -11,8 +11,14 @@ import com.google.gson.Gson;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Planejamento extends PanacheEntity {
 
 	@Column(columnDefinition = "DATE")
@@ -29,86 +35,6 @@ public class Planejamento extends PanacheEntity {
 	private String googleId;
 	private Boolean ativo;
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getRecorrencia() {
-		return recorrencia;
-	}
-
-	public void setRecorrencia(String recorrencia) {
-		this.recorrencia = recorrencia;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
-
-	public String getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(String categorias) {
-		this.categorias = categorias;
-	}
-
-	public String getGoogleId() {
-		return googleId;
-	}
-
-	public void setGoogleId(String googleId) {
-		this.googleId = googleId;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public PlanejamentoDTO dto() {
 		PlanejamentoDTO dto = new PlanejamentoDTO();
 		dto.setId(this.id);
@@ -124,5 +50,13 @@ public class Planejamento extends PanacheEntity {
 		}
 		dto.setGoogleId(this.googleId);
 		return dto;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

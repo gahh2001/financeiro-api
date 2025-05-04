@@ -1,5 +1,10 @@
 package org.financeiro.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class MediasGeraisDTO {
 
 	private String categoriaMaisGasta;
@@ -20,30 +25,5 @@ public class MediasGeraisDTO {
 	}
 	public MediasGeraisDTO(Double ganhoMedia) {
 		this.ganhoMedia = ganhoMedia;
-	}
-
-	public String getCategoriaMaisGasta() {
-		return categoriaMaisGasta;
-	}
-	public void setCategoriaMaisGasta(String categoriaMaisGasta) {
-		this.categoriaMaisGasta = categoriaMaisGasta;
-	}
-	public String getCategoriaMenosGasta() {
-		return categoriaMenosGasta;
-	}
-	public void setCategoriaMenosGasta(String categoriaMenosGasta) {
-		this.categoriaMenosGasta = categoriaMenosGasta;
-	}
-	public Double getGanhoMedia() {
-		return ganhoMedia;
-	}
-	public void setGanhoMedia(Double ganhoMedia) {
-		this.ganhoMedia = ganhoMedia;
-	}
-	public Double getGastomedia() {
-		return gastomedia;
-	}
-	public void setGastomedia(Double gastomedia) {
-		this.gastomedia = gastomedia;
 	}
 }

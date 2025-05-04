@@ -2,8 +2,14 @@ package org.financeiro.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class CategoriaMovimentacao extends PanacheEntity{
 
 	private String tipoMovimentacao;
@@ -11,9 +17,7 @@ public class CategoriaMovimentacao extends PanacheEntity{
 	private String googleId;
 	private String icone;
 	private String corIcone;
-
-	public CategoriaMovimentacao() {
-	}
+	private Double valorPadrao;
 
 	public CategoriaMovimentacao(Long id, String tipoMovimentacao, String nomeCategoria, String googleId) {
 		this.id = id;
@@ -33,49 +37,5 @@ public class CategoriaMovimentacao extends PanacheEntity{
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTipoMovimentacao() {
-		return tipoMovimentacao;
-	}
-
-	public void setTipoMovimentacao(String tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
-	}
-
-	public String getNomeCategoria() {
-		return nomeCategoria;
-	}
-
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
-	}
-
-	public String getGoogleId() {
-		return googleId;
-	}
-
-	public void setGoogleId(String googleId) {
-		this.googleId = googleId;
-	}
-
-	public String getIcone() {
-		return icone;
-	}
-
-	public void setIcone(String simbolo) {
-		this.icone = simbolo;
-	}
-
-	public String getCorIcone() {
-		return corIcone;
-	}
-
-	public void setCorIcone(String corSimbolo) {
-		this.corIcone = corSimbolo;
 	}
 }

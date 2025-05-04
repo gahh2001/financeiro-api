@@ -2,6 +2,11 @@ package org.financeiro.dto;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SomaCategoriasPorPeriodoDTO {
 
 	private String nomeCategoria;
@@ -18,22 +23,6 @@ public class SomaCategoriasPorPeriodoDTO {
 		this.nomeCategoria = nomeCategoria;
 		this.somaMovimentacao = somaMovimentacao;
 		this.data = data;
-	}
-
-	public String getNomeCategoria() {
-		return nomeCategoria;
-	}
-
-	public Double getSomaMovimentacao() {
-		return somaMovimentacao;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
 	}
 
 	private Double formatDouble(Double value) {
