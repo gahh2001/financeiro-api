@@ -17,4 +17,6 @@ public interface ICategoriaMovimentacaoRepository {
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId);
 
 	List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao, String googleId);
+
+	List<Long> listaIdCategoriasPorNome(String googleId, List<String> nomes);
 }

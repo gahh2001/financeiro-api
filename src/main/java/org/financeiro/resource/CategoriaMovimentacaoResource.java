@@ -97,9 +97,9 @@ public class CategoriaMovimentacaoResource {
 			@HeaderParam("Authorization") String token,
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
-			@QueryParam("tipoMovimentacao") String tipoMovimentacao) {
+			@QueryParam("categoria") List<String> categorias) {
 		List<SomaCategoriasPorPeriodoDTO> list = business
-			.listaSomaPorCategoriaEMeses(token, dataInicio, dataFim, tipoMovimentacao);
+			.listaSomaPorCategoriaEMeses(token, dataInicio, dataFim, categorias);
 		return Response.ok(list).build();
 	}
 

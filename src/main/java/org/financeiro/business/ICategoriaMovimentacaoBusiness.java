@@ -24,7 +24,7 @@ public interface ICategoriaMovimentacaoBusiness {
 		Long dataFim, String tipoMovimentacao);
 
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String token, Long dataInicio,
-		Long dataFim, String tipoMovimentacao);
+		Long dataFim, List<String> categorias);
 
 	List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String token, Long dataInicio,
 		Long dataFim);

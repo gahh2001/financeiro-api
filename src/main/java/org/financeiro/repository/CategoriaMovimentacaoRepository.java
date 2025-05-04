@@ -60,4 +60,14 @@ public class CategoriaMovimentacaoRepository
 		antiga.persistAndFlush();
 		return antiga;
 	}
+
+	@Override
+	@Transactional
+	public List<Long> listaIdCategoriasPorNome(String googleId, List<String> nomes) {
+		return getEntityManager()
+			.createQuery("SELECT c.id FROM CategoriaMovimentacao c WHERE c.googleId = :googleId AND c.nomeCategoria IN :nomes", Long.class)
+			.setParameter("googleId", googleId)
+			.setParameter("nomes", nomes)
+			.getResultList();
+	}
 }

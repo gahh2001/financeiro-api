@@ -96,11 +96,23 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 
 	@Override
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String token, Long dataInicio,
-			Long dataFim, String tipoMovimentacao) {
+			Long dataFim, List<String> categorias) {
 		String googleId = tokenBusiness.getToken(token);
+		List<Long> idCategorias;
+		if (categorias.contains("POSITIVOS")) {
+			idCategorias = List.of(-1L);
+		} else if (categorias.contains("NEGATIVOS")) {
+			idCategorias = List.of(-2L);
+		} else {
+			idCategorias = this.obtemCategoriasPorNome(googleId, categorias);
+		}
 		return this.somaCategoriasPorMesRepository
 			.listaSomaPorCategoriaEMeses(googleId, new Date(dataInicio),
-				new Date(dataFim), tipoMovimentacao);
+				new Date(dataFim), idCategorias);
+	}
+
+	private List< Long > obtemCategoriasPorNome(String googleId, List<String> categorias) {
+		return this.repository.listaIdCategoriasPorNome(googleId, categorias);
 	}
 
 	@Override

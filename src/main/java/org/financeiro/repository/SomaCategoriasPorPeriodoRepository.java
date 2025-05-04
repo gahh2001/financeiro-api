@@ -1,5 +1,7 @@
 package org.financeiro.repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,13 +34,24 @@ public class SomaCategoriasPorPeriodoRepository
 	@Override
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Date dataInicio,
-			Date dataFim, String tipoMovimentacao) {
-		return list("SELECT new org.financeiro.dto.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
-			+ "DATE_TRUNC('month', m.dataMovimentacao) as data, SUM(m.valor) AS somaMovimentacao) FROM Movimentacao m JOIN "
-			+ "CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id WHERE m.googleId = "
-			+ "?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 AND m.tipoMovimentacao = ?4 GROUP BY "
-			+ "cm.nomeCategoria, data ORDER BY data ASC",
-			googleId, dataInicio, dataFim, tipoMovimentacao);
+			Date dataFim, List<Long> categorias) {
+		String criterioCategoria;
+		List<Object> parametros = new ArrayList<>(Arrays.asList(googleId, dataInicio, dataFim));
+		if (categorias.contains(-1L)) {
+			criterioCategoria = "AND m.tipoMovimentacao = 'POSITIVO'";
+		} else if (categorias.contains(-2L)) {
+			criterioCategoria = "AND m.tipoMovimentacao = 'NEGATIVO'";
+		} else {
+			criterioCategoria = "AND m.idCategoriaMovimentacao IN ?4";
+			parametros.add(categorias);
+		}
+		String jpql = "SELECT new org.financeiro.dto.SomaCategoriasPorPeriodoDTO(cm.nomeCategoria, "
+			+ "DATE_TRUNC('month', m.dataMovimentacao) as data, SUM(m.valor) AS somaMovimentacao) "
+			+ "FROM Movimentacao m JOIN CategoriaMovimentacao cm ON m.idCategoriaMovimentacao = cm.id "
+			+ "WHERE m.googleId = ?1 AND m.dataMovimentacao BETWEEN ?2 AND ?3 "
+			+ criterioCategoria
+			+ " GROUP BY cm.nomeCategoria, data ORDER BY data ASC";
+		return list(jpql, parametros.toArray());
 	}
 
 	@Override
