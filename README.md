@@ -2,6 +2,8 @@
 
 Este repositório contém o backend da aplicação [**MyWallet Pro**](https://mywalletpro.com.br/), uma aplicação web de organização financeira pessoal. A API foi desenvolvida com foco em performance, simplicidade, organização e escalabilidade utilizando o framework **Quarkus** e a linguagem **Java**.
 
+![Tela inicial](https://github.com/gahh2001/financeiro-web/blob/master/public/images/login.png)
+
 ## ✨ Funcionalidades
 
 - Cadastro e autenticação de usuários
