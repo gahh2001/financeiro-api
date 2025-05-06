@@ -21,5 +21,6 @@ Este repositório contém o backend da aplicação [**MyWallet Pro**](https://my
 - **JPA/Hibernate** – Mapeamento objeto-relacional (ORM)
 - **RESTEasy** – API REST
 - **JWT** – Autenticação baseada em token
+- Docker - Porque containerizar é uma maravilha...
 
 Confira também o [repositório Frontend](https://github.com/gahh2001/financeiro-web) desta aplicação e fique a vontade para ver tudo isto funcionando em https://mywalletpro.com.br/
