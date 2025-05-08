@@ -52,11 +52,12 @@ public class CategoriaMovimentacaoRepository
 
 	@Override
 	@Transactional
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+	public CategoriaMovimentacao atualizaCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
 		CategoriaMovimentacao antiga = findById(novaCategoria.getId());
 		antiga.setNomeCategoria(novaCategoria.getNomeCategoria());
 		antiga.setIcone(novaCategoria.getIcone());
 		antiga.setCorIcone(novaCategoria.getCorIcone());
+		antiga.setValorPadrao(novaCategoria.getValorPadrao());
 		antiga.persistAndFlush();
 		return antiga;
 	}

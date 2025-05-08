@@ -10,7 +10,7 @@ public interface ICategoriaMovimentacaoRepository {
 
 	CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId);
 
-	CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria);
+	CategoriaMovimentacao atualizaCategoriaMovimentacao(CategoriaMovimentacao novaCategoria);
 
 	void removeCategoriaMovimentacao(Long idCategoria);
 

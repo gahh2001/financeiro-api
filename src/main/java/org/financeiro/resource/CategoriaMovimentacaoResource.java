@@ -118,9 +118,9 @@ public class CategoriaMovimentacaoResource {
 	@PATCH
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(@HeaderParam("Authorization") String token,
+	public CategoriaMovimentacao atualizaCategoriaMovimentacao(@HeaderParam("Authorization") String token,
 			CategoriaMovimentacao novaCategoria) {
-		return business.atualizaNomeCategoriaMovimentacao(novaCategoria);
+		return business.atualizaCategoriaMovimentacao(novaCategoria);
 	}
 
 	@DELETE

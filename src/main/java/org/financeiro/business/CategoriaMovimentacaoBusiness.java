@@ -82,8 +82,8 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 	}
 
 	@Override
-	public CategoriaMovimentacao atualizaNomeCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
-		return repository.atualizaNomeCategoriaMovimentacao(novaCategoria);
+	public CategoriaMovimentacao atualizaCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
+		return repository.atualizaCategoriaMovimentacao(novaCategoria);
 	}
 
 	@Override
