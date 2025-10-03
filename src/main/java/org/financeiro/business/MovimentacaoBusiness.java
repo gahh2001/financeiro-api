@@ -192,7 +192,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 
 	private void atualizaSaldoAoEditar(Movimentacao atualizada, String token) {
 		Movimentacao antiga = this.movimentacaoRepository.listaMovimentacaoPorId(atualizada.getId());
-		if ( Objects.nonNull(antiga.getAlteraSaldo()) && Objects.nonNull(atualizada.getAlteraSaldo())
+		if (Objects.nonNull(antiga.getAlteraSaldo()) && Objects.nonNull(atualizada.getAlteraSaldo())
 				&& Boolean.FALSE.equals(antiga.getAlteraSaldo() && Boolean.TRUE.equals(atualizada.getAlteraSaldo()))) {
 			Conta conta = this.contaBusiness.getAccountByGoogleId(token);
 			this.atualizaSaldoAoCriar(antiga, conta);
