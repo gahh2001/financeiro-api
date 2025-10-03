@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
@@ -81,7 +80,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 				dto.setCorIcone(categoria.getCorIcone());
 				return dto; //seria bacana já buscar esses dados adicionais na propria query
 			})
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	@Override
@@ -100,7 +99,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 					dto.setCorIcone(categoria.getCorIcone());
 					return dto;
 				})
-				.collect(Collectors.toList());
+				.toList();
 	};
 
 	@Override
@@ -119,7 +118,7 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 				dto.setCorIcone(categoria.getCorIcone());
 				return dto;
 			})
-			.collect(Collectors.toList());
+			.toList();
 	};
 
 	@Override

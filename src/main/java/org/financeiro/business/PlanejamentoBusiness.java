@@ -3,7 +3,6 @@ package org.financeiro.business;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.financeiro.dto.DesempenhoPlanejamentoDTO;
 import org.financeiro.dto.MovimentacaoDTO;
@@ -117,7 +116,7 @@ public class PlanejamentoBusiness implements IPlanejamentoBusiness {
 						planejamento.getDataInicio().toString(),
 						planejamento.getDataFim().toString()))
 				.flatMap(List::stream)
-				.collect(Collectors.toList());
+				.toList();
 		}
 	}
 
