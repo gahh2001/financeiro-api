@@ -23,12 +23,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class LoginBusiness implements ILoginBusiness {
+public class LoginBusiness {
 
 	@Inject
-	IContaBusiness contaBusiness;
+	ContaBusiness contaBusiness;
 
-	@Override
 	public LoginDTO validateLogin(String token) throws LoginException {
 		HttpTransport transport = new NetHttpTransport();
 		GsonFactory factory = new GsonFactory() ;

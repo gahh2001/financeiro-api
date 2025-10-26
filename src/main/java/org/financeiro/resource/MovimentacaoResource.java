@@ -2,7 +2,7 @@ package org.financeiro.resource;
 
 import java.util.List;
 
-import org.financeiro.business.IMovimentacaoBusiness;
+import org.financeiro.business.MovimentacaoBusiness;
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
@@ -27,7 +27,7 @@ import jakarta.ws.rs.core.Response;
 public class MovimentacaoResource {
 
 	@Inject
-	IMovimentacaoBusiness movimentacaoBusiness;
+	MovimentacaoBusiness movimentacaoBusiness;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

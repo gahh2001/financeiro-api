@@ -9,16 +9,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class ContaRepository implements IContaRepository, PanacheRepository<Conta>{
+public class ContaRepository implements PanacheRepository<Conta>{
 
-	@Override
 	@Transactional
 	public Conta criaconta(Conta conta) {
 		persist(conta);
 		return conta;
 	}
 
-	@Override
 	@Transactional
 	public Conta updateAccount(Conta conta) {
 		Conta existente = this.getAccountByGoogleId(conta.getGoogleId());
@@ -31,26 +29,22 @@ public class ContaRepository implements IContaRepository, PanacheRepository<Cont
 		return conta;
 	}
 
-	@Override
 	@Transactional
 	public Conta listaContaPorId(Long idConta) {
 		return this.findById(idConta);
 	}
 
-	@Override
 	@Transactional
 	public Conta getAccountByGoogleId(String id) {
 		List<Conta> conta = list("select t from Conta t where t.googleId = ?1", id);
 		return conta == null || conta.isEmpty() ? null : conta.get(0);
 	}
 
-	@Override
 	@Transactional
 	public void atualizaSaldoConta(Double novoSaldo, String googleId) {
 		update("update Conta t set t.saldoConta = ?1 where t.googleId = ?2 ", novoSaldo, googleId);
 	}
 
-	@Override
 	@Transactional
 	public void atualizaInvestimento(double novoInvestimento, String googleId) {
 		update("update Conta t set t.saldoInvestimento = ?1 where t.googleId = ?2", novoInvestimento, googleId);

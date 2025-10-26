@@ -11,9 +11,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class MovimentacaoDTORepository implements PanacheRepository<MovimentacaoDTO>, IMovimentacaoDTORepository{
+public class MovimentacaoDTORepository implements PanacheRepository<MovimentacaoDTO> {
 
-	@Override
 	@Transactional
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Date dataInicio, Date dataFim,
 			String tipo, List<String> categorias) {

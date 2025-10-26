@@ -2,7 +2,7 @@ package org.financeiro.resource;
 
 import java.util.List;
 
-import org.financeiro.business.IPlanejamentoBusiness;
+import org.financeiro.business.PlanejamentoBusiness;
 import org.financeiro.dto.DesempenhoPlanejamentoDTO;
 import org.financeiro.dto.MovimentacaoDTO;
 import org.financeiro.dto.PlanejamentoDTO;
@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.Response;
 public class PlanejamentoResource {
 
 	@Inject
-	IPlanejamentoBusiness business;
+	PlanejamentoBusiness business;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

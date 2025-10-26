@@ -12,32 +12,31 @@ import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
-import org.financeiro.repository.IMovimentacaoDTORepository;
-import org.financeiro.repository.IMovimentacaoRepository;
+import org.financeiro.repository.MovimentacaoDTORepository;
+import org.financeiro.repository.MovimentacaoRepository;
 import org.financeiro.security.TokenSecurity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class MovimentacaoBusiness implements IMovimentacaoBusiness {
+public class MovimentacaoBusiness {
 
 	@Inject
-	IMovimentacaoRepository movimentacaoRepository;
+	MovimentacaoRepository movimentacaoRepository;
 
 	@Inject
-	IContaBusiness contaBusiness;
+	ContaBusiness contaBusiness;
 
 	@Inject
-	ICategoriaMovimentacaoBusiness categoriaBusiness;
+	CategoriaMovimentacaoBusiness categoriaBusiness;
 
 	@Inject
-	IMovimentacaoDTORepository movimentacaoDTORepository;
+	MovimentacaoDTORepository movimentacaoDTORepository;
 
 	@Inject
 	TokenSecurity tokenBusiness;
 
-	@Override
 	public Movimentacao criaMovimentacao(String token, Movimentacao novaMovimentacao) throws NonExistentAccount {
 		String googleId = tokenBusiness.getToken(token);
 		Conta conta = this.contaBusiness.getAccountByGoogleId(token);
@@ -51,7 +50,6 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		return movimentacaoRepository.criaMovimentacao(novaMovimentacao);
 	}
 
-	@Override
 	public Movimentacao atualizaMovimentacao(String token, Movimentacao atualizada) throws NonExistentAccount {
 		String googleId = tokenBusiness.getToken(token);
 		try {
@@ -65,7 +63,6 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		}
 	}
 
-	@Override
 	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String token, Long dataInicio, Long dataFim) {
 		String googleId = tokenBusiness.getToken(token);
 		List<Movimentacao> movimentacoes = movimentacaoRepository
@@ -83,7 +80,6 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			.toList();
 	}
 
-	@Override
 	public List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(String token, String tipoMovimentacao,
 			String dataInicio, String dataFim) {
 		String googleId = tokenBusiness.getToken(token);
@@ -102,7 +98,6 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 				.toList();
 	};
 
-	@Override
 	public List<MovimentacaoDTO> listaMovimentacaoPorIdCategoria(String token, Long idCategoria, String dataInicio,
 			String dataFim) {
 		String googleId = tokenBusiness.getToken(token);
@@ -121,12 +116,10 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 			.toList();
 	};
 
-	@Override
 	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria) {
 		return movimentacaoRepository.listaMovimentacaoPorIdCategoria(googleId, idCategoria);
 	};
 
-	@Override
 	public Boolean removeMovimentacao(Long idMovimentacao, String token) {
 		String googleId = tokenBusiness.getToken(token);
 		Conta conta = this.contaBusiness.getAccountByGoogleId(token);
@@ -153,7 +146,6 @@ public class MovimentacaoBusiness implements IMovimentacaoBusiness {
 		return movimentacaoRepository.removeMovimentacao(idMovimentacao, googleId);
 	}
 
-	@Override
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String token, Long dataInicio, Long dataFim,
 			String tipo, String categorias) {
 		String googleId = tokenBusiness.getToken(token);

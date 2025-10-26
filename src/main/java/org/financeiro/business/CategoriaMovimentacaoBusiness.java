@@ -8,9 +8,9 @@ import org.financeiro.entity.CategoriaMovimentacao;
 import org.financeiro.entity.Conta;
 import org.financeiro.entity.Movimentacao;
 import org.financeiro.exceptions.NonExistentAccount;
-import org.financeiro.repository.ICategoriaMovimentacaoRepository;
-import org.financeiro.repository.IMovimentacaoRepository;
-import org.financeiro.repository.ISomaCategoriasPorPeriodoRepository;
+import org.financeiro.repository.CategoriaMovimentacaoRepository;
+import org.financeiro.repository.MovimentacaoRepository;
+import org.financeiro.repository.SomaCategoriasPorPeriodoRepository;
 import org.financeiro.security.TokenSecurity;
 import org.jboss.logging.Logger;
 
@@ -18,26 +18,25 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusiness {
+public class CategoriaMovimentacaoBusiness {
 
 	@Inject
-	IContaBusiness contaBusiness;
+	ContaBusiness contaBusiness;
 
 	@Inject
-	ICategoriaMovimentacaoRepository repository;
+	CategoriaMovimentacaoRepository repository;
 
 	@Inject
-	IMovimentacaoRepository repositoryMovimentacao;
+	MovimentacaoRepository repositoryMovimentacao;
 
 	@Inject
-	ISomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
+	SomaCategoriasPorPeriodoRepository somaCategoriasPorMesRepository;
 
 	@Inject
 	TokenSecurity tokenBusiness;
 
 	private static final Logger log = Logger.getLogger(CategoriaMovimentacaoBusiness.class);
 
-	@Override
 	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria,
 			String token) throws NonExistentAccount {
 		String googleId = tokenBusiness.getToken(token);
@@ -49,26 +48,22 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		return repository.criaCategoriaMovimentacao(categoria);
 	}
 
-	@Override
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String token) {
 		String googleId = tokenBusiness.getToken(token);
 		return this.repository.listaCategoriasMovimentacaoPorConta(googleId);
 	}
 
-	@Override
 	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String token) {
 		String googleId = tokenBusiness.getToken(token);
 		return repository.listaCategoriaMovimentacaoPorId(idCategoria, googleId);
 	}
 
-	@Override
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(
 			String tipoMovimentacao, String token) {
 		String googleId = tokenBusiness.getToken(token);
 		return repository.listaCategoriasMovimentacaoPorTipoMovimentacao(tipoMovimentacao, googleId);
 	}
 
-	@Override
 	public CategoriaMovimentacao removeCategoriaMovimentacao(String token, Long idCategoria) {
 		String googleId = tokenBusiness.getToken(token);
 		List<Movimentacao> movimentacoesExistentes = repositoryMovimentacao
@@ -81,12 +76,10 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		return null;
 	}
 
-	@Override
 	public CategoriaMovimentacao atualizaCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
 		return repository.atualizaCategoriaMovimentacao(novaCategoria);
 	}
 
-	@Override
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String token, Long dataInicio,
 			Long dataFim, String tipoMovimentacao) {
 		String googleId = tokenBusiness.getToken(token);
@@ -94,7 +87,6 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 			.listaSomaPorCategoria(googleId, new Date(dataInicio), new Date(dataFim), tipoMovimentacao);
 	}
 
-	@Override
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String token, Long dataInicio,
 			Long dataFim, List<String> categorias) {
 		String googleId = tokenBusiness.getToken(token);
@@ -115,7 +107,6 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		return this.repository.listaIdCategoriasPorNome(googleId, categorias);
 	}
 
-	@Override
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String token, Long dataInicio,
 			Long dataFim) {
 		String googleId = tokenBusiness.getToken(token);
@@ -126,7 +117,6 @@ public class CategoriaMovimentacaoBusiness implements ICategoriaMovimentacaoBusi
 		return result;
 	}
 
-	@Override
 	public void criaCategoriasIniciais(String token) {
 		String googleId = tokenBusiness.getToken(token);
 		CategoriaMovimentacao primeira = new CategoriaMovimentacao(

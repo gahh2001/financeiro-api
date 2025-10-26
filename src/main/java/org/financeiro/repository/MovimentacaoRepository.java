@@ -10,16 +10,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheRepository<Movimentacao> {
+public class MovimentacaoRepository implements PanacheRepository<Movimentacao> {
 
-	@Override
 	@Transactional
 	public Movimentacao criaMovimentacao(Movimentacao movimentacao) {
 		persist(movimentacao);
 		return movimentacao;
 	}
 
-	@Override
 	@Transactional
 	public Movimentacao atualizaMovimentacao(Movimentacao movimentacaoAtualizada) {
 		Movimentacao movimentacaoAntiga = this.findById(movimentacaoAtualizada.getId());
@@ -31,7 +29,6 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 		return movimentacaoAtualizada;
 	}
 
-	@Override
 	@Transactional
 	public Movimentacao listaMovimentacaoPorIdEConta(Long id, String googleId) {
 		List<Movimentacao> movimentacao = list(
@@ -39,20 +36,17 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 		return movimentacao != null && !movimentacao.isEmpty() ? movimentacao.get(0) : null;
 	}
 
-	@Override
 	@Transactional
 	public Movimentacao listaMovimentacaoPorId(Long id) {
 		return this.findById(id);
 	}
 
-	@Override
 	@Transactional
 	public List<Movimentacao> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio, Date dataFim) {
 		return list("select t from Movimentacao t where t.googleId = ?1 "
 				+ "and (t.dataMovimentacao between ?2 and ?3)", googleId, dataInicio, dataFim);
 	}
 
-	@Override
 	@Transactional
 	public List<Movimentacao> listaMovimentacoesPorTipoMovimentacao(String googleId, String tipoMovimentacao,
 			Date dataInicio, Date dataFim) {
@@ -60,7 +54,6 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 				+ "and (t.dataMovimentacao between ?3 and ?4)", googleId, tipoMovimentacao, dataInicio, dataFim);
 	}
 
-	@Override
 	@Transactional
 	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria, Date dataInicio,
 			Date dataFim) {
@@ -68,14 +61,12 @@ public class MovimentacaoRepository implements IMovimentacaoRepository, PanacheR
 				+ "and (t.dataMovimentacao between ?3 and ?4)", googleId, idCategoria, dataInicio, dataFim);
 	}
 
-	@Override
 	@Transactional
 	public List<Movimentacao> listaMovimentacaoPorIdCategoria(String googleId, Long idCategoria) {
 		return list("select t from Movimentacao t where t.googleId = ?1 and t.idCategoriaMovimentacao = ?2",
 			googleId, idCategoria);
 	}
 
-	@Override
 	@Transactional
 	public Boolean removeMovimentacao(Long idMovimentacao, String googleId) {
 		return deleteById(idMovimentacao);

@@ -1,25 +1,24 @@
 package org.financeiro.business;
 
 import org.financeiro.entity.Conta;
-import org.financeiro.repository.IContaRepository;
+import org.financeiro.repository.ContaRepository;
 import org.financeiro.security.TokenSecurity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ContaBusiness implements IContaBusiness {
+public class ContaBusiness {
 
 	@Inject
-	IContaRepository contaRepository;
+	ContaRepository contaRepository;
 
 	@Inject
-	ICategoriaMovimentacaoBusiness categoriasBusiness;
+	CategoriaMovimentacaoBusiness categoriasBusiness;
 
 	@Inject
 	TokenSecurity tokenBusiness;
 
-	@Override
 	public void processAccount(Conta conta, String token) {
 		Conta contaExistente = this.contaRepository.getAccountByGoogleId(conta.getGoogleId());
 		if (contaExistente == null) {
@@ -30,39 +29,32 @@ public class ContaBusiness implements IContaBusiness {
 		this.contaRepository.updateAccount(conta);
 	}
 
-	@Override
 	public Conta criaconta(Conta conta) {
 		return this.contaRepository
 		.criaconta(conta);
 	}
 
-	@Override
 	public Conta updateAccount(Conta conta) {
 		return this.contaRepository.updateAccount(conta);
 	}
 
-	@Override
 	public Conta listaContaPorId(Long idConta) {
 		return this.contaRepository.listaContaPorId(idConta);
 	}
 
-	@Override
 	public Conta getAccountByGoogleId(String token) {
 		String googleId = tokenBusiness.getToken(token);
 		return this.contaRepository.getAccountByGoogleId(googleId);
 	}
 
-	@Override
 	public void atualizaSaldoConta(Double valorMovimentacao, String googleId) {
 		this.contaRepository.atualizaSaldoConta(valorMovimentacao, googleId);
 	}
 
-	@Override
 	public void atualizaInvestimento(double novoInvestimento, String googleId) {
 		this.contaRepository.atualizaInvestimento(novoInvestimento, googleId);
 	}
 
-	@Override
 	public void editarSaldo(Conta conta, Double valor) {
 		this.contaRepository.atualizaSaldoConta(valor, conta.getGoogleId());
 	}

@@ -1,6 +1,6 @@
 package org.financeiro.resource;
 
-import org.financeiro.business.IContaBusiness;
+import org.financeiro.business.ContaBusiness;
 import org.financeiro.entity.Conta;
 
 import jakarta.inject.Inject;
@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response;
 public class ContaResource {
 
 	@Inject
-	IContaBusiness contaBusiness;
+	ContaBusiness contaBusiness;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

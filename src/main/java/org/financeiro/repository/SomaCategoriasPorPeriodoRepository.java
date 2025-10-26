@@ -13,9 +13,8 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class SomaCategoriasPorPeriodoRepository
-		implements PanacheRepository<SomaCategoriasPorPeriodoDTO>, ISomaCategoriasPorPeriodoRepository {
+		implements PanacheRepository<SomaCategoriasPorPeriodoDTO> {
 
-	@Override
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoria(String googleId, Date dataInicio,
 			Date dataFim, String tipoMovimentacao) {
@@ -31,7 +30,6 @@ public class SomaCategoriasPorPeriodoRepository
 			googleId, dataInicio, dataFim, tipoMovimentacao);
 	}
 
-	@Override
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorCategoriaEMeses(String googleId, Date dataInicio,
 			Date dataFim, List<Long> categorias) {
@@ -54,7 +52,6 @@ public class SomaCategoriasPorPeriodoRepository
 		return list(jpql, parametros.toArray());
 	}
 
-	@Override
 	@Transactional
 	public List<SomaCategoriasPorPeriodoDTO> listaSomaPorTipoEMeses(String googleId, Date dataInicio,
 			Date dataFim) {

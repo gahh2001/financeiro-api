@@ -3,8 +3,8 @@ package org.financeiro.resource;
 import java.util.Date;
 import java.util.List;
 
-import org.financeiro.business.ICategoriaMovimentacaoBusiness;
-import org.financeiro.business.IMediasGeraisBusiness;
+import org.financeiro.business.CategoriaMovimentacaoBusiness;
+import org.financeiro.business.MediasGeraisBusiness;
 import org.financeiro.dto.MediasGeraisDTO;
 import org.financeiro.dto.SomaCategoriasPorPeriodoDTO;
 import org.financeiro.entity.CategoriaMovimentacao;
@@ -30,10 +30,10 @@ import jakarta.ws.rs.core.Response;
 public class CategoriaMovimentacaoResource {
 
 	@Inject
-	ICategoriaMovimentacaoBusiness business;
+	CategoriaMovimentacaoBusiness business;
 
 	@Inject
-	IMediasGeraisBusiness mediasBusiness;
+	MediasGeraisBusiness mediasBusiness;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

@@ -13,12 +13,11 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO>, IMediasGeraisRepository{
+public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO> {
 
 	@PersistenceContext
 	EntityManager entityManager;
 
-	@Override
 	@Transactional
 	public MediasGeraisDTO obtemCategoriaMaisRegistradaPorTipo(String googleId, Date dataInicio,
 			Date dataFim, String tipo) {
@@ -31,7 +30,6 @@ public class MediasGeraisRepository implements PanacheRepository<MediasGeraisDTO
 		return result != null && !result.isEmpty() ? result.get(0) : null;
 	}
 
-	@Override
 	@Transactional
 	public Double obtemMediaMensalPorTipo(String googleId, Date dataInicio, Date dataFim, String tipo) {
 		String sql = "WITH MovimentacaoMensal AS (SELECT DATE_TRUNC('month', m.dataMovimentacao) AS mes,"

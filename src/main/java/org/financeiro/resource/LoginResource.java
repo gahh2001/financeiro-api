@@ -1,6 +1,6 @@
 package org.financeiro.resource;
 
-import org.financeiro.business.ILoginBusiness;
+import org.financeiro.business.LoginBusiness;
 import org.financeiro.dto.LoginDTO;
 import org.financeiro.exceptions.LoginException;
 
@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class LoginResource {
 	@Inject
-	ILoginBusiness loginBusiness;
+	LoginBusiness loginBusiness;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

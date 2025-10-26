@@ -10,22 +10,19 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class CategoriaMovimentacaoRepository
-		implements PanacheRepository<CategoriaMovimentacao>, ICategoriaMovimentacaoRepository {
+		implements PanacheRepository<CategoriaMovimentacao> {
 
-	@Override
 	@Transactional
 	public CategoriaMovimentacao criaCategoriaMovimentacao(CategoriaMovimentacao categoria) {
 		persist(categoria);
 		return categoria;
 	}
 
-	@Override
 	@Transactional
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorConta(String googleId) {
 		return list("select t from CategoriaMovimentacao t where t.googleId = ?1 order by t.nomeCategoria asc", googleId);
 	}
 
-	@Override
 	@Transactional
 	public CategoriaMovimentacao listaCategoriaMovimentacaoPorId(Long idCategoria, String googleId) {
 		List<CategoriaMovimentacao> categoria = list ("select c from CategoriaMovimentacao c "
@@ -33,7 +30,6 @@ public class CategoriaMovimentacaoRepository
 		return categoria != null && !categoria.isEmpty() ? categoria.get(0) : null;
 	}
 
-	@Override
 	@Transactional
 	public List<CategoriaMovimentacao> listaCategoriasMovimentacaoPorTipoMovimentacao(String tipoMovimentacao,
 			String googleId) {
@@ -44,13 +40,11 @@ public class CategoriaMovimentacaoRepository
 				tipoMovimentacao, googleId);
 	}
 
-	@Override
 	@Transactional
 	public void removeCategoriaMovimentacao(Long idCategoria) {
 		deleteById(idCategoria);
 	}
 
-	@Override
 	@Transactional
 	public CategoriaMovimentacao atualizaCategoriaMovimentacao(CategoriaMovimentacao novaCategoria) {
 		CategoriaMovimentacao antiga = findById(novaCategoria.getId());
@@ -62,7 +56,6 @@ public class CategoriaMovimentacaoRepository
 		return antiga;
 	}
 
-	@Override
 	@Transactional
 	public List<Long> listaIdCategoriasPorNome(String googleId, List<String> nomes) {
 		return getEntityManager()
