@@ -11,6 +11,22 @@ services:
     ports:
       - 5433:5432
 
+  db-backup:
+    image: prodrigestivill/postgres-backup-local
+    container_name: inovacao-db-backup
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=financeiro
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=syonet
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    volumes:
+      - ./backups-bd:/backups
+
   app:
     build: ./financeiro-api
     container_name: backend-container
