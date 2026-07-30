@@ -65,19 +65,8 @@ public class MovimentacaoBusiness {
 
 	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String token, Long dataInicio, Long dataFim) {
 		String googleId = tokenBusiness.getToken(token);
-		List<Movimentacao> movimentacoes = movimentacaoRepository
-				.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date (dataFim));
-		return movimentacoes.stream()
-			.map(movimentacao -> {
-				MovimentacaoDTO dto = new MovimentacaoDTO(movimentacao);
-				CategoriaMovimentacao categoria = categoriaBusiness
-					.listaCategoriaMovimentacaoPorId(movimentacao.getIdCategoriaMovimentacao(), token);
-				dto.setNomeCategoriaMovimentacao(categoria.getNomeCategoria());
-				dto.setIcone(categoria.getIcone());
-				dto.setCorIcone(categoria.getCorIcone());
-				return dto; //seria bacana já buscar esses dados adicionais na propria query
-			})
-			.toList();
+		return movimentacaoDTORepository
+			.listaMovimentacoesPorIdContaEPeriodo(googleId, new Date(dataInicio), new Date(dataFim));
 	}
 
 	public List<MovimentacaoDTO> listaMovimentacoesPorTipoMovimentacao(String token, String tipoMovimentacao,

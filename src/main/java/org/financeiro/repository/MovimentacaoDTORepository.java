@@ -14,6 +14,18 @@ import jakarta.transaction.Transactional;
 public class MovimentacaoDTORepository implements PanacheRepository<MovimentacaoDTO> {
 
 	@Transactional
+	public List<MovimentacaoDTO> listaMovimentacoesPorIdContaEPeriodo(String googleId, Date dataInicio,
+			Date dataFim) {
+		String query = "select new org.financeiro.dto.MovimentacaoDTO(m.id, m.googleId, m.valor, "
+			+ "m.dataMovimentacao, m.tipoMovimentacao, m.idCategoriaMovimentacao, c.nomeCategoria, "
+			+ "m.descricaoMovimentacao, c.icone, c.corIcone, m.alteraSaldo) "
+			+ "from Movimentacao m left join CategoriaMovimentacao c "
+			+ "on c.id = m.idCategoriaMovimentacao and c.googleId = m.googleId "
+			+ "where m.googleId = ?1 and m.dataMovimentacao between ?2 and ?3";
+		return list(query, googleId, dataInicio, dataFim);
+	}
+
+	@Transactional
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Date dataInicio, Date dataFim,
 			String tipo, List<String> categorias) {
 		List<Object> parametros = new ArrayList<>();

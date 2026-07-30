@@ -23,6 +23,7 @@ public class MovimentacaoDTO {
 	private String descricaoMovimentacao;
 	private String icone;
 	private String corIcone;
+	private Boolean alteraSaldo;
 
 	public MovimentacaoDTO(Movimentacao movimentacao) {
 		this.id = movimentacao.getId();
@@ -32,6 +33,23 @@ public class MovimentacaoDTO {
 		this.tipoMovimentacao = movimentacao.getTipoMovimentacao();
 		this.idCategoriaMovimentacao = movimentacao.getIdCategoriaMovimentacao();
 		this.descricaoMovimentacao = movimentacao.getDescricaoMovimentacao();
+		this.alteraSaldo = movimentacao.getAlteraSaldo();
+	}
+
+	public MovimentacaoDTO(Long id, String googleId, Double valor, Date dataMovimentacao, String tipoMovimentacao,
+			Long idCategoriaMovimentacao, String nomeCategoriaMovimentacao, String descricaoMovimentacao,
+			String icone, String corIcone, Boolean alteraSaldo) {
+		this.id = id;
+		this.googleId = googleId;
+		this.valor = valor;
+		this.dataMovimentacao = dataMovimentacao;
+		this.tipoMovimentacao = tipoMovimentacao;
+		this.idCategoriaMovimentacao = idCategoriaMovimentacao;
+		this.nomeCategoriaMovimentacao = nomeCategoriaMovimentacao;
+		this.descricaoMovimentacao = descricaoMovimentacao;
+		this.icone = icone;
+		this.corIcone = corIcone;
+		this.alteraSaldo = alteraSaldo;
 	}
 
 	public MovimentacaoDTO(Long id, Double valor, Date dataMovimentacao, String tipoMovimentacao,
