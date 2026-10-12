@@ -27,13 +27,22 @@ public class MovimentacaoDTORepository implements PanacheRepository<Movimentacao
 
 	@Transactional
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String googleId, Date dataInicio, Date dataFim,
-			String tipo, List<String> categorias) {
+			String tipo, List<String> categorias, String description) {
 		List<Object> parametros = new ArrayList<>();
 		parametros.add(googleId);
-		parametros.add(dataInicio);
-		parametros.add(dataFim);
+		String dateCriteria = dataInicio != null && dataFim != null
+			? "and m.dataMovimentacao between ?" + (parametros.size() + 1) + " and ?" + (parametros.size() + 2) + " " : "";
+		if (!dateCriteria.isEmpty()) {
+			parametros.add(dataInicio);
+			parametros.add(dataFim);
+		}
+		String descriptionCriteria = description != null && !description.isBlank()
+			? "and lower(m.descricaoMovimentacao) like ?" + (parametros.size() + 1) + " " : "";
+		if (!descriptionCriteria.isEmpty()) {
+			parametros.add("%" + description.trim().toLowerCase() + "%");
+		}
 		String criterioTipo = tipo != null && !"TODOS".equals(tipo)
-			? "and c.tipoMovimentacao = ?" + (parametros.size() + 1) : "";
+			? "and c.tipoMovimentacao = ?" + (parametros.size() + 1) + " " : "";
 		if (!criterioTipo.isEmpty()) {
 			parametros.add(tipo);
 		}
@@ -46,8 +55,9 @@ public class MovimentacaoDTORepository implements PanacheRepository<Movimentacao
 			+ "m.dataMovimentacao, m.tipoMovimentacao, "
 			+ "c.id as idCategoriaMovimentacao, c.nomeCategoria, m.descricaoMovimentacao "
 			+ ", c.icone, c.corIcone) from Movimentacao m join CategoriaMovimentacao c "
-			+ "on m.idCategoriaMovimentacao = c.id and m.googleId = ?1 and "
-			+ "m.dataMovimentacao between ?2 and ?3 "
+			+ "on m.idCategoriaMovimentacao = c.id and m.googleId = ?1 "
+			+ dateCriteria
+			+ descriptionCriteria
 			+ criterioTipo
 			+ criterioCategoria;
 		return list(query, parametros.toArray());

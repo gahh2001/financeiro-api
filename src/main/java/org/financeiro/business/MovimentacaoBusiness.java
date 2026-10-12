@@ -136,10 +136,11 @@ public class MovimentacaoBusiness {
 	}
 
 	public List<MovimentacaoDTO> listaMovimentacoesPorParametros(String token, Long dataInicio, Long dataFim,
-			String tipo, String categorias) {
+			String tipo, String categorias, String description) {
 		String googleId = tokenBusiness.getToken(token);
 		return this.movimentacaoDTORepository.listaMovimentacoesPorParametros(googleId,
-			new Date(dataInicio), new Date(dataFim), tipo, Arrays.asList(categorias.split(",")));
+			dataInicio != null ? new Date(dataInicio) : null, dataFim != null ? new Date(dataFim) : null, tipo,
+			categorias != null ? Arrays.asList(categorias.split(",")) : null, description);
 	}
 
 	private Date stringToDate(String dataString) {

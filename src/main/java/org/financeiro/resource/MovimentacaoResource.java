@@ -74,9 +74,10 @@ public class MovimentacaoResource {
 			@QueryParam("dataInicio") Long dataInicio,
 			@QueryParam("dataFim") Long dataFim,
 			@QueryParam("tipoMovimentacao") String tipo,
-			@QueryParam("categorias") String categorias) {
+			@QueryParam("categorias") String categorias,
+			@QueryParam("descricao") String description) {
 		return movimentacaoBusiness.
-			listaMovimentacoesPorParametros(token, dataInicio, dataFim, tipo, categorias);
+			listaMovimentacoesPorParametros(token, dataInicio, dataFim, tipo, categorias, description);
 	}
 
 	@GET
